@@ -1,12 +1,15 @@
 """
 Firewood Shelter — parametric CadQuery model.
 
-Foundation : 3 × H4 sleepers 200×75×2400, running front-to-back
-Posts      : 6 × H4 100×75 — front 1800 mm, back 1400 mm (skillion slope)
-Framing    : 90×45 — wall plates, rafters @ 600 mm centres, back-wall noggins
+Foundation : N_SL × H4 sleepers 200×50, running front-to-back
+Posts      : H4 100×100 — front 1800 mm, back 1400 mm (skillion slope)
+Framing    : 90×45 — wall plates, rafters @ ≤600 mm centres, back-wall noggins
 Cladding   : rough-sawn paling on back wall
 Roof       : skillion corrugated iron (modelled as a flat sheet, correct slope angle)
 Open face  : front — no framing, full access for stacking / retrieval
+
+Sized for FIREWOOD_VOL_M3 m³ of firewood — see firewood sizing section below.
+Sleeper count and rafter count are derived from the firewood and structural parameters.
 
 Coordinate system
   X  left → right  (looking at the open front)
@@ -16,16 +19,27 @@ Coordinate system
 import cadquery as cq
 import math
 
+# ── Firewood sizing ───────────────────────────────────────────────────────────
+# Target storage and standard stack geometry drive the shelter width and depth.
+
+FIREWOOD_VOL_M3 = 4.0   # target storage volume (m³)
+STACK_H_M       = 1.2   # standard stack height (m)
+STACK_D_M       = 0.5   # standard stack depth (m)
+STACK_ROWS      = 3     # rows of wood — one along the front, one along the back
+
+_linear_m    = FIREWOOD_VOL_M3 / (STACK_H_M * STACK_D_M) 
+_row_width_m = _linear_m / STACK_ROWS 
+
 # ── Parameters ────────────────────────────────────────────────────────────────
 
-# Sleepers — H4 treated 200 × 75
+# Sleepers — H4 treated 200 × 50
 SL_W  = 200     # width  (left-right when positioned)
-SL_H  = 50      # height (standing on edge is not typical — these lay flat)
-SL_L  = 2400    # length (front-to-back)
+SL_H  = 50      # height (laying flat)
+SL_L  = round((STACK_ROWS * STACK_D_M) * 1000)   # front-to-back: 2000 mm
 
 # Sleeper layout
-N_SL  = 3       # number of sleepers
-BAY_W = 1200    # centre-to-centre spacing  →  total frame width = 2 400
+BAY_W = 1400    # centre-to-centre spacing (max structural bay, mm)
+# N_SL is derived in the Derived section below
 
 # Posts — H4 treated 100 × 75
 POST_W = 100    # along wall length (left-right on front/back walls)
@@ -42,9 +56,6 @@ OV_F = 300      # overhang beyond front wall plate
 OV_B = 150      # overhang beyond back wall plate
 OV_S = 150      # overhang each side
 
-# Rafters
-N_RAF = 5       # number of rafters (incl. two edge rafters)
-
 # Back-wall paling
 PAL_T = 18      # paling board thickness
 
@@ -57,8 +68,11 @@ REBAR_L    = 1200
 REBAR_SHOW = 400  # portion above ground that is visible
 
 # ── Derived ───────────────────────────────────────────────────────────────────
-TOTAL_W = BAY_W * (N_SL - 1)   # 2 400
-TOTAL_D = SL_L                  # 2 400
+# Number of sleepers: enough bays to meet the minimum row width
+N_SL    = math.ceil(_row_width_m * 1000 / BAY_W) + 1
+
+TOTAL_W = BAY_W * (N_SL - 1)
+TOTAL_D = SL_L
 
 SL_TOP = SL_H                   # z of top face of sleepers = 75
 
@@ -76,18 +90,23 @@ RAF_Z_B = BACK_POST_TOP  + FR_D          # 1 565
 
 # Slope geometry
 SLOPE_RISE = RAF_Z_F - RAF_Z_B           # 400 mm
-SLOPE_RUN  = TOTAL_D                     # 2 400 mm
+SLOPE_RUN  = TOTAL_D
 SLOPE_DEG  = math.degrees(math.atan2(SLOPE_RISE, SLOPE_RUN))  # ≈ 9.46°
 SLOPE_RAD  = math.radians(SLOPE_DEG)
 
-print(f"Roof slope : {SLOPE_DEG:.1f}°  ({SLOPE_RISE}/{SLOPE_RUN} mm)")
-print(f"Frame width: {TOTAL_W} mm   depth: {TOTAL_D} mm")
+print(f"Roof slope    : {SLOPE_DEG:.1f}°  ({SLOPE_RISE}/{SLOPE_RUN} mm)")
+print(f"Frame         : {TOTAL_W} mm wide  ×  {TOTAL_D} mm deep")
+print(f"Firewood rows : {STACK_ROWS} × {TOTAL_W} mm = {STACK_ROWS * TOTAL_W / 1000:.1f} m linear  "
+      f"(target {_linear_m:.1f} m for {FIREWOOD_VOL_M3} m³)")
 
 # Sleeper-centred X positions of posts
-POST_XS = [i * BAY_W + SL_W / 2 for i in range(N_SL)]   # [100, 1300, 2500]
+POST_XS = [i * BAY_W + SL_W / 2 for i in range(N_SL)]
 
 # Full width span of top members (sleeper-face to sleeper-face)
-SPAN_W = TOTAL_W + SL_W    # 2 600
+SPAN_W = TOTAL_W + SL_W
+
+# Number of rafters: outermost over edge sleepers, ≤600 mm centres
+N_RAF  = math.ceil(TOTAL_W / 600) + 1
 
 # Rafter X positions (evenly spaced, outermost over edge sleepers)
 RAF_XS = [POST_XS[0] + i * (TOTAL_W / (N_RAF - 1)) for i in range(N_RAF)]
@@ -193,7 +212,7 @@ for row, frac in enumerate([1 / 3, 2 / 3]):
 # ── Back-wall paling cladding ─────────────────────────────────────────────────
 # Rough-sawn paling boards: 100 × 18 mm face, run vertically, butted tight.
 # Board length needed: 1 450 mm (use 1 500 mm stock, trim 50 mm off each board).
-# Board count: ceil(SPAN_W / 100) = ceil(2 600 / 100) = 26 boards + 2 spare = 28 total.
+# Board count: ceil(SPAN_W / 100) = ceil(4 400 / 100) = 44 boards + 2 spare = 46 total.
 # Modelled as a solid panel for clarity.
 pal_h = BACK_POST_TOP               # full post height = 1 450 mm
 paling = cq.Workplane("XY").box(SPAN_W, PAL_T, pal_h)
@@ -231,20 +250,15 @@ rebar_cyl = (
     .extrude(REBAR_SHOW)
 )
 
-rebar_positions = [
-    # Left face of leftmost sleeper
-    (0,         OV_F,         0),
-    (0,         TOTAL_D - OV_F, 0),
-    # Right face of rightmost sleeper
-    (SPAN_W,    OV_F,         0),
-    (SPAN_W,    TOTAL_D - OV_F, 0),
-    # Front and back ends of middle sleeper (outer face of end grain)
-    (POST_XS[1], 0,            0),
-    (POST_XS[1], TOTAL_D,      0),
-    # Extra pegs on left/right sleeper ends to resist fore-aft movement
-    (POST_XS[0], 0,            0),
-    (POST_XS[0], TOTAL_D,      0),
-]
+rebar_positions = []
+# Outer face of leftmost and rightmost sleepers (resist lateral movement)
+for _y in [OV_F, TOTAL_D - OV_F]:
+    rebar_positions.append((0,      _y, 0))
+    rebar_positions.append((SPAN_W, _y, 0))
+# Front and back ends of each interior sleeper (resist fore-aft movement)
+for _cx in POST_XS[1:-1]:
+    rebar_positions.append((_cx, 0,       0))
+    rebar_positions.append((_cx, TOTAL_D, 0))
 
 for i, (rx, ry, rz) in enumerate(rebar_positions):
     asm.add(
@@ -253,6 +267,64 @@ for i, (rx, ry, rz) in enumerate(rebar_positions):
         loc=cq.Location(cq.Vector(rx, ry, rz)),
         color=C_RB,
     )
+
+# ── Budget sync ───────────────────────────────────────────────────────────────
+# Quantities are derived from model parameters above.  Unit prices are read from
+# the existing budget.json so they survive re-runs without manual re-entry.
+
+import json as _json
+from pathlib import Path as _Path
+
+_noggin_len  = BAY_W - POST_W                            # clear span between posts
+_framing_m   = round(
+    2  * SPAN_W          / 1000 +                        # wall plates (front + back)
+    N_RAF * RAF_LEN_SLOPE / 1000 +                       # rafters (slope length each)
+    (N_SL - 1) * 2 * _noggin_len / 1000,                 # noggins (2 rows × n bays)
+    1
+)
+_paling_qty  = math.ceil(SPAN_W / 100) + 2              # boards needed + 2 spare
+_roof_sheets = math.ceil((SPAN_W + 2 * OV_S) / 760)     # 760 mm effective coverage/sheet
+_brackets    = N_SL * 2 * 2                              # 2 per post, posts on 2 faces
+_coach_qty   = N_SL * 2                                  # 2 per sleeper (optional tie-down)
+
+# (name, computed qty, unit)
+_COMPUTED = [
+    ("H4 sleepers 200×50",                                               round(N_SL * SL_L / 1000, 1), "meters"),
+    ("H4 posts 100×100×2400 (front posts)",                              N_SL,              "each"),
+    ("H4 posts 100×100×1800 (back posts)",                               N_SL,              "each"),
+    ("90×45 CCA treated pine (plates rafters noggins)",                  _framing_m,        "meters"),
+    ("75×75 galv angle brackets",                                        _brackets,         "each"),
+    ("12mm rebar 1.2m pegs",                                             len(rebar_positions), "each"),
+    ("Roofing screws hex head 65mm box/100",                             1,                 "box"),
+    ("Joist hanger nails 40mm 1kg box",                                  1,                 "box"),
+    ("Coach screws M10×100 (sleeper-to-rebar tie-down, optional)",       _coach_qty,        "each"),
+    ("Rough-sawn paling 100×18mm×1500mm (vertical back wall cladding)", _paling_qty,        "each"),
+    ("Corrugated roofing iron 810×3300mm sheet",                         _roof_sheets,      "each"),
+]
+
+_budget_path = _Path(__file__).parent.parent / "budget.json"
+if _budget_path.exists():
+    _budget  = _json.loads(_budget_path.read_text())
+    _by_name = {item["name"]: item for item in _budget["items"]}
+
+    _new_items = []
+    for _name, _qty, _unit in _COMPUTED:
+        _existing   = _by_name.get(_name, {})
+        _unit_price = _existing.get("unit_price", 0.0)
+        _new_items.append({
+            "name":       _name,
+            "qty":        float(_qty),
+            "unit":       _unit,
+            "unit_price": _unit_price,
+            "subtotal":   round(_unit_price * _qty, 2),
+            "added":      _existing.get("added", "2026-04-15"),
+        })
+
+    _budget["items"] = _new_items
+    _budget_path.write_text(_json.dumps(_budget, indent=2, ensure_ascii=False) + "\n")
+
+    _total = sum(i["subtotal"] for i in _new_items)
+    print(f"Budget synced  : {len(_new_items)} items  total ${_total:.2f}")
 
 # ── Export ────────────────────────────────────────────────────────────────────
 show_object = asm
