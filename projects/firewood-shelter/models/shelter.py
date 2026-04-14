@@ -22,8 +22,8 @@ import math
 # ── Firewood sizing ───────────────────────────────────────────────────────────
 # Target storage and standard stack geometry drive the shelter width and depth.
 
-FIREWOOD_VOL_M3 = 4.0   # target storage volume (m³)
-STACK_H_M       = 1.2   # standard stack height (m)
+FIREWOOD_VOL_M3 = 3.0   # target storage volume (m³)
+STACK_H_M       = 1.6   # standard stack height (m)
 STACK_D_M       = 0.5   # standard stack depth (m)
 STACK_ROWS      = 3     # rows of wood — one along the front, one along the back
 
@@ -94,6 +94,7 @@ SLOPE_RUN  = TOTAL_D
 SLOPE_DEG  = math.degrees(math.atan2(SLOPE_RISE, SLOPE_RUN))  # ≈ 9.46°
 SLOPE_RAD  = math.radians(SLOPE_DEG)
 
+print(f"No of bays    : {N_SL - 1} (based on target row width of {_row_width_m:.2f} m)")
 print(f"Roof slope    : {SLOPE_DEG:.1f}°  ({SLOPE_RISE}/{SLOPE_RUN} mm)")
 print(f"Frame         : {TOTAL_W} mm wide  ×  {TOTAL_D} mm deep")
 print(f"Firewood rows : {STACK_ROWS} × {TOTAL_W} mm = {STACK_ROWS * TOTAL_W / 1000:.1f} m linear  "
@@ -105,11 +106,16 @@ POST_XS = [i * BAY_W + SL_W / 2 for i in range(N_SL)]
 # Full width span of top members (sleeper-face to sleeper-face)
 SPAN_W = TOTAL_W + SL_W
 
-# Number of rafters: outermost over edge sleepers, ≤600 mm centres
-N_RAF  = math.ceil(TOTAL_W / 600) + 1
-
-# Rafter X positions (evenly spaced, outermost over edge sleepers)
-RAF_XS = [POST_XS[0] + i * (TOTAL_W / (N_RAF - 1)) for i in range(N_RAF)]
+# Rafter positions: one rafter at each post, intermediates added where bay > 750 mm.
+# This keeps rafters aligned with posts for modular bay-by-bay construction.
+RAF_MAX_SPACING = 750   # mm
+RAF_XS = []
+for _i in range(N_SL - 1):
+    _n_spaces = math.ceil(BAY_W / RAF_MAX_SPACING)
+    for _j in range(_n_spaces):
+        RAF_XS.append(POST_XS[_i] + _j * BAY_W / _n_spaces)
+RAF_XS.append(POST_XS[-1])
+N_RAF = len(RAF_XS)
 
 # Rafter geometry: sloped length and mid-height
 RAF_LEN_HORIZ = TOTAL_D + OV_F + OV_B         # 2 850 horizontal span

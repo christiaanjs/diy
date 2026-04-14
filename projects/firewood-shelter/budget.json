@@ -5,50 +5,50 @@
   "items": [
     {
       "name": "H4 sleepers 200×50",
-      "qty": 4.5,
+      "qty": 3.0,
       "unit": "meters",
       "unit_price": 10.95,
-      "subtotal": 49.27,
+      "subtotal": 32.85,
       "added": "2026-04-14"
     },
     {
       "name": "H4 posts 100×100×2400 (front posts)",
-      "qty": 3.0,
+      "qty": 2.0,
       "unit": "each",
       "unit_price": 26.52,
-      "subtotal": 79.56,
+      "subtotal": 53.04,
       "added": "2026-04-14"
     },
     {
       "name": "H4 posts 100×100×1800 (back posts)",
-      "qty": 3.0,
+      "qty": 2.0,
       "unit": "each",
       "unit_price": 21.87,
-      "subtotal": 65.61,
+      "subtotal": 43.74,
       "added": "2026-04-14"
     },
     {
       "name": "90×45 CCA treated pine (plates rafters noggins)",
-      "qty": 23.1,
+      "qty": 11.8,
       "unit": "meters",
       "unit_price": 9.3,
-      "subtotal": 214.83,
+      "subtotal": 109.74,
       "added": "2026-04-14"
     },
     {
       "name": "75×75 galv angle brackets",
-      "qty": 12.0,
+      "qty": 8.0,
       "unit": "each",
       "unit_price": 11.32,
-      "subtotal": 135.84,
+      "subtotal": 90.56,
       "added": "2026-04-14"
     },
     {
       "name": "12mm rebar 1.2m pegs",
-      "qty": 6.0,
+      "qty": 4.0,
       "unit": "each",
       "unit_price": 8.0,
-      "subtotal": 48.0,
+      "subtotal": 32.0,
       "added": "2026-04-14"
     },
     {
@@ -69,26 +69,26 @@
     },
     {
       "name": "Coach screws M10×100 (sleeper-to-rebar tie-down, optional)",
-      "qty": 6.0,
+      "qty": 4.0,
       "unit": "each",
       "unit_price": 3.5,
-      "subtotal": 21.0,
+      "subtotal": 14.0,
       "added": "2026-04-14"
     },
     {
       "name": "Rough-sawn paling 100×18mm×1500mm (vertical back wall cladding)",
-      "qty": 32.0,
+      "qty": 18.0,
       "unit": "each",
       "unit_price": 3.54,
-      "subtotal": 113.28,
+      "subtotal": 63.72,
       "added": "2026-04-15"
     },
     {
       "name": "Corrugated roofing iron 810×3300mm sheet",
-      "qty": 5.0,
+      "qty": 3.0,
       "unit": "each",
       "unit_price": 76.98,
-      "subtotal": 384.9,
+      "subtotal": 230.94,
       "added": "2026-04-15"
     }
   ]
