@@ -1,0 +1,95 @@
+{
+  "project": "Firewood Shelter",
+  "slug": "firewood-shelter",
+  "created": "2026-04-14",
+  "items": [
+    {
+      "name": "H4 sleepers 200\u00d750\u00d72400",
+      "qty": 3.0,
+      "unit": "each",
+      "unit_price": 26.28,
+      "subtotal": 78.84,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "H4 posts 100\u00d7100\u00d72400 (front posts)",
+      "qty": 3.0,
+      "unit": "each",
+      "unit_price": 26.52,
+      "subtotal": 79.56,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "H4 posts 100\u00d7100\u00d71800 (back posts)",
+      "qty": 3.0,
+      "unit": "each",
+      "unit_price": 21.87,
+      "subtotal": 65.61,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "90\u00d745 CCA treated pine (plates rafters noggins)",
+      "qty": 30.0,
+      "unit": "meters",
+      "unit_price": 9.3,
+      "subtotal": 279.0,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "75\u00d775 galv angle brackets",
+      "qty": 12.0,
+      "unit": "each",
+      "unit_price": 11.32,
+      "subtotal": 135.84,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "12mm rebar 1.2m pegs",
+      "qty": 8.0,
+      "unit": "each",
+      "unit_price": 8.0,
+      "subtotal": 64.0,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "Roofing screws hex head 65mm box/100",
+      "qty": 1.0,
+      "unit": "box",
+      "unit_price": 32.0,
+      "subtotal": 32.0,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "Joist hanger nails 40mm 1kg box",
+      "qty": 1.0,
+      "unit": "box",
+      "unit_price": 16.0,
+      "subtotal": 16.0,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "Coach screws M10\u00d7100 (sleeper-to-rebar tie-down, optional)",
+      "qty": 6.0,
+      "unit": "each",
+      "unit_price": 3.5,
+      "subtotal": 21.0,
+      "added": "2026-04-14"
+    },
+    {
+      "name": "Rough-sawn paling 100\u00d718mm\u00d71500mm (vertical back wall cladding)",
+      "qty": 28.0,
+      "unit": "each",
+      "unit_price": 3.54,
+      "subtotal": 99.12,
+      "added": "2026-04-15"
+    },
+    {
+      "name": "Corrugated roofing iron 810\u00d73300mm sheet",
+      "qty": 4.0,
+      "unit": "each",
+      "unit_price": 76.98,
+      "subtotal": 307.92,
+      "added": "2026-04-15"
+    }
+  ]
+}

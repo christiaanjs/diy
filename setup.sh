@@ -1,0 +1,215 @@
+#!/bin/bash
+set -e
+
+echo "=== CadQuery Woodworking Environment Setup ==="
+
+python3 --version || { echo "Python 3 required"; exit 1; }
+
+# ── Python environment ────────────────────────────────────────────────────────
+# Prefer a pyenv-virtualenv named 'cadquery' if available; otherwise create .venv.
+if command -v pyenv &>/dev/null && pyenv virtualenvs --bare 2>/dev/null | grep -qx "cadquery"; then
+    echo "Found pyenv virtualenv 'cadquery' — writing .python-version"
+    echo "cadquery" > .python-version
+    # pyenv-virtualenv will auto-activate from here; install/upgrade deps into it
+    pip install --upgrade pip
+    pip install cadquery flask flask-cors watchdog
+else
+    echo "pyenv virtualenv 'cadquery' not found — creating .venv"
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install --upgrade pip
+    pip install cadquery flask flask-cors watchdog
+fi
+
+# Project and viewer directories
+mkdir -p projects viewer
+
+# requirements.txt
+cat > requirements.txt << 'EOF'
+cadquery
+flask
+flask-cors
+watchdog
+EOF
+
+# Three.js viewer
+cat > viewer/index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CadQuery Viewer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; color: #eee; font-family: monospace; overflow: hidden; }
+    #canvas { width: 100vw; height: 100vh; display: block; }
+    #ui {
+      position: fixed; top: 16px; left: 16px;
+      background: rgba(0,0,0,0.6); padding: 12px 16px;
+      border-radius: 8px; border: 1px solid #333; min-width: 200px;
+    }
+    #ui h3 { font-size: 13px; color: #8be; margin-bottom: 8px; }
+    #project { font-size: 11px; color: #aaa; margin-bottom: 4px; }
+    #status { font-size: 11px; color: #8f8; }
+    #error  { font-size: 11px; color: #f88; white-space: pre-wrap; max-width: 300px; }
+    #controls {
+      position: fixed; bottom: 16px; left: 16px;
+      background: rgba(0,0,0,0.6); padding: 10px 14px;
+      border-radius: 8px; border: 1px solid #333;
+      font-size: 11px; color: #aaa; line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="ui">
+    <h3>CadQuery Viewer</h3>
+    <div id="project"></div>
+    <div id="status">Loading...</div>
+    <div id="error"></div>
+  </div>
+  <div id="controls">
+    Left drag — orbit<br>
+    Right drag — pan<br>
+    Scroll — zoom<br>
+    G — toggle grid
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    const canvas    = document.getElementById('canvas');
+    const statusEl  = document.getElementById('status');
+    const errorEl   = document.getElementById('error');
+    const projectEl = document.getElementById('project');
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1a1a2e);
+
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.position.set(300, 250, 300);
+
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const sun = new THREE.DirectionalLight(0xffffff, 1.2);
+    sun.position.set(300, 400, 200);
+    sun.castShadow = true;
+    scene.add(sun);
+    const fill = new THREE.DirectionalLight(0x88aaff, 0.3);
+    fill.position.set(-200, 100, -200);
+    scene.add(fill);
+
+    const grid = new THREE.GridHelper(1000, 20, 0x333355, 0x222233);
+    scene.add(grid);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'g' || e.key === 'G') grid.visible = !grid.visible;
+    });
+
+    const loader = new GLTFLoader();
+    let modelGroup = null;
+
+    function loadModel() {
+      loader.load(
+        '/model.glb?' + Date.now(),
+        (gltf) => {
+          if (modelGroup) scene.remove(modelGroup);
+          modelGroup = gltf.scene;
+
+          modelGroup.traverse(obj => {
+            if (obj.isMesh) {
+              obj.castShadow = true;
+              obj.receiveShadow = true;
+            }
+          });
+
+          const box = new THREE.Box3().setFromObject(modelGroup);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3()).length();
+          modelGroup.position.sub(center);
+          controls.target.set(0, 0, 0);
+          camera.position.setLength(size * 1.5);
+          controls.update();
+
+          scene.add(modelGroup);
+          statusEl.textContent = 'Model loaded';
+          statusEl.style.color = '#8f8';
+          errorEl.textContent = '';
+        },
+        undefined,
+        () => {
+          statusEl.textContent = 'Load failed';
+          statusEl.style.color = '#f88';
+        }
+      );
+    }
+
+    let lastUpdated = 0;
+    async function poll() {
+      try {
+        const res = await fetch('/status');
+        const data = await res.json();
+        if (data.project) projectEl.textContent = data.project;
+        if (data.error) {
+          statusEl.textContent = 'Build error';
+          statusEl.style.color = '#f88';
+          errorEl.textContent = data.error;
+        } else if (data.updated > lastUpdated) {
+          lastUpdated = data.updated;
+          loadModel();
+        }
+      } catch {}
+    }
+
+    loadModel();
+    setInterval(poll, 1500);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
+EOF
+
+echo ""
+echo "=== Setup complete ==="
+echo ""
+echo "Create your first project:"
+echo "  python budget.py new \"My First Build\""
+echo ""
+echo "Then start the viewer:"
+echo "  python server.py my-first-build"
+echo ""
+echo "Note: if you used .venv (non-pyenv path), activate it first:"
+echo "  source .venv/bin/activate"
+echo ""
+echo "Open http://localhost:5000"
