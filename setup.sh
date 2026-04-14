@@ -100,8 +100,16 @@ cat > viewer/index.html << 'EOF'
     renderer.shadowMap.enabled = true;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
+    const DEFAULT_BG = '#1a1a2e';
+
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x1a1a2e);
+    scene.background = new THREE.Color(DEFAULT_BG);
+
+    function applyBackground(hex) {
+      const color = hex || DEFAULT_BG;
+      scene.background = new THREE.Color(color);
+      document.body.style.background = color;
+    }
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
     camera.position.set(300, 250, 300);
@@ -163,25 +171,25 @@ cat > viewer/index.html << 'EOF'
       );
     }
 
-    let lastUpdated = 0;
-    async function poll() {
-      try {
-        const res = await fetch('/status');
-        const data = await res.json();
-        if (data.project) projectEl.textContent = data.project;
-        if (data.error) {
-          statusEl.textContent = 'Build error';
-          statusEl.style.color = '#f88';
-          errorEl.textContent = data.error;
-        } else if (data.updated > lastUpdated) {
-          lastUpdated = data.updated;
-          loadModel();
-        }
-      } catch {}
-    }
+    const es = new EventSource('/events');
 
-    loadModel();
-    setInterval(poll, 1500);
+    es.addEventListener('config', e => {
+      const cfg = JSON.parse(e.data);
+      if (cfg.project) projectEl.textContent = cfg.project;
+      applyBackground(cfg.background);
+    });
+
+    es.addEventListener('model', e => {
+      const d = JSON.parse(e.data);
+      if (d.error) {
+        statusEl.textContent = 'Build error';
+        statusEl.style.color = '#f88';
+        errorEl.textContent = d.error;
+      } else {
+        errorEl.textContent = '';
+        loadModel();
+      }
+    });
 
     function animate() {
       requestAnimationFrame(animate);

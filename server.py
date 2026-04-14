@@ -15,13 +15,14 @@ an auto-refreshing 3D viewer at http://localhost:5000.
 import os
 import sys
 import json
+import queue
 import time
 import argparse
 import threading
 import importlib.util
 import tempfile
 from pathlib import Path
-from flask import Flask, send_from_directory, jsonify
+from flask import Flask, send_from_directory, jsonify, Response, stream_with_context
 from flask_cors import CORS
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
@@ -58,6 +59,37 @@ CORS(app)
 
 current_model = {"glb": None, "error": None, "updated": 0}
 
+VIEWER_CONFIG_PATH = PROJECT_DIR / "viewer.json"
+
+def load_viewer_config() -> dict:
+    """Return viewer.json contents, or {} if the file doesn't exist."""
+    if VIEWER_CONFIG_PATH.exists():
+        try:
+            return json.loads(VIEWER_CONFIG_PATH.read_text())
+        except Exception:
+            return {}
+    return {}
+
+
+# ── SSE client registry ───────────────────────────────────────────────────────
+
+_sse_clients: list[queue.Queue] = []
+_sse_lock = threading.Lock()
+
+
+def push_event(event_type: str, data: dict):
+    """Push a named SSE event to every connected browser client."""
+    msg = {"type": event_type, "data": data}
+    with _sse_lock:
+        stale = []
+        for q in _sse_clients:
+            try:
+                q.put_nowait(msg)
+            except queue.Full:
+                stale.append(q)
+        for q in stale:
+            _sse_clients.remove(q)
+
 
 def load_model(filepath: Path):
     spec = importlib.util.spec_from_file_location("model", filepath)
@@ -83,7 +115,6 @@ def export_glb(shape) -> bytes:
     os.unlink(tmp_path)
     return data
 
-# TODO: Hot reload on model change
 def rebuild(filepath: Path):
     print(f"  Rebuilding: {filepath.name}")
     try:
@@ -93,9 +124,11 @@ def rebuild(filepath: Path):
         glb = export_glb(shape)
         current_model.update(glb=glb, error=None, updated=time.time())
         print("  ✓ Model updated")
+        push_event("model", {"error": None})
     except Exception as e:
         current_model.update(error=str(e), updated=time.time())
         print(f"  ✗ Error: {e}")
+        push_event("model", {"error": str(e)})
 
 
 class ModelHandler(FileSystemEventHandler):
@@ -106,6 +139,15 @@ class ModelHandler(FileSystemEventHandler):
     def on_created(self, event):
         if event.src_path.endswith(".py"):
             rebuild(Path(event.src_path))
+
+
+class ViewerConfigHandler(FileSystemEventHandler):
+    def on_modified(self, event):
+        if Path(event.src_path).name == "viewer.json":
+            push_event("config", load_viewer_config())
+
+    def on_created(self, event):
+        self.on_modified(event)
 
 
 @app.route("/")
@@ -122,11 +164,48 @@ def model_glb():
 
 @app.route("/status")
 def status():
+    cfg = load_viewer_config()
     return jsonify({
         "project": PROJECT_SLUG,
         "error": current_model["error"],
         "updated": current_model["updated"],
+        "background": cfg.get("background"),
     })
+
+
+@app.route("/events")
+def events():
+    def stream():
+        q: queue.Queue = queue.Queue(maxsize=20)
+        with _sse_lock:
+            _sse_clients.append(q)
+        try:
+            # Send current state immediately so the browser doesn't wait for the first event
+            cfg = {"project": PROJECT_SLUG, **load_viewer_config()}
+            yield f"event: config\ndata: {json.dumps(cfg)}\n\n"
+            if current_model["glb"]:
+                yield f"event: model\ndata: {json.dumps({'error': None})}\n\n"
+            elif current_model["error"]:
+                yield f"event: model\ndata: {json.dumps({'error': current_model['error']})}\n\n"
+
+            while True:
+                try:
+                    msg = q.get(timeout=25)
+                    yield f"event: {msg['type']}\ndata: {json.dumps(msg['data'])}\n\n"
+                except queue.Empty:
+                    yield ": heartbeat\n\n"   # keep the connection alive through proxies
+        finally:
+            with _sse_lock:
+                try:
+                    _sse_clients.remove(q)
+                except ValueError:
+                    pass
+
+    return Response(
+        stream_with_context(stream()),
+        mimetype="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @app.route("/export/<filename>")
@@ -145,6 +224,7 @@ if __name__ == "__main__":
 
     observer = Observer()
     observer.schedule(ModelHandler(), str(MODEL_DIR), recursive=False)
+    observer.schedule(ViewerConfigHandler(), str(PROJECT_DIR), recursive=False)
     observer.start()
 
     print(f"\n=== CadQuery Live Viewer ===")
@@ -154,7 +234,7 @@ if __name__ == "__main__":
     print(f"Ctrl+C to stop\n")
 
     try:
-        app.run(port=PORT, debug=False)
+        app.run(port=PORT, debug=False, threaded=True)
     finally:
         observer.stop()
         observer.join()

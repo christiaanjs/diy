@@ -11,6 +11,7 @@ projects/<slug>/
 ├── README.md       ← project description, goals, and status (keep up to date)
 ├── budget.json     ← materials budget (managed via budget.py)
 ├── build-plan.md   ← step-by-step build instructions and tool list
+├── viewer.json     ← optional viewer settings (background colour, etc.)
 ├── preview.png     ← latest screenshot captured by view.py
 ├── models/         ← CadQuery .py files (one per component or assembly)
 └── exports/        ← .step / .dxf / .stl outputs
@@ -128,6 +129,22 @@ python budget.py summary        # all projects
 ```
 
 When the user mentions buying materials, add them to the budget automatically.
+
+## Viewer config
+
+Create `projects/<slug>/viewer.json` to customise the Three.js viewer for a project. All fields are optional — omitted fields fall back to the viewer default.
+
+```json
+{
+  "background": "#1a1a2e"
+}
+```
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `background` | CSS hex string | `"#1a1a2e"` | Scene and page background colour |
+
+The server reads `viewer.json` on every `/status` poll, so changes take effect in the live viewer without a restart.
 
 ## Python environment
 
