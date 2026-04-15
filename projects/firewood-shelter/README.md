@@ -1,5 +1,7 @@
 # Firewood Shelter
 
+TODO: Update with parameters from model
+
 A freestanding outdoor firewood shelter sized to hold a full cord of split wood. Three H4 treated sleepers form the skid foundation, kept in place by driven rebar pegs so no concrete is needed. Six H4 posts carry a skillion (single-slope) corrugated iron roof that drains to the rear. The front face is fully open for easy stacking and retrieval. The back wall is clad with vertical rough-sawn paling for weather protection and airflow.
 
 ## Status
@@ -38,4 +40,4 @@ A freestanding outdoor firewood shelter sized to hold a full cord of split wood.
 - Rebar pegs driven through sleepers at front, rear, and mid-sleeper ends to resist fore-aft and lateral movement
 - Board count for back wall: 26 boards needed across 2600 mm span; 28 purchased (2 spare)
 - Rafters pitched at matching slope — all five identical, no compound cuts
-- Budget total: ~$1,179 AUD
+- Budget total: ~$630

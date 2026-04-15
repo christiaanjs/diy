@@ -29,10 +29,10 @@
     },
     {
       "name": "90×45 CCA treated pine (plates rafters noggins)",
-      "qty": 11.8,
+      "qty": 10.5,
       "unit": "meters",
       "unit_price": 9.3,
-      "subtotal": 109.74,
+      "subtotal": 97.65,
       "added": "2026-04-14"
     },
     {
@@ -44,11 +44,11 @@
       "added": "2026-04-14"
     },
     {
-      "name": "12mm rebar 1.2m pegs",
+      "name": "10mm rebar 300mm pegs",
       "qty": 4.0,
       "unit": "each",
-      "unit_price": 8.0,
-      "subtotal": 32.0,
+      "unit_price": 4.59,
+      "subtotal": 18.36,
       "added": "2026-04-14"
     },
     {
@@ -77,10 +77,10 @@
     },
     {
       "name": "Rough-sawn paling 100×18mm×1500mm (vertical back wall cladding)",
-      "qty": 18.0,
+      "qty": 0.0,
       "unit": "each",
-      "unit_price": 3.54,
-      "subtotal": 63.72,
+      "unit_price": 0.0,
+      "subtotal": 0.0,
       "added": "2026-04-15"
     },
     {

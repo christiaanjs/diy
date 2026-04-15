@@ -63,8 +63,12 @@ def die(msg: str):
     sys.exit(1)
 
 
+def active_items(budget: dict) -> list:
+    return [i for i in budget["items"] if i.get("qty", 0) != 0]
+
+
 def total(budget: dict) -> float:
-    return sum(i["qty"] * i["unit_price"] for i in budget["items"])
+    return sum(i["qty"] * i["unit_price"] for i in active_items(budget))
 
 
 # ── commands ──────────────────────────────────────────────────────────────────
@@ -136,7 +140,7 @@ def cmd_list(args):
         die("usage: list <project>")
     slug = args[0]
     budget = load_budget(slug)
-    items = budget["items"]
+    items = active_items(budget)
     print(f"\n{budget['project']}  (created {budget['created']})")
     if not items:
         print("─" * 40)
@@ -144,13 +148,15 @@ def cmd_list(args):
         print("─" * 40)
         print()
         return
+    all_items = budget["items"]
     name_w = max(len(item["name"]) for item in items)
-    idx_w = len(f"[{len(items) - 1}]")
+    idx_w = len(f"[{len(all_items) - 1}]")
     price_w = max(len(fmt_money(item["unit_price"])) for item in items)
-    # chars before "= subtotal": 2 + idx_w + 2 + name_w + 2 + 6 + 1 + 8 + 2 + 2 + price_w + 2 = idx_w + name_w + price_w + 27
-    total_label_w = idx_w + name_w + price_w + 25  # so that "  TOTAL..." + "= " aligns with data rows
+    total_label_w = idx_w + name_w + price_w + 25
     rows = []
-    for i, item in enumerate(items):
+    for i, item in enumerate(all_items):
+        if item.get("qty", 0) == 0:
+            continue
         subtotal = item["qty"] * item["unit_price"]
         rows.append(
             f"  {f'[{i}]':<{idx_w}}  {item['name']:<{name_w}}"
@@ -226,7 +232,7 @@ def cmd_summary(args):
         t = total(budget)
         grand += t
         print(
-            f"  {budget['project']:<{name_w}}  {len(budget['items']):>5}  "
+            f"  {budget['project']:<{name_w}}  {len(active_items(budget)):>5}  "
             f"{fmt_money(t):>12}  {budget['created']}"
         )
     print("─" * sep_w)
