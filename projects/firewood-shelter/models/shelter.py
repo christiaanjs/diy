@@ -224,15 +224,14 @@ def _make_rafter_at(rx):
         (FR_T / 2,           RAF_Z_F),  # front plate
         (TOTAL_D - FR_T / 2, RAF_Z_B),  # back plate
     ):
-        cut_h = FR_D + BIRDSMOUTH_DEPTH + 10
+        # Box top sits flush at plate_top_z — creates a level horizontal seat.
+        # Cut depth into the rafter is determined by the slope geometry (~27 mm at
+        # the front plate, ~15 mm at the back); no extra offset needed.
+        cut_h = FR_D + 20
         notch = (
             cq.Workplane("XY")
             .box(FR_T + 2, BIRDSMOUTH_SEAT, cut_h)
-            .translate(cq.Vector(
-                rx,
-                plate_y_cen,
-                plate_top_z + BIRDSMOUTH_DEPTH - cut_h / 2,
-            ))
+            .translate(cq.Vector(rx, plate_y_cen, plate_top_z - cut_h / 2))
         )
         r = r.cut(notch)
     return r
