@@ -40,8 +40,7 @@ target {{ linear_m | round(1) }} m at {{ STACK_H_M }} m high × {{ STACK_D_M }} 
 | Back wall plate | 1 | {{ SPAN_W }} | {{ FR_T }} | {{ FR_D }} | 90×45 CCA pine, laid flat |
 | Rafter | {{ N_RAF }} | {{ raf_len_slope }} | {{ FR_T }} | {{ FR_D }} | Along-slope length; 90×45 CCA pine |
 {% if REAR_PALING %}| Back-wall noggin | {{ nog_qty }} | {{ noggin_len }} | {{ FR_T }} | {{ FR_D }} | 90×45 CCA pine; {{ n_bays }} bay{{'s' if n_bays > 1 else ''}} × 2 rows |
-{% endif %}
-{% if REAR_PALING %}| Paling board | {{ pal_needed }} | {{ pal_h }} | 100 | {{ PAL_T }} | Rough-sawn; trim {{ pal_trim }} mm from 1500 mm stock |
+{% endif %}{% if REAR_PALING %}| Paling board | {{ pal_needed }} | {{ pal_h }} | 100 | {{ PAL_T }} | Rough-sawn; trim {{ pal_trim }} mm from 1500 mm stock |
 {% else %}| Knee brace | {{ knee_count }} | {{ KNEE_DIAG }} | {{ FR_D }} | {{ FR_T }} | 90×45 CCA pine; 45° cuts both ends; one per upper rear post corner |
 {% endif %}| Roof sheet | {{ roof_sheets }} | 3300 | 810 | — | Corrugated iron; cover width ~760 mm lapped |
 

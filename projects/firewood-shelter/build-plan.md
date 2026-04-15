@@ -36,7 +36,6 @@ target 3.8 m at 1.6 m high × 0.5 m deep stacks).
 | Front wall plate | 1 | 1600 | 45 | 90 | 90×45 CCA pine, laid flat (90 mm vertical) |
 | Back wall plate | 1 | 1600 | 45 | 90 | 90×45 CCA pine, laid flat |
 | Rafter | 3 | 1991 | 45 | 90 | Along-slope length; 90×45 CCA pine |
-
 | Knee brace | 2 | 675 | 90 | 45 | 90×45 CCA pine; 45° cuts both ends; one per upper rear post corner |
 | Roof sheet | 3 | 3300 | 810 | — | Corrugated iron; cover width ~760 mm lapped |
 
