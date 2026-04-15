@@ -190,7 +190,7 @@ fp_plate = cq.Workplane("XY").box(SPAN_W, FR_T, FR_D)
 asm.add(
     fp_plate,
     name="plate_front",
-    loc=cq.Location(cq.Vector(SPAN_W / 2, POST_D / 2, PLATE_F_Z)),
+    loc=cq.Location(cq.Vector(SPAN_W / 2, FR_T / 2, PLATE_F_Z)),
     color=C_FR,
 )
 
@@ -199,10 +199,12 @@ bp_plate = cq.Workplane("XY").box(SPAN_W, FR_T, FR_D)
 asm.add(
     bp_plate,
     name="plate_back",
-    loc=cq.Location(cq.Vector(SPAN_W / 2, TOTAL_D - POST_D / 2, PLATE_B_Z)),
+    loc=cq.Location(cq.Vector(SPAN_W / 2, TOTAL_D - FR_T / 2, PLATE_B_Z)),
     color=C_FR,
 )
 
+# TODO: Diagram for rafter geometry and birdsmouth cut parameters
+# TODO: Fix birdsmouth cut location - can we use the plate boxes to cut the rafters instead of calculating the notch positions separately?
 
 # ── Rafters (sloped, running front-to-back) ───────────────────────────────────
 # Each rafter: FR_T wide × FR_D deep × RAF_LEN_SLOPE long.
@@ -279,6 +281,7 @@ else:
     knee_box = (
         cq.Workplane("XY").box(KNEE_DIAG, FR_T, FR_D)
         # TODO: Correct diagonal cuts to fit flush against post face and plate underside.
+        # Can we use the plate and post boxes to cut the knee braces instead of calculating the cut planes separately?
         # Left cut
         # .faces(">X")
         # .first()
