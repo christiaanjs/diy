@@ -12,7 +12,7 @@ projects/<slug>/
 ├── budget.json     ← materials budget (managed via budget.py)
 ├── build-plan.md   ← step-by-step build instructions and tool list
 ├── viewer.json     ← optional viewer settings (background colour, etc.)
-├── preview.png     ← latest screenshot captured by view.py
+├── preview.png     ← latest render produced by view.py
 ├── models/         ← CadQuery .py files (one per component or assembly)
 └── exports/        ← .step / .dxf / .stl outputs
 ```
@@ -32,13 +32,13 @@ The viewer (`viewer/index.html`) and server (`server.py`) are shared across all 
    ```
 4. Take a preview screenshot to visually inspect the model:
    ```
-   python view.py <slug> --no-browser
+   python view.py <slug>
+   python view.py <slug> --view front   # or: back, side, left, top, iso
    ```
-   This starts the server, waits for WebGL to render, captures `projects/<slug>/preview.png`,
-   and shuts down. Read the screenshot with the Read tool to verify the geometry looks correct
-   before handing off to the user. Use `python view.py <slug>` (without `--no-browser`) to
-   also open the live viewer in a browser.
-5. Start the viewer for a project (live, interactive):
+   Renders directly via CadQuery's SVG exporter — no server needed. Saves to
+   `projects/<slug>/preview.png`. Read the screenshot with the Read tool to verify
+   the geometry looks correct before handing off to the user.
+5. Start the live viewer for a project (interactive):
    ```
    python server.py <slug>
    ```

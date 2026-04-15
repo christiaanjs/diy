@@ -1,30 +1,35 @@
 #!/usr/bin/env python3
 """
-view.py — start the live viewer for a project and capture a screenshot.
-
-The screenshot is saved to projects/<slug>/preview.png so Claude Code can
-read it and verify the rendered model visually.
+view.py — render a project's model to preview.png using CadQuery's SVG exporter.
 
 Usage:
-  python view.py <project>               # start server, take screenshot, open browser
-  python view.py <project> --no-browser  # screenshot only, don't open browser
-  python view.py <project> --no-shot     # open browser only, no screenshot
+  python view.py <project>                              # iso view → preview.png
+  python view.py <project> --view <name>                # choose viewpoint
+  python view.py <project> --output <path>              # custom output path
+  python view.py <project> --view front --output a.png  # combine both
 
-Requires: playwright  (pip install playwright && python -m playwright install chromium)
+Views: iso (default), front, back, side, left, top
+
+Requires: cairosvg  (pip install cairosvg)
+          fallbacks: rsvg-convert (brew install librsvg) or inkscape
 """
 
 import sys
-import time
-import signal
 import subprocess
 from pathlib import Path
-from urllib.request import urlopen
-from urllib.error import URLError
 
 PROJECTS_DIR = Path(__file__).parent / "projects"
-SERVER_PORT  = 5002
-SERVER_URL   = f"http://localhost:{SERVER_PORT}"
-WAIT_SECONDS = 8    # time to let Three.js finish rendering before screenshot
+
+# projectionDir tuples: direction FROM which the camera views the shape.
+# Z is up in all CadQuery models.
+VIEWS = {
+    "iso": (1.0, -1.0, 1.0),  # CadQuery default — upper-left-front
+    "front": (0.0, -1.0, 0.0),  # looking at +Y face (front wall)
+    "back": (0.0, 1.0, 0.0),  # looking at -Y face (back wall)
+    "side": (1.0, 0.0, 0.0),  # right side, looking along -X
+    "left": (-1.0, 0.0, 0.0),  # left side, looking along +X
+    "top": (0.0, 0.0, -1.0),  # plan view, looking straight down
+}
 
 
 def die(msg: str):
@@ -32,153 +37,188 @@ def die(msg: str):
     sys.exit(1)
 
 
-def wait_for_server(timeout: int = 15) -> bool:
-    """Poll /status until the server responds or timeout expires."""
-    deadline = time.time() + timeout
-    while time.time() < deadline:
-        try:
-            urlopen(f"{SERVER_URL}/status", timeout=1)
-            return True
-        except (URLError, OSError):
-            time.sleep(0.4)
-    return False
+def find_model_file(proj_dir: Path) -> Path:
+    """Return the most recently modified .py file in models/."""
+    models_dir = proj_dir / "models"
+    py_files = sorted(
+        models_dir.glob("*.py"), key=lambda p: p.stat().st_mtime, reverse=True
+    )
+    if not py_files:
+        die(f"No .py model files found in {models_dir}")
+    return py_files[0]
 
 
-def wait_for_model(timeout: int = 20) -> dict:
-    """Poll /status until updated > 0. Returns the final status dict."""
-    import json
-    deadline = time.time() + timeout
-    while time.time() < deadline:
-        try:
-            data = json.loads(urlopen(f"{SERVER_URL}/status", timeout=2).read())
-            if data.get("updated", 0) > 0:
-                return data
-        except Exception:
-            pass
-        time.sleep(0.5)
-    return {}
-
-
-def take_screenshot(path: Path, wait: float = WAIT_SECONDS) -> dict:
-    """
-    Load the viewer in headless Chromium, capture a screenshot, and
-    return a dict with the DOM state:
-      { "status": str, "error": str | None, "screenshot": Path | None }
-    """
+def load_show_object(model_file: Path):
+    """Execute a model file and return its show_object."""
+    src = model_file.read_text()
+    namespace = {"__file__": str(model_file), "__name__": "__main__"}
     try:
-        from playwright.sync_api import sync_playwright
+        exec(compile(src, str(model_file), "exec"), namespace)
+    except Exception as e:
+        die(f"Model error in {model_file.name}: {e}")
+    obj = namespace.get("show_object")
+    if obj is None:
+        die(f"{model_file.name} does not set show_object")
+    return obj
+
+
+def export_svg(obj, svg_path: Path, view: str = "iso"):
+    """Export a CadQuery object to an SVG file with the given viewpoint."""
+    import cadquery as cq
+    from cadquery.occ_impl.exporters.svg import getSVG
+    from cadquery.occ_impl.shapes import Shape
+
+    proj_dir = VIEWS.get(view, VIEWS["iso"])
+
+    # Resolve to a bare Shape — getSVG() takes a Shape, not a Workplane
+    if isinstance(obj, cq.Assembly):
+        shape = obj.toCompound()
+    elif isinstance(obj, cq.Workplane):
+        shape = obj.val()
+    elif isinstance(obj, Shape):
+        shape = obj
+    else:
+        die(f"show_object is an unrecognised type: {type(obj)}")
+
+    svg_text = getSVG(
+        shape,
+        opts={
+            "width": 1400,
+            "height": 900,
+            "projectionDir": proj_dir,
+            "showAxes": False,
+            "showHidden": True,
+            "strokeWidth": -1,
+            "strokeColor": (0, 0, 0),
+            "hiddenColor": (160, 160, 160),
+        },
+    )
+    svg_path.write_text(svg_text)
+    print(f"  SVG exported  : {svg_path.name}")
+
+
+def svg_to_png(svg_path: Path, png_path: Path, width: int = 1400, height: int = 900):
+    """Convert SVG → PNG. Tries cairosvg, rsvg-convert, then inkscape.
+
+    CadQuery's SVG template uses scale(s, -s) to flip Y for CAD conventions.
+    cairosvg and rsvg-convert render this flipped relative to how a browser would,
+    so we correct with a vertical flip after conversion.
+    """
+    tmp_path = png_path.with_suffix(".tmp.png")
+
+    success = False
+    method = ""
+
+    # cairosvg  (pip install cairosvg)
+    try:
+        import cairosvg
+
+        cairosvg.svg2png(
+            url=str(svg_path),
+            write_to=str(tmp_path),
+            output_width=width,
+            output_height=height,
+            background_color="white",
+        )
+        success = True
+        method = "cairosvg"
     except ImportError:
-        print("playwright not installed — skipping screenshot.")
-        print("  pip install playwright && python -m playwright install chromium")
-        return {"status": "unknown", "error": None, "screenshot": None}
+        pass
+    except Exception as e:
+        print(f"  cairosvg failed: {e} — trying fallback…")
 
-    print(f"  Waiting {wait}s for WebGL to render…")
-    with sync_playwright() as pw:
-        browser = pw.chromium.launch(args=["--no-sandbox"])
-        page = browser.new_page(viewport={"width": 1400, "height": 900})
-        page.goto(SERVER_URL)
-        page.wait_for_timeout(int(wait * 1000))
-        page.screenshot(path=str(path))
+    # rsvg-convert  (brew install librsvg)
+    if not success:
+        r = subprocess.run(
+            [
+                "rsvg-convert",
+                "-w",
+                str(width),
+                "-h",
+                str(height),
+                "-o",
+                str(tmp_path),
+                str(svg_path),
+            ],
+            capture_output=True,
+        )
+        if r.returncode == 0:
+            success = True
+            method = "rsvg-convert"
 
-        # Read the UI overlay text from the DOM
-        status_text = page.text_content("#status") or ""
-        error_text  = page.text_content("#error")  or ""
+    # Inkscape
+    if not success:
+        r = subprocess.run(
+            [
+                "inkscape",
+                "--export-type=png",
+                f"--export-width={width}",
+                f"--export-filename={tmp_path}",
+                str(svg_path),
+            ],
+            capture_output=True,
+        )
+        if r.returncode == 0:
+            success = True
+            method = "inkscape"
 
-        browser.close()
+    if not success:
+        die(
+            "No SVG-to-PNG converter found.\n"
+            "  pip install cairosvg        (recommended)\n"
+            "  brew install librsvg        (rsvg-convert)\n"
+            "  brew install inkscape"
+        )
 
-    result = {
-        "status":     status_text.strip(),
-        "error":      error_text.strip() or None,
-        "screenshot": path,
-    }
-    print(f"  Viewer status : {result['status']}")
-    if result["error"]:
-        print(f"  Viewer error  : {result['error']}")
-    print(f"  Screenshot    : {path}")
-    return result
+    # CadQuery's SVG uses scale(s, -s) which SVG renderers flip relative to browsers.
+    # Correct with a vertical flip so floor stays at the bottom, roof at the top.
+    from PIL import Image
+
+    img = Image.open(tmp_path).transpose(Image.FLIP_TOP_BOTTOM)
+    img.save(png_path)
+    tmp_path.unlink(missing_ok=True)
+
+    print(f"  PNG saved     : {png_path}  ({method})")
 
 
 def main():
     args = sys.argv[1:]
-    if not args:
+    if not args or args[0].startswith("-"):
         print(__doc__)
         sys.exit(1)
 
-    slug        = args[0]
-    open_browser = "--no-browser" not in args
-    do_shot      = "--no-shot"    not in args
+    slug = args[0]
+
+    view = "iso"
+    if "--view" in args:
+        idx = args.index("--view")
+        if idx + 1 >= len(args):
+            die(f"--view requires a name: {', '.join(VIEWS)}")
+        view = args[idx + 1]
+        if view not in VIEWS:
+            die(f"Unknown view '{view}'. Choose from: {', '.join(VIEWS)}")
 
     proj_dir = PROJECTS_DIR / slug
     if not proj_dir.exists():
         die(f"Project '{slug}' not found.")
 
-    shot_path = proj_dir / "preview.png"
+    png_path = proj_dir / "preview.png"
+    if "--output" in args:
+        idx = args.index("--output")
+        if idx + 1 >= len(args):
+            die("--output requires a file path")
+        png_path = Path(args[idx + 1])
 
-    # ── Kill any existing server on the port ─────────────────────────────────
-    port = int(SERVER_URL.rsplit(":", 1)[-1])
-    subprocess.run(
-        ["lsof", "-ti", f":{port}"],
-        capture_output=True, text=True
-    ).stdout.strip().split("\n")
-    existing = subprocess.run(
-        ["lsof", "-ti", f":{port}"], capture_output=True, text=True
-    ).stdout.strip()
-    if existing:
-        for pid in existing.split("\n"):
-            try:
-                subprocess.run(["kill", pid.strip()], check=False)
-            except Exception:
-                pass
-        time.sleep(0.5)
+    model_file = find_model_file(proj_dir)
+    print(f"  Model         : {model_file.name}  (view: {view})")
 
-    # ── Start server ──────────────────────────────────────────────────────────
-    print(f"Starting server for '{slug}'…")
-    server = subprocess.Popen(
-        [sys.executable, "server.py", slug, "--port", str(SERVER_PORT)],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    svg_path = proj_dir / "_preview_tmp.svg"
 
-    if not wait_for_server():
-        server.terminate()
-        die("Server did not start within 15 s.")
+    obj = load_show_object(model_file)
+    export_svg(obj, svg_path, view=view)
+    svg_to_png(svg_path, png_path)
+    svg_path.unlink(missing_ok=True)
 
-    print(f"  Server ready at {SERVER_URL}")
-
-    status = wait_for_model()
-    if not status:
-        print("  Warning: model may not have loaded yet (continuing anyway).")
-    elif status.get("error"):
-        print(f"  Build error   : {status['error']}")
-    else:
-        print("  Model built OK.")
-
-    # ── Screenshot + DOM error extraction ────────────────────────────────────
-    viewer_result = {}
-    if do_shot:
-        viewer_result = take_screenshot(shot_path)
-        if viewer_result.get("error"):
-            print(f"\n  !! Viewer reported an error — check preview.png and error above.")
-
-    # ── Open browser ─────────────────────────────────────────────────────────
-    if open_browser:
-        import webbrowser
-        webbrowser.open(SERVER_URL)
-        print(f"  Browser opened: {SERVER_URL}")
-
-    # ── Keep server alive until Ctrl-C ────────────────────────────────────────
-    if open_browser:
-        print("\nServer running. Ctrl-C to stop.\n")
-        try:
-            server.wait()
-        except KeyboardInterrupt:
-            pass
-    else:
-        # screenshot-only mode — shut down immediately after capture
-        pass
-
-    server.terminate()
-    server.wait()
     print("Done.")
 
 

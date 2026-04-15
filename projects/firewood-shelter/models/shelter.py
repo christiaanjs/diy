@@ -203,45 +203,43 @@ asm.add(
     color=C_FR,
 )
 
-# TODO: Diagram for rafter geometry and birdsmouth cut parameters
-# TODO: Fix birdsmouth cut location - can we use the plate boxes to cut the rafters instead of calculating the notch positions separately?
-
 # ── Rafters (sloped, running front-to-back) ───────────────────────────────────
-# Each rafter: FR_T wide × FR_D deep × RAF_LEN_SLOPE long.
-# Created horizontal, then rotated around X by −SLOPE_DEG (front up, back down),
-# then translated to its centre position.
-# Birdsmouth notches are cut from the bottom face at each end to seat on the plates.
-def _make_rafter():
-    r = cq.Workplane("XY").box(FR_T, RAF_LEN_SLOPE, FR_D)
-    for _sign in (+1, -1):  # +1 = front end, -1 = back end
+# Each rafter is built in world space — rotated and translated directly onto the
+# shape — so birdsmouth notches can be cut using the exact plate world positions
+# (RAF_Z_F / RAF_Z_B for plate top-face Z; FR_T/2 and TOTAL_D−FR_T/2 for centre Y).
+# No coordinate conversion required.
+def _make_rafter_at(rx):
+    r = (
+        cq.Workplane("XY")
+        .box(FR_T, RAF_LEN_SLOPE, FR_D)
+        .rotate((0, 0, 0), (1, 0, 0), -SLOPE_DEG)
+        .translate(cq.Vector(rx, RAF_CEN_Y, RAF_CEN_Z))
+    )
+    # Birdsmouth notch at each plate bearing point.
+    # The cutting box is centred on the plate centre Y, and its top face sits at
+    # plate_top_z + BIRDSMOUTH_DEPTH — removing exactly BIRDSMOUTH_DEPTH of material
+    # from the rafter underside.  The box extends well below the plate so the cut
+    # passes cleanly through the rafter bottom regardless of slope.
+    for plate_y_cen, plate_top_z in (
+        (FR_T / 2,           RAF_Z_F),  # front plate
+        (TOTAL_D - FR_T / 2, RAF_Z_B),  # back plate
+    ):
+        cut_h = FR_D + BIRDSMOUTH_DEPTH + 10
         notch = (
             cq.Workplane("XY")
-            .box(FR_T + 2, BIRDSMOUTH_SEAT, BIRDSMOUTH_DEPTH)
-            .translate(
-                cq.Vector(
-                    0,
-                    _sign * (RAF_LEN_SLOPE / 2 - BIRDSMOUTH_SEAT / 2),
-                    -FR_D / 2 + BIRDSMOUTH_DEPTH / 2,
-                )
-            )
+            .box(FR_T + 2, BIRDSMOUTH_SEAT, cut_h)
+            .translate(cq.Vector(
+                rx,
+                plate_y_cen,
+                plate_top_z + BIRDSMOUTH_DEPTH - cut_h / 2,
+            ))
         )
         r = r.cut(notch)
     return r
 
 
-rafter_box = _make_rafter()
-
 for i, rx in enumerate(RAF_XS):
-    asm.add(
-        rafter_box,
-        name=f"rafter_{i}",
-        loc=cq.Location(
-            cq.Vector(rx, RAF_CEN_Y, RAF_CEN_Z),
-            cq.Vector(1, 0, 0),  # rotate around X axis
-            -SLOPE_DEG,  # tilt front-high, back-low
-        ),
-        color=C_FR,
-    )
+    asm.add(_make_rafter_at(rx), name=f"rafter_{i}", color=C_FR)
 
 # ── Back-wall noggins (paling variant only) ───────────────────────────────────
 # Noggins support the paling boards mid-span; not needed with a diagonal brace.
