@@ -275,47 +275,58 @@ else:
     # Box long axis is along X (KNEE_DIAG length); rotated around Y.
     # Negative Y-rotation → +X end rises; positive → +X end drops.
 
-    knee_box = (
-        cq.Workplane("XY").box(KNEE_DIAG, FR_T, FR_D)
-        # TODO: Correct diagonal cuts to fit flush against post face and plate underside.
-        # Can we use the plate and post boxes to cut the knee braces instead of calculating the cut planes separately?
-        # Left cut
-        # .faces(">X")
-        # .first()
-        # .workplane(centerOption="CenterOfMass")
-        # .transformed(rotate=(0, 0, -45))
-        # .split(keepTop=True)
-        # Right cut
-        # .faces("<X")
-        # .first()
-        # .workplane(centerOption="CenterOfMass")
-        # .transformed(rotate=(0, 45, 0))
-        # .split(keepTop=True)
-    )
+    # Build each knee brace in world space so ends can be cut using the actual
+    # post face and plate bottom positions — same strategy as the rafter birdsmouth.
+    #
+    # "/" left brace:  post end trimmed at X = post_inner_face (vertical cut),
+    #                  plate end trimmed at Z = BACK_POST_TOP (horizontal cut).
+    # "\" right brace: mirror — post end at X = post_inner_face on the right.
+    #
+    # BACK_POST_TOP is the plate bottom face Z (= PLATE_B_Z − FR_D/2).
 
-    # Both braces share the same centre-Z: midpoint of diagonal, shifted
-    # outward by KNEE_OFFSET so the inner face sits flush against post/plate.
+    def _make_knee_at(cx, cz, post_face_x, side):
+        angle = -45 if side == "L" else 45
+        r = (
+            cq.Workplane("XY")
+            .box(KNEE_DIAG, FR_T, FR_D)
+            .rotate((0, 0, 0), (0, 1, 0), angle)
+            .translate(cq.Vector(cx, TOTAL_D - POST_D / 2, cz))
+        )
+        _big = 3000
+        # Plate end: remove everything above the plate bottom face
+        r = r.cut(
+            cq.Workplane("XY")
+            .box(_big, _big, _big)
+            .translate(cq.Vector(cx, TOTAL_D - POST_D / 2, BACK_POST_TOP + _big / 2))
+        )
+        # Post end: remove everything past the post inner face
+        if side == "L":
+            r = r.cut(
+                cq.Workplane("XY")
+                .box(_big, _big, _big)
+                .translate(cq.Vector(post_face_x - _big / 2, TOTAL_D - POST_D / 2, cz))
+            )
+        else:
+            r = r.cut(
+                cq.Workplane("XY")
+                .box(_big, _big, _big)
+                .translate(cq.Vector(post_face_x + _big / 2, TOTAL_D - POST_D / 2, cz))
+            )
+        return r
+
     _kz = BACK_POST_TOP - KNEE_LEG / 2 - KNEE_OFFSET
     for _bay in range(N_SL - 1):
-        # Left corner "/" — inner face abuts right face of left post + plate underside
         _lx = POST_XS[_bay] + POST_W / 2 + KNEE_LEG / 2 + KNEE_OFFSET
-        asm.add(
-            knee_box,
-            name=f"knee_L_{_bay}",
-            color=C_FR,
-            loc=cq.Location(
-                cq.Vector(_lx, TOTAL_D - POST_D / 2, _kz), cq.Vector(0, 1, 0), -45
-            ),
-        )
-        # Right corner "\" — inner face abuts left face of right post + plate underside
         _rx = POST_XS[_bay + 1] - POST_W / 2 - KNEE_LEG / 2 - KNEE_OFFSET
         asm.add(
-            knee_box,
+            _make_knee_at(_lx, _kz, POST_XS[_bay] + POST_W / 2, "L"),
+            name=f"knee_L_{_bay}",
+            color=C_FR,
+        )
+        asm.add(
+            _make_knee_at(_rx, _kz, POST_XS[_bay + 1] - POST_W / 2, "R"),
             name=f"knee_R_{_bay}",
             color=C_FR,
-            loc=cq.Location(
-                cq.Vector(_rx, TOTAL_D - POST_D / 2, _kz), cq.Vector(0, 1, 0), 45
-            ),
         )
 
 # ── Roof sheet ────────────────────────────────────────────────────────────────
