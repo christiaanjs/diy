@@ -460,24 +460,13 @@ def cmd_cutlist(slug, cols=4, output=None):
             key=lambda t: t[0],
         )[1]
 
-        cell_svg = _make_svg(rep_shape, smallest_axis, opts={
-            "width":       cell_w,
-            "height":      cell_h,
-            "marginLeft":  20,
-            "marginTop":   20,
-            "showHidden":  False,
-            "strokeWidth": -1,
-            "strokeColor": (30, 30, 30),
-            "hiddenColor": (160, 160, 160),
-        })
-
         # Cell background + border
         cells.append(
             f'<rect x="{ox}" y="{oy}" width="{cell_w}" height="{cell_h}" '
             f'fill="white" stroke="#bbb" stroke-width="1"/>'
         )
-        # Embed the cell paths (extracted from the cell SVG) at offset (ox, oy)
-        cells.append(_embed_svg_content(cell_svg, ox, oy))
+        # Render part profile directly via HLR — no SVG template parsing
+        cells.append(_cell_group(rep_shape, smallest_axis, ox, oy, cell_w, cell_h))
 
         # Dimension label from 3D bounding box (L × W × T, sorted descending)
         dims = sorted([round(bb.xlen), round(bb.ylen), round(bb.zlen)], reverse=True)
@@ -512,23 +501,66 @@ def cmd_cutlist(slug, cols=4, output=None):
     print(f"  Saved    : {png_path}")
 
 
-def _embed_svg_content(cell_svg, ox, oy):
+def _cell_group(shape, look_along, ox, oy, cell_w, cell_h, margin=20):
     """
-    Extract the <g ...>...</g> blocks from a cell SVG and position them at (ox, oy)
-    in the master canvas.
+    Render shape directly via HLR and return an SVG <g> element positioned at (ox,oy).
 
-    _make_svg generates exactly two top-level <g> elements (hidden paths, visible
-    paths).  Each already has transform="scale(US, -US) translate(XT, YT)" that
-    maps model coords → cell-local pixels.  Wrapping in translate(ox, oy) positions
-    the cell within the master.
+    Bypasses _make_svg / SVG_TEMPLATE entirely so there is no XML parsing — the
+    output is a single, self-contained <g> with known-valid structure.
     """
-    # Grab all top-level <g> blocks.  The content inside only has <path> elements
-    # (self-closing), so the greedy .*? with DOTALL safely finds each </g>.
-    g_blocks = re.findall(r'(<g\b[^>]*>.*?</g>)', cell_svg, re.DOTALL)
-    if not g_blocks:
-        return ""
-    inner = "\n".join(g_blocks)
-    return f'<g transform="translate({ox},{oy})">\n{inner}\n</g>'
+    from cadquery.occ_impl.exporters.svg import getPaths
+    from cadquery.occ_impl.shapes import Shape, Compound, TOLERANCE
+    from OCP.gp import gp_Ax2, gp_Pnt, gp_Dir
+    from OCP.BRepLib import BRepLib
+    from OCP.HLRBRep import HLRBRep_Algo, HLRBRep_HLRToShape
+    from OCP.HLRAlgo import HLRAlgo_Projector
+
+    xd = _x_dir(look_along)
+
+    hlr = HLRBRep_Algo()
+    hlr.Add(shape.wrapped)
+    hlr.Projector(HLRAlgo_Projector(gp_Ax2(gp_Pnt(), gp_Dir(*look_along), gp_Dir(*xd))))
+    hlr.Update()
+    hlr.Hide()
+
+    hlr_out = HLRBRep_HLRToShape(hlr)
+    vis_occ = []
+    for getter in (hlr_out.VCompound, hlr_out.Rg1LineVCompound, hlr_out.OutLineVCompound):
+        s = getter()
+        if not s.IsNull():
+            vis_occ.append(s)
+
+    if not vis_occ:
+        return f'<g transform="translate({ox},{oy})"></g>'
+
+    for el in vis_occ:
+        BRepLib.BuildCurves3d_s(el, TOLERANCE)
+
+    vis_shapes = list(map(Shape, vis_occ))
+    # getPaths(visible_shapes, hidden_shapes) → (hidden_paths, visible_paths)
+    _, path_data = getPaths(vis_shapes, [])
+
+    if not path_data:
+        return f'<g transform="translate({ox},{oy})"></g>'
+
+    bb = Compound.makeCompound(vis_shapes).BoundingBox()
+    us = min(
+        (cell_w - 2 * margin) / max(bb.xlen, 1e-6),
+        (cell_h - 2 * margin) / max(bb.ylen, 1e-6),
+    )
+    xt = (0 - bb.xmin) + margin / us
+    yt = (0 - bb.ymax) - margin / us
+    sw = 1.0 / us
+
+    paths = "".join(f'<path d="{p}"/>' for p in path_data)
+    return (
+        f'<g transform="translate({ox},{oy})">'
+        f'<g fill="none" stroke="#1e1e1e" stroke-width="{sw:.6f}"'
+        f' transform="scale({us:.6f},-{us:.6f}) translate({xt:.4f},{yt:.4f})">'
+        f'{paths}'
+        f'</g>'
+        f'</g>'
+    )
 
 
 # ── CLI entry point ───────────────────────────────────────────────────────────
