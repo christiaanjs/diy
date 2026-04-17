@@ -104,8 +104,8 @@ RAF_Z_B = BACK_POST_TOP + FR_D  # 1 565
 
 # Slope geometry
 SLOPE_RISE = RAF_Z_F - RAF_Z_B  # 400 mm
-SLOPE_RUN = TOTAL_D
-SLOPE_DEG = math.degrees(math.atan2(SLOPE_RISE, SLOPE_RUN))  # ≈ 9.46°
+SLOPE_RUN = TOTAL_D - FR_T
+SLOPE_DEG = math.degrees(math.atan2(SLOPE_RISE, SLOPE_RUN))  # ≈ 11.3°
 SLOPE_RAD = math.radians(SLOPE_DEG)
 
 print(f"No of bays    : {N_SL - 1} (based on target row width of {_row_width_m:.2f} m)")
@@ -133,15 +133,22 @@ for _i in range(N_SL - 1):
 RAF_XS.append(POST_XS[-1])
 N_RAF = len(RAF_XS)
 
+# TODO: Rafters X position should line up with inside of back plate not outside
+
 # Rafter geometry: sloped length and mid-height
 RAF_LEN_HORIZ = TOTAL_D + OV_F + OV_B  # 2 850 horizontal span
 RAF_LEN_SLOPE = math.sqrt(RAF_LEN_HORIZ**2 + SLOPE_RISE**2)  # actual slope length
-RAF_MID_Z = (RAF_Z_F + RAF_Z_B) / 2  # average height of rafter bottom = 1 765
-RAF_CEN_Z = RAF_MID_Z + FR_D / 2  # rafter centroid z = 1 810
+RAF_MID_Z = (RAF_Z_F + RAF_Z_B) / 2  # average height of rafter bottom
 # Y centre adjusted for asymmetric overhangs
-RAF_CEN_Y = (
-    TOTAL_D / 2 + (OV_B - OV_F) / 2
-)  # = 1 275  (shifted back by net overhang diff)
+RAF_CEN_Y = TOTAL_D / 2 + (OV_B - OV_F) / 2  # shifted back by net overhang diff
+# Rafter centroid Z derived from the rotation-projection formula
+#   z_bottom(y) = RAF_CEN_Z − (y − RAF_CEN_Y)·tan(θ) − FR_D/(2·cos(θ))
+# The birdsmouth heel sits at the OUTER face of each plate (y=0 for front,
+# y=TOTAL_D for back), so we anchor to y=0 where z_bottom = RAF_Z_F:
+#   RAF_CEN_Z = RAF_Z_F − RAF_CEN_Y·tan(θ) + FR_D/(2·cos(θ))
+# This simultaneously satisfies the back-plate constraint when
+# SLOPE_RUN = TOTAL_D (heel-to-heel horizontal span).
+RAF_CEN_Z = RAF_Z_F - RAF_CEN_Y * math.tan(SLOPE_RAD) + FR_D / (2 * math.cos(SLOPE_RAD))
 
 # Birdsmouth cut geometry (notch in rafter underside at each plate bearing point)
 BIRDSMOUTH_DEPTH = min(FR_D // 3, 30)  # 30 mm (1/3-rule max)
@@ -186,20 +193,24 @@ for i, cx in enumerate(POST_XS):
     )
 
 # ── Front wall plate (runs left-right on top of front posts) ─────────────────
-fp_plate = cq.Workplane("XY").box(SPAN_W, FR_T, FR_D)
+PLATE_W = TOTAL_W + POST_W
+fp_plate = cq.Workplane("XY").box(PLATE_W, FR_T, FR_D)
+fp_plate_loc_vec = cq.Vector(SPAN_W / 2, FR_T / 2, PLATE_F_Z)
 asm.add(
     fp_plate,
     name="plate_front",
-    loc=cq.Location(cq.Vector(SPAN_W / 2, FR_T / 2, PLATE_F_Z)),
+    loc=cq.Location(fp_plate_loc_vec),
     color=C_FR,
 )
 
 # ── Back wall plate ───────────────────────────────────────────────────────────
-bp_plate = cq.Workplane("XY").box(SPAN_W, FR_T, FR_D)
+bp_plate = cq.Workplane("XY").box(PLATE_W, FR_T, FR_D)
+bp_plate_loc_vec = cq.Vector(SPAN_W / 2, TOTAL_D - FR_T / 2, PLATE_B_Z)
+
 asm.add(
     bp_plate,
     name="plate_back",
-    loc=cq.Location(cq.Vector(SPAN_W / 2, TOTAL_D - FR_T / 2, PLATE_B_Z)),
+    loc=cq.Location(bp_plate_loc_vec),
     color=C_FR,
 )
 
@@ -215,25 +226,13 @@ def _make_rafter_at(rx):
         .rotate((0, 0, 0), (1, 0, 0), -SLOPE_DEG)
         .translate(cq.Vector(rx, RAF_CEN_Y, RAF_CEN_Z))
     )
-    # Birdsmouth notch at each plate bearing point.
-    # The cutting box is centred on the plate centre Y, and its top face sits at
-    # plate_top_z + BIRDSMOUTH_DEPTH — removing exactly BIRDSMOUTH_DEPTH of material
-    # from the rafter underside.  The box extends well below the plate so the cut
-    # passes cleanly through the rafter bottom regardless of slope.
-    for plate_y_cen, plate_top_z in (
-        (FR_T / 2,           RAF_Z_F),  # front plate
-        (TOTAL_D - FR_T / 2, RAF_Z_B),  # back plate
-    ):
-        # Box top sits flush at plate_top_z — creates a level horizontal seat.
-        # Cut depth into the rafter is determined by the slope geometry (~27 mm at
-        # the front plate, ~15 mm at the back); no extra offset needed.
-        cut_h = FR_D + 20
-        notch = (
-            cq.Workplane("XY")
-            .box(FR_T + 2, BIRDSMOUTH_SEAT, cut_h)
-            .translate(cq.Vector(rx, plate_y_cen, plate_top_z - cut_h / 2))
-        )
-        r = r.cut(notch)
+    # Birdsmouth notch: cut using the plate-box shape extended upward by
+    # BIRDSMOUTH_DEPTH.  The top of the cutter reaches plate_top_z + BIRDSMOUTH_DEPTH
+    # (the seat depth), the bottom extends well below the plate so the cut clears any
+    # rafter material that dips below plate_top_z due to the slope.
+    for plate, loc_vec in [(fp_plate, fp_plate_loc_vec), (bp_plate, bp_plate_loc_vec)]:
+        notch = plate.translate(loc_vec)
+        r = r.cut(notch)  # TODO:
     return r
 
 

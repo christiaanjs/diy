@@ -30,10 +30,16 @@ fi
 VIEWS=(front back side left top)
 
 echo "--- ISO ---"
-python view.py "$SLUG"
+python view.py "$SLUG" --output "$PROJ_DIR/exports/preview.png"
 for VIEW in "${VIEWS[@]}"; do
     echo "--- $VIEW ---"
-    python view.py "$SLUG" --view "$VIEW" --output "$PROJ_DIR/preview-${VIEW}.png"
+    python view.py "$SLUG" --view "$VIEW" --output "$PROJ_DIR/exports/preview-${VIEW}.png"
+done
+
+DIAGS=(exploded elevation cutlist)
+for DIAG in "${DIAGS[@]}"; do
+    echo "--- $DIAG ---"
+    python diag.py "$SLUG" "$DIAG" --output "$PROJ_DIR/exports/${DIAG}.png"
 done
 
 echo ""
