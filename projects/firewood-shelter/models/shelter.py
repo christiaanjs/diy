@@ -105,7 +105,8 @@ RAF_Z_B = BACK_POST_TOP + FR_D  # 1 565
 # Slope geometry
 SLOPE_RISE = RAF_Z_F - RAF_Z_B  # 400 mm
 SLOPE_RUN = TOTAL_D - FR_T
-SLOPE_DEG = math.degrees(math.atan2(SLOPE_RISE, SLOPE_RUN))  # ≈ 11.3°
+SLOPE_GRAD = SLOPE_RISE / SLOPE_RUN
+SLOPE_DEG = math.degrees(math.atan2(SLOPE_RISE, SLOPE_RUN))
 SLOPE_RAD = math.radians(SLOPE_DEG)
 
 print(f"No of bays    : {N_SL - 1} (based on target row width of {_row_width_m:.2f} m)")
@@ -125,7 +126,7 @@ SPAN_W = TOTAL_W + SL_W
 # Rafter positions: one rafter at each post, intermediates added where bay > 750 mm.
 # This keeps rafters aligned with posts for modular bay-by-bay construction.
 RAF_MAX_SPACING = 750  # mm
-RAF_XS = []
+RAF_XS: list[float] = []
 for _i in range(N_SL - 1):
     _n_spaces = math.ceil(BAY_W / RAF_MAX_SPACING)
     for _j in range(_n_spaces):
@@ -133,26 +134,26 @@ for _i in range(N_SL - 1):
 RAF_XS.append(POST_XS[-1])
 N_RAF = len(RAF_XS)
 
-# TODO: Rafters X position should line up with inside of back plate not outside
-
 # Rafter geometry: sloped length and mid-height
 RAF_LEN_HORIZ = TOTAL_D + OV_F + OV_B  # 2 850 horizontal span
-RAF_LEN_SLOPE = math.sqrt(RAF_LEN_HORIZ**2 + SLOPE_RISE**2)  # actual slope length
+RAF_LEN_RISE = RAF_LEN_HORIZ * SLOPE_GRAD
+RAF_LEN_SLOPE = math.sqrt(RAF_LEN_HORIZ**2 + RAF_LEN_RISE**2)  # actual slope length
 RAF_MID_Z = (RAF_Z_F + RAF_Z_B) / 2  # average height of rafter bottom
 # Y centre adjusted for asymmetric overhangs
 RAF_CEN_Y = TOTAL_D / 2 + (OV_B - OV_F) / 2  # shifted back by net overhang diff
 # Rafter centroid Z derived from the rotation-projection formula
 #   z_bottom(y) = RAF_CEN_Z − (y − RAF_CEN_Y)·tan(θ) − FR_D/(2·cos(θ))
-# The birdsmouth heel sits at the OUTER face of each plate (y=0 for front,
-# y=TOTAL_D for back), so we anchor to y=0 where z_bottom = RAF_Z_F:
+
 #   RAF_CEN_Z = RAF_Z_F − RAF_CEN_Y·tan(θ) + FR_D/(2·cos(θ))
 # This simultaneously satisfies the back-plate constraint when
 # SLOPE_RUN = TOTAL_D (heel-to-heel horizontal span).
 RAF_CEN_Z = RAF_Z_F - RAF_CEN_Y * math.tan(SLOPE_RAD) + FR_D / (2 * math.cos(SLOPE_RAD))
 
 # Birdsmouth cut geometry (notch in rafter underside at each plate bearing point)
-BIRDSMOUTH_DEPTH = min(FR_D // 3, 30)  # 30 mm (1/3-rule max)
-BIRDSMOUTH_SEAT = FR_T + 10  # 55 mm seat width (plate width + 10 mm)
+BIRDSMOUTH_DEPTH = round(
+    min(FR_D // 3, math.tan(SLOPE_RAD) * FR_T)
+)  # 30 mm (1/3-rule max)
+BIRDSMOUTH_SEAT = FR_T
 
 # ── Colours ───────────────────────────────────────────────────────────────────
 C_SL = cq.Color(0.42, 0.28, 0.18)  # dark treated timber (sleepers/posts)
