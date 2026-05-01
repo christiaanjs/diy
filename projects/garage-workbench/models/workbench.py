@@ -1,9 +1,10 @@
 """
 Garage Workbench — parametric CadQuery model.
 
-All timber is 90 × 45 mm H3.2 structural pine — the standard affordable
-framing section sold at Mitre 10 / Bunnings NZ.  No milling or facing
-required; use dressed (DAR/PAR) stock straight from the rack.
+All timber is 90 × 45 mm H3.2 structural pine — the standard rough-sawn
+framing section used in NZ house construction.  Buy it off the framing
+rack at any Mitre 10 / Bunnings; no dressing or facing required.
+Dimensions are nominal — actual cross-section varies ±2–3 mm per piece.
 
 Structure:
   Top        : single 18 mm structural plywood sheet (1800 × 600)

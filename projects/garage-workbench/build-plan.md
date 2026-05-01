@@ -42,7 +42,7 @@ Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 
 ## Build steps
 
-1. **Buy dressed stock** — Purchase 90×45 H3.2 DAR (dressed all round) pine. Check each length for straightness; sight down the edge and reject anything badly bowed or twisted. All pieces come at finished size — no planing needed.
+1. **Buy rough-sawn framing timber** — Purchase 90×45 H3.2 rough-sawn framing pine from the framing rack (not the dressed joinery section). This is standard house-framing stock — cheaper, widely available, and perfectly adequate for a workbench. Wear gloves when handling green treated timber. Sight down each length and reject anything badly bowed or twisted; a slight crown is fine. Actual cross-sections run ±2–3 mm from nominal — this makes no difference for butt-jointed coach-screw construction.
 
 2. **Cut legs to length** — Cross-cut 4 legs at 882 mm using a handsaw. Mark a square line around all four faces with a combination square before cutting. Bundle the 4 legs and check they are the same length.
 
@@ -90,7 +90,7 @@ Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 
 ## Notes
 
-- **No facing / milling:** DAR 90×45 is sold at finished size. Just cut to length.
+- **No facing / milling:** Rough-sawn framing timber needs nothing done to it. Just cut to length.
 - **Assembly order:** Build end frames on the floor first — it is far easier to keep joints square when the pieces are lying flat. Stand them up only when both frames are complete.
 - **Square check:** After every glue-and-screw step, measure both diagonals. Equal diagonals = square frame. A 2 mm difference is acceptable; correct anything over 4 mm by tapping a corner before the glue sets.
 - **Coach screw tips:** Always pre-drill to prevent splitting. Hold the screw vertical and snug it up with the socket wrench — do not over-tighten or you will crush the pine fibre. Tighten once more the next day after the PVA has cured.

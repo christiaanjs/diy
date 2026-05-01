@@ -17,7 +17,7 @@ A straightforward garage workbench built entirely from 90×45 mm H3.2 structural
 
 ## Materials
 
-- Primary: 90×45 mm H3.2 treated structural pine (all legs, aprons, stretchers)
+- Primary: 90×45 mm H3.2 rough-sawn framing pine (all legs, aprons, stretchers) — standard house-framing timber off the rack
 - Top: 18 mm F8 structural plywood
 - Shelf: 18 mm F8 structural plywood (second sheet or large offcut)
 
@@ -29,7 +29,7 @@ A straightforward garage workbench built entirely from 90×45 mm H3.2 structural
 
 ## Notes
 
-- All 90×45 PAR/DAR stock is sold at finished size — no planing or facing needed.
+- Rough-sawn framing timber is fine — this is what house walls are built from. Actual dimensions vary ±2–3 mm from nominal; it makes no difference for coach-screw butt joints.
 - Two-end-frame assembly: build the left and right end frames first, then connect with the four long rails. This is the easiest way to keep everything square without bar clamps.
 - The legs are oriented with the 90 mm face left-right (wide face visible from front) and the 45 mm face front-to-back. This keeps the bench depth compact while the wide face carries the load well.
 - Single 18 mm plywood top is adequate for general garage use. For heavy hammering or metalwork, screw a second sheet underneath later.
