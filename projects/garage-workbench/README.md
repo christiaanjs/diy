@@ -23,7 +23,7 @@ A straightforward garage workbench built entirely from 90×45 mm H3.2 structural
 
 ## Joinery
 
-- All leg-to-apron and leg-to-stretcher joints: 2× M10×100 coach screws + PVA glue
+- All leg-to-apron and leg-to-stretcher joints: 3× 75 mm construction screws toe-nailed from inside the frame + PVA glue — face grain to face grain throughout, no end-grain connections, no crossing screw paths
 - Top fixed to frame: 75 mm construction screws through apron top edge into plywood underside
 - Shelf screwed down to stretcher top faces: 75 mm construction screws
 

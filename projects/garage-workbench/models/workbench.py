@@ -13,7 +13,8 @@ Structure:
   Lower shelf: 18 mm structural plywood, inset between legs
   Stretchers : 90 × 45 mm pine — long + end pairs supporting shelf
 
-Joinery: coach screws (M10 × 100) + PVA throughout — no jigs needed.
+Joinery: 75 mm construction screws toe-nailed from inside + PVA throughout — face grain to
+         face grain at every joint, no end grain, no crossing screw paths, no jigs needed.
 
 Coordinate system
   X  left → right  (looking at the front face)

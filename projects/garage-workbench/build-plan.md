@@ -3,20 +3,18 @@
 ## Tools required
 
 ### Power tools
-- Drill/driver (pilot holes and driving coach screws)
+- Drill/driver (pilot holes and driving construction screws)
 - Circular saw or jigsaw (cutting plywood sheet to size) — optional; a panel saw at the timber yard can do this
 
 ### Hand tools
 - Handsaw (cross-cutting 90×45 framing to length — no table saw needed)
-- Socket wrench with 16 mm or 17 mm socket (tightening M10 coach screws)
 - Tape measure, combination square, pencil
 - Clamps — 4× F-clamps or G-clamps (600 mm jaw sufficient)
 - Hammer (for tapping joints square)
 
 ### Jigs & accessories
 - Straight-edge or clamping guide for circular saw (plywood cuts)
-- 6 mm HSS drill bit (pilot holes through legs)
-- 10 mm spade or brad-point bit (optional countersink for coach screw heads)
+- 3 mm HSS drill bit (optional pilot holes for toe-nailed screws — prevents splitting near ends)
 
 ---
 
@@ -42,7 +40,7 @@ Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 
 ## Build steps
 
-1. **Buy rough-sawn framing timber** — Purchase 90×45 H3.2 rough-sawn framing pine from the framing rack (not the dressed joinery section). This is standard house-framing stock — cheaper, widely available, and perfectly adequate for a workbench. Wear gloves when handling green treated timber. Sight down each length and reject anything badly bowed or twisted; a slight crown is fine. Actual cross-sections run ±2–3 mm from nominal — this makes no difference for butt-jointed coach-screw construction.
+1. **Buy rough-sawn framing timber** — Purchase 90×45 H3.2 rough-sawn framing pine from the framing rack (not the dressed joinery section). This is standard house-framing stock — cheaper, widely available, and perfectly adequate for a workbench. Wear gloves when handling green treated timber. Sight down each length and reject anything badly bowed or twisted; a slight crown is fine. Actual cross-sections run ±2–3 mm from nominal — this makes no difference for toe-nailed butt-joint construction.
 
 2. **Cut legs to length** — Cross-cut 4 legs at 882 mm using a handsaw. Mark a square line around all four faces with a combination square before cutting. Bundle the 4 legs and check they are the same length.
 
@@ -64,7 +62,7 @@ Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 
    b. Clamp a short apron across the top between the legs, top faces flush, inside face of apron flush with the inside face of each leg. Check square by measuring both diagonals.
 
-   c. Pre-drill a 6 mm pilot hole through the **wide (90 mm) front face of each leg** into the apron end. This direction — through 45 mm of leg then 55 mm into the apron — gives a solid M10 × 100 connection with good bite. Drive 2× M10 × 100 coach screws per end with a socket wrench. Apply PVA first.
+   c. Toe-nail 3× 75 mm construction screws per joint from **inside the frame**: tilt the drill to ~30° and start each screw on the **inside face** of the apron, about 20–25 mm back from the joint end, angling into the leg face — one angled up, one angled down, one roughly straight. The screw travels through apron face grain and bites into leg face grain — no end grain involved. Apply PVA to the joint face first. A 3 mm pilot at the same angle prevents splitting.
 
    d. Repeat for the short stretcher at the lower position.
 
@@ -72,11 +70,9 @@ Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 
 6. **Connect the end frames with long aprons and stretchers** — Stand both end frames upright 1620 mm apart (inside-face to inside-face) and prop them vertical.
 
-   > **Why not coach screws here:** the long aprons connect to the 45 mm-wide *side* face of the leg — a screw would need to travel 90 mm through the leg before reaching the apron end, leaving only 10 mm of bite even with M10 × 100. That's inadequate, and perpendicular screws in the same 90 × 45 section would cross paths. Instead, fasten with toe-nailed construction screws from inside the frame — standard NZ framing practice, stronger than it sounds.
-
    a. Fit the two long aprons front and back. Clamp them in position and check the frame is square (measure diagonals across the top opening).
 
-   b. Working from **inside the frame**, drive 3× 75 mm construction screws through each apron end into the leg at a ~30° angle — one angled up, one angled down, one straight. Apply a dab of PVA to the joint face first.
+   b. Working from **inside the frame**, toe-nail 3× 75 mm construction screws per joint: tilt the drill to ~30°, start each screw on the **inside face** of the apron about 20–25 mm from the end, angling into the leg face — one angled up, one angled down, one straight. Apply a dab of PVA to the joint face first.
 
    c. Fit the long stretchers the same way.
 
@@ -97,7 +93,6 @@ Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 - **No facing / milling:** Rough-sawn framing timber needs nothing done to it. Just cut to length.
 - **Assembly order:** Build end frames on the floor first — it is far easier to keep joints square when the pieces are lying flat. Stand them up only when both frames are complete.
 - **Square check:** After every glue-and-screw step, measure both diagonals. Equal diagonals = square frame. A 2 mm difference is acceptable; correct anything over 4 mm by tapping a corner before the glue sets.
-- **Two fastener types, two reasons:** Coach screws (M10 × 100) are used only where the screw path travels through 45 mm of leg and into an apron end — that gives 55 mm of bite, which is strong. The long aprons use toe-nailed construction screws instead because a coach screw through the full 90 mm leg width would have only 10 mm of bite and would also cross paths with the end-frame coach screws inside the same 90 × 45 section.
-- **Coach screw tips:** Always pre-drill a 6 mm pilot to prevent splitting. Snug up with a socket wrench — do not over-tighten or you will crush the pine fibre. Tighten once more the next day after the PVA has cured.
+- **Toe-nailing technique:** Start each screw about 20–25 mm back from the joint face on the inside face of the apron or stretcher. Tilt the drill to approximately 30°. A 3 mm pilot hole at the same angle prevents splitting near the ends. Three screws per joint — one angled up, one angled down, one roughly straight — gives good pull-out resistance with no screws entering end grain and no crossing paths inside any timber section.
 - **Leg orientation:** The 90 mm face of each leg faces left-right (visible from the front), the 45 mm face goes front-to-back. This keeps the bench shallow and saves material while maintaining good load-bearing capacity.
 - **Future upgrades:** A face vice (Record #52 or similar) bolts to the left-end apron. The 90 mm apron face provides a good clamping surface. Peg-board or plywood tool storage can be screwed directly to the back apron.
