@@ -1,0 +1,54 @@
+name: Render Previews
+
+on:
+  push:
+    paths:
+      - "projects/**/models/*.py"
+      - "view.py"
+      - "view_render.py"
+      - "requirements.txt"
+      - ".github/workflows/previews.yml"
+  pull_request:
+    paths:
+      - "projects/**/models/*.py"
+      - "view.py"
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install system dependencies
+        run: sudo apt-get install -y libcairo2 libglib2.0-0
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Render previews for all projects
+        run: |
+          for dir in projects/*/; do
+            slug="${dir%/}"
+            slug="${slug#projects/}"
+            echo "=== $slug ==="
+            bash preview-all.sh "$slug" || echo "WARNING: render failed for $slug"
+          done
+
+      - name: Generate HTML gallery
+        run: python generate-index.py
+
+      - name: Upload preview gallery
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-gallery
+          path: |
+            gallery.html
+            projects/**/preview*.png
+          retention-days: 30
