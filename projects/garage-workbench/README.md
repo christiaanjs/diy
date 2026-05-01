@@ -1,37 +1,36 @@
 # Garage Workbench
 
-A heavy-duty freestanding workbench sized for general garage use. The frame is 90×90 mm hardwood legs with 90×45 mm pine aprons and stretchers, joined with pocket screws and construction adhesive. The work surface is a doubled 18 mm plywood top (36 mm total) for rigidity and resistance to denting. A lower plywood shelf sits on stretchers at 250 mm to hold tools, bins, or power supplies.
+A straightforward garage workbench built entirely from 90×45 mm H3.2 structural pine — the standard affordable framing timber available at any Mitre 10 or Bunnings NZ. No milling, facing, or special stock is needed; buy dressed (DAR) lengths off the rack and cut to length with a handsaw. Joints are coach-screwed butt joints throughout, so the only tools required are a handsaw, drill, socket set, and square.
 
 ## Status
 
-**modelling**
+**ready-to-build**
 
 ## Dimensions
 
 - Overall: 1800 W × 600 D × 900 H mm
-- Legs: 90 × 90 mm, 864 mm tall (4 off)
-- Long aprons/stretchers: 1620 mm clear span
-- Short aprons/stretchers: 420 mm clear span
-- Work surface: 1800 × 600 mm (2 × 18 mm plywood laminated)
-- Lower shelf: 1620 × 420 × 18 mm plywood (inset between legs at 250 mm)
+- Legs: 90 × 45 mm, 882 mm tall (4 off) — 90 mm face runs left-right
+- Long aprons / stretchers: 1620 mm
+- Short aprons / stretchers: 510 mm
+- Work surface: 1800 × 600 × 18 mm structural plywood (single sheet)
+- Lower shelf: 1620 × 510 × 18 mm structural plywood
 
 ## Materials
 
-- Primary: 18 mm structural plywood (work surface and shelf)
-- Frame: 90 × 45 mm pine (aprons and stretchers)
-- Legs: 90 × 90 mm hardwood (e.g. Victorian ash or spotted gum)
+- Primary: 90×45 mm H3.2 treated structural pine (all legs, aprons, stretchers)
+- Top: 18 mm F8 structural plywood
+- Shelf: 18 mm F8 structural plywood (second sheet or large offcut)
 
 ## Joinery
 
-- Legs to aprons: pocket screws (2 per joint) + PVA glue
-- Aprons to aprons (corners): butt joint with pocket screws
-- Stretchers to legs: pocket screws + glue (same detail as aprons)
-- Top to frame: screws through apron top edge into plywood underside
-- Shelf: rests on stretcher top faces; screwed down
+- All leg-to-apron and leg-to-stretcher joints: 2× M10×100 coach screws + PVA glue
+- Top fixed to frame: 75 mm construction screws through apron top edge into plywood underside
+- Shelf screwed down to stretcher top faces: 75 mm construction screws
 
 ## Notes
 
-- 900 mm finished height is standard ergonomic workbench height for standing work.
-- Double top can be separated and replaced if the surface gets heavily damaged.
-- Shelf is set at 250 mm (top face) — enough clearance beneath for typical tool bins.
-- No vice modelled yet; add a face vice to the left front corner if desired.
+- All 90×45 PAR/DAR stock is sold at finished size — no planing or facing needed.
+- Two-end-frame assembly: build the left and right end frames first, then connect with the four long rails. This is the easiest way to keep everything square without bar clamps.
+- The legs are oriented with the 90 mm face left-right (wide face visible from front) and the 45 mm face front-to-back. This keeps the bench depth compact while the wide face carries the load well.
+- Single 18 mm plywood top is adequate for general garage use. For heavy hammering or metalwork, screw a second sheet underneath later.
+- Shelf is wider (510 mm) than a typical hardwood-legged bench because 90×45 legs are shallower than 90×90 legs.

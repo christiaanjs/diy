@@ -4,51 +4,43 @@
   "created": "2026-05-01",
   "items": [
     {
-      "name": "90\u00d790 mm hardwood legs (e.g. Victorian ash) 900 mm",
-      "qty": 4.0,
-      "unit": "each",
-      "unit_price": 12.5,
-      "subtotal": 50.0,
-      "added": "2026-05-01"
-    },
-    {
-      "name": "90\u00d745 mm pine framing",
-      "qty": 9.0,
+      "name": "90×45 H3.2 structural pine (DAR) — legs, aprons, stretchers",
+      "qty": 13.0,
       "unit": "meters",
       "unit_price": 4.2,
-      "subtotal": 37.800000000000004,
+      "subtotal": 54.6,
       "added": "2026-05-01"
     },
     {
-      "name": "18 mm structural plywood 2400\u00d71200",
+      "name": "18mm F8 structural plywood 2400×1200 — top and shelf",
       "qty": 2.0,
-      "unit": "each",
-      "unit_price": 68.0,
-      "subtotal": 136.0,
+      "unit": "sheets",
+      "unit_price": 72.0,
+      "subtotal": 144.0,
       "added": "2026-05-01"
     },
     {
-      "name": "Pocket screws 50 mm box/100",
+      "name": "M10×100 hex-head coach screws (pack 50)",
+      "qty": 1.0,
+      "unit": "pack",
+      "unit_price": 38.0,
+      "subtotal": 38.0,
+      "added": "2026-05-01"
+    },
+    {
+      "name": "75mm construction screws (box 100) — top and shelf",
       "qty": 1.0,
       "unit": "box",
+      "unit_price": 14.0,
+      "subtotal": 14.0,
+      "added": "2026-05-01"
+    },
+    {
+      "name": "PVA wood glue 1L",
+      "qty": 1.0,
+      "unit": "each",
       "unit_price": 12.0,
       "subtotal": 12.0,
-      "added": "2026-05-01"
-    },
-    {
-      "name": "PVA wood glue 1 L",
-      "qty": 1.0,
-      "unit": "each",
-      "unit_price": 9.5,
-      "subtotal": 9.5,
-      "added": "2026-05-01"
-    },
-    {
-      "name": "Danish oil 500 mL",
-      "qty": 1.0,
-      "unit": "each",
-      "unit_price": 18.0,
-      "subtotal": 18.0,
       "added": "2026-05-01"
     }
   ]

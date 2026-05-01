@@ -1,12 +1,18 @@
 """
 Garage Workbench — parametric CadQuery model.
 
+All timber is 90 × 45 mm H3.2 structural pine — the standard affordable
+framing section sold at Mitre 10 / Bunnings NZ.  No milling or facing
+required; use dressed (DAR/PAR) stock straight from the rack.
+
 Structure:
-  Top       : two layers of 18 mm plywood (36 mm total)
-  Legs      : 90 × 90 mm hardwood, 4 off
-  Aprons    : 90 × 45 mm framing pine — long front/back + short end aprons
-  Lower shelf: 18 mm plywood, inset from legs
+  Top        : single 18 mm structural plywood sheet (1800 × 600)
+  Legs       : 90 × 45 mm pine, 4 off — same section as everything else
+  Aprons     : 90 × 45 mm pine — long front/back + short end aprons
+  Lower shelf: 18 mm structural plywood, inset between legs
   Stretchers : 90 × 45 mm pine — long + end pairs supporting shelf
+
+Joinery: coach screws (M10 × 100) + PVA throughout — no jigs needed.
 
 Coordinate system
   X  left → right  (looking at the front face)
@@ -24,12 +30,12 @@ BENCH_D  = 600    # total depth  (Y)
 BENCH_H  = 900    # finished height from floor to top surface (Z)
 
 # Top
-TOP_T    = 18     # thickness of each plywood layer
-TOP_LAYERS = 2    # double-layered top
+TOP_T    = 18     # plywood thickness
+TOP_LAYERS = 1    # single sheet — adequate over a well-spaced frame
 
-# Legs
-LEG_W    = 90     # leg section (X)
-LEG_D    = 90     # leg section (Y)
+# Legs — same 90 × 45 section as all framing; no special stock needed
+LEG_W    = 90     # leg face width (X) — the 90 mm face runs left-right
+LEG_D    = 45     # leg depth (Y)      — the 45 mm face goes front-to-back
 LEG_H    = BENCH_H - TOP_T * TOP_LAYERS  # leg height (top of leg = underside of top)
 
 # Aprons (connect legs at the top, inside face flush with leg inside face)
@@ -85,7 +91,7 @@ STR_BACK_CY  = APR_BACK_CY
 STR_Z        = SHELF_Z - SHELF_T - STR_H / 2   # shelf sits on top of stretchers
 
 # ── Colours ───────────────────────────────────────────────────────────────────
-C_LEG   = cq.Color(0.45, 0.28, 0.14)   # dark hardwood legs
+C_LEG   = cq.Color(0.66, 0.48, 0.30)   # pine — same as all framing
 C_FRAME = cq.Color(0.66, 0.48, 0.30)   # pine framing (aprons / stretchers)
 C_PLY   = cq.Color(0.82, 0.72, 0.50)   # plywood top and shelf
 

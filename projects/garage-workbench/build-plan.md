@@ -3,20 +3,20 @@
 ## Tools required
 
 ### Power tools
-- Circular saw or table saw (ripping plywood and dimensioning framing)
-- Pocket-hole jig (e.g. Kreg K4 or K5) + drill/driver
-- Random orbital sander (80 / 120 / 180 grit)
-- Drill press or handheld drill (pilot holes, countersinks)
+- Drill/driver (pilot holes and driving coach screws)
+- Circular saw or jigsaw (cutting plywood sheet to size) — optional; a panel saw at the timber yard can do this
 
 ### Hand tools
-- Tape measure, combination square, marking gauge
-- Handsaw (cross-cut for short aprons if table saw unavailable)
-- Mallet and chisels (trimming, fitting)
-- Clamps — at least 4 × 600 mm F-clamps and 2 × 1200 mm bar clamps
+- Handsaw (cross-cutting 90×45 framing to length — no table saw needed)
+- Socket wrench with 16 mm or 17 mm socket (tightening M10 coach screws)
+- Tape measure, combination square, pencil
+- Clamps — 4× F-clamps or G-clamps (600 mm jaw sufficient)
+- Hammer (for tapping joints square)
 
 ### Jigs & accessories
-- Kreg pocket-hole jig set for 38 mm and 45 mm stock
-- Straight-edge / clamping guide for circular saw
+- Straight-edge or clamping guide for circular saw (plywood cuts)
+- 6 mm HSS drill bit (pilot holes through legs)
+- 10 mm spade or brad-point bit (optional countersink for coach screw heads)
 
 ---
 
@@ -24,56 +24,75 @@
 
 | Part | Qty | L (mm) | W (mm) | T (mm) | Material | Notes |
 |------|-----|--------|--------|--------|----------|-------|
-| Leg | 4 | 864 | 90 | 90 | 90×90 hardwood | Square both ends |
-| Long apron | 2 | 1620 | 90 | 45 | 90×45 pine | Front and back |
-| Short apron | 2 | 420 | 90 | 45 | 90×45 pine | Left and right ends |
-| Long stretcher | 2 | 1620 | 90 | 45 | 90×45 pine | Front and back lower |
-| Short stretcher | 2 | 420 | 90 | 45 | 90×45 pine | Left and right lower |
-| Top layer (×2) | 2 | 1800 | 600 | 18 | 18 mm ply | Work surface |
-| Lower shelf | 1 | 1620 | 420 | 18 | 18 mm ply | Inset between legs |
+| Leg | 4 | 882 | 90 | 45 | 90×45 H3.2 pine | 90 mm face runs left-right |
+| Long apron | 2 | 1620 | 90 | 45 | 90×45 pine | Front and back, top |
+| Short apron | 2 | 510 | 90 | 45 | 90×45 pine | Left and right ends, top |
+| Long stretcher | 2 | 1620 | 90 | 45 | 90×45 pine | Front and back, lower |
+| Short stretcher | 2 | 510 | 90 | 45 | 90×45 pine | Left and right ends, lower |
+| Top | 1 | 1800 | 600 | 18 | 18 mm F8 ply | Work surface |
+| Lower shelf | 1 | 1620 | 510 | 18 | 18 mm F8 ply | Inset between legs |
 
-**Framing total:** ≈ 8.2 m of 90×45 mm pine (buy 9 m to allow cross-cutting waste)
-**Plywood:** 2 sheets of 2400×1200×18 mm (top layers + shelf from offcuts)
+**Framing total:** 12.0 m of 90×45 mm — buy 13 m to allow for end cuts.
+Suggested lengths: 3× 4.8 m + 1× 3.0 m, or whatever combination covers 13 m with minimal waste.
+
+**Plywood:** 2 sheets of 2400×1200×18 mm F8 structural ply.
+Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 
 ---
 
 ## Build steps
 
-1. **Mill stock** — Square and face all leg stock to 90×90 mm. If buying PAR pine for aprons/stretchers verify 90×45 finished; adjust cut list if dressed size differs.
+1. **Buy dressed stock** — Purchase 90×45 H3.2 DAR (dressed all round) pine. Check each length for straightness; sight down the edge and reject anything badly bowed or twisted. All pieces come at finished size — no planing needed.
 
-2. **Cut legs to length** — Cross-cut all 4 legs to 864 mm. Mark the top and bottom of each leg before cutting so grain stays consistent.
+2. **Cut legs to length** — Cross-cut 4 legs at 882 mm using a handsaw. Mark a square line around all four faces with a combination square before cutting. Bundle the 4 legs and check they are the same length.
 
-3. **Cut aprons and stretchers** — Rip/cross-cut 90×45 pine to:
-   - 2 × 1620 mm (long aprons)
-   - 2 × 420 mm (short aprons)
-   - 2 × 1620 mm (long stretchers)
-   - 2 × 420 mm (short stretchers)
-   Mark each piece before cutting — aprons and stretchers are identical in length but live at different heights.
+3. **Cut aprons and stretchers** — Cross-cut the remaining 90×45 to:
+   - 2× 1620 mm (long aprons)
+   - 2× 510 mm (short aprons)
+   - 2× 1620 mm (long stretchers)
+   - 2× 510 mm (short stretchers)
 
-4. **Drill pocket holes** — Using the Kreg jig set for 45 mm stock, drill 2 pocket holes in each end of every apron and stretcher. Drill on the face that will be hidden (inside face).
+   Label each piece immediately — aprons and stretchers are the same length per pair but live at different heights.
 
-5. **Dry fit end frames** — Clamp one short apron between two legs (flush with top of legs, inside faces) and one short stretcher between the same pair of legs at 160 mm from the floor (so stretcher top face = 250 mm shelf height − 90 mm stretcher height = 160 mm from floor). Confirm the assembly is square; measure diagonals.
+4. **Mark the leg joint positions** — On each leg, mark two lines with a square:
+   - Apron shoulder: 90 mm down from the top (the apron top face is flush with the leg top).
+   - Stretcher shoulder: 142 mm up from the bottom (stretcher bottom face = 142 mm; top face = 232 mm; shelf top = 250 mm).
 
-6. **Glue and screw end frames** — Apply PVA to the mating faces of each apron and stretcher end. Drive 2 pocket screws per joint. Clamp and allow to cure 30 min before disturbing. Build both end frames.
+5. **Build the end frames** — For each of the two end frames (left and right):
 
-7. **Assemble base frame** — Stand the two end frames upright. Insert the two long aprons at the top and the two long stretchers at the lower position. Apply glue to all mating faces, drive pocket screws, and check for square. Use bar clamps to hold while screwing.
+   a. Lay two legs on the floor parallel, 510 mm apart (inside-face to inside-face).
 
-8. **Cut plywood** — From the first 2400×1200 mm sheet, rip 2 pieces at 600 mm wide and cross-cut each to 1800 mm (the two top layers). From offcuts or the second sheet, cut the shelf at 1620 × 420 mm.
+   b. Clamp a short apron across the top between the legs, top faces flush, inside face flush with leg inside face. Check the assembly is square by measuring both diagonals — they should be equal.
 
-9. **Laminate top** — Spread a thin, even coat of PVA over the entire face of the first top layer. Lay the second layer on top with edges flush. Clamp every 200–300 mm with F-clamps. Allow full overnight cure before removing clamps.
+   c. Pre-drill a 6 mm pilot hole through the leg face into each end of the apron. Drive 2× M10×100 coach screws per end with a socket wrench. Apply PVA to the mating surfaces before driving the first screw.
 
-10. **Attach top** — Flip the frame upside-down onto the underside of the laminated top. Position so the top overhangs equally front and back. Drive 50 mm screws through the top edge of each apron up into the plywood underside (3 screws per long apron, 2 per short apron). No countersink needed — screw head pulls into pine.
+   d. Repeat for the short stretcher at the lower position. Measure from the floor mark (142 mm) to position it.
 
-11. **Fit shelf** — Drop the shelf panel onto the stretchers. Check it sits flush. Drive 2 screws per stretcher through the shelf into the stretcher top face to hold it captive.
+   e. Stand the end frame up and check it sits flat. Build the second end frame identically.
 
-12. **Sand and finish** — Sand all exposed surfaces with 80, then 120, then 180 grit. The work surface can be left bare (plywood top will harden with use) or finished with boiled linseed oil (2 coats) for moisture resistance. Wipe down legs and frame with a single coat of Danish oil.
+6. **Connect the end frames** — Stand both end frames upright 1620 mm apart (inside-face to inside-face). Temporarily clamp or prop them vertical.
+
+   a. Fit the two long aprons across the top front and back. Clamp in position, check the frame is square (measure diagonals across the top), then pre-drill and drive 2× coach screws through each leg into the apron end. Apply PVA first.
+
+   b. Fit the two long stretchers at the lower position and fasten the same way.
+
+   c. Once all four long rails are in, the frame should be rigid. Recheck square and adjust if needed (a diagonal tap with a hammer usually corrects a few mm).
+
+7. **Cut plywood** — From sheet 1, cut the top: 1800×600 mm. From sheet 2, cut the shelf: 1620×510 mm. A circular saw with a clamped straight-edge gives a clean straight cut; alternatively ask the timber yard to rip the sheets for you.
+
+8. **Attach the top** — Place the plywood top on the frame, centred side-to-side. Drive 75 mm construction screws at an angle through the top edge of each apron up into the underside of the plywood — 3 screws per long apron and 2 per short apron. No countersink needed; the screw head pulls into pine.
+
+9. **Fit the shelf** — Drop the shelf panel onto the stretchers. Drive 2× 75 mm screws per stretcher through the shelf into the stretcher top face to hold it captive.
+
+10. **Finish** — The H3.2 treated pine needs no additional finish for a garage environment. Round any sharp corners with a few passes of 80-grit sandpaper. The plywood top can be left bare and will harden with use, or apply 2 coats of boiled linseed oil for moisture resistance.
 
 ---
 
 ## Notes
 
-- **Assembly order:** Build end frames first so you have two rigid sub-assemblies to connect — this prevents racking during the final frame assembly.
-- **Square checks:** After every glue-up, measure both diagonals and tap the frame to equal before the glue sets. A 2 mm diagonal discrepancy is acceptable; over 5 mm will cause the bench to rock.
-- **Grain direction:** Orient both plywood top layers with face grain running along the 1800 mm length (stronger in bending, better appearance).
-- **Leg-to-floor:** If the garage floor is uneven, add levelling feet (M10 threaded inserts + adjustable foot pads) in the leg bottoms.
-- **Future vice:** A face vice bolts to the left front apron. Leave the front face of the left leg clear of obstruction so a vice jaw can be fitted flush.
+- **No facing / milling:** DAR 90×45 is sold at finished size. Just cut to length.
+- **Assembly order:** Build end frames on the floor first — it is far easier to keep joints square when the pieces are lying flat. Stand them up only when both frames are complete.
+- **Square check:** After every glue-and-screw step, measure both diagonals. Equal diagonals = square frame. A 2 mm difference is acceptable; correct anything over 4 mm by tapping a corner before the glue sets.
+- **Coach screw tips:** Always pre-drill to prevent splitting. Hold the screw vertical and snug it up with the socket wrench — do not over-tighten or you will crush the pine fibre. Tighten once more the next day after the PVA has cured.
+- **Leg orientation:** The 90 mm face of each leg faces left-right (visible from the front), the 45 mm face goes front-to-back. This keeps the bench shallow and saves material while maintaining good load-bearing capacity.
+- **Future upgrades:** A face vice (Record #52 or similar) bolts to the left-end apron. The 90 mm apron face provides a good clamping surface. Peg-board or plywood tool storage can be screwed directly to the back apron.
