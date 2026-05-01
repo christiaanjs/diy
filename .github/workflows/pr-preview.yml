@@ -36,13 +36,8 @@ jobs:
             bash preview-all.sh "$slug" || echo "WARNING: render failed for $slug"
           done
 
-      - name: Generate HTML gallery
-        run: python generate-index.py
-
-      - name: Prepare deploy directory
-        run: |
-          mkdir -p _deploy
-          cp gallery.html _deploy/index.html
+      - name: Generate site
+        run: python generate-index.py --out-dir _deploy
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -56,21 +51,31 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const owner = context.repo.owner;
-            const repo  = context.repo.repo;
-            const pr    = context.payload.pull_request.number;
-            const sha   = context.payload.pull_request.head.sha.slice(0, 7);
-            const url   = `https://${owner}.github.io/${repo}/pr-${pr}/`;
-            const marker = '<!-- woodworking-preview-bot -->';
+            const fs      = require('fs');
+            const owner   = context.repo.owner;
+            const repo    = context.repo.repo;
+            const pr      = context.payload.pull_request.number;
+            const sha     = context.payload.pull_request.head.sha.slice(0, 7);
+            const base    = `https://${owner}.github.io/${repo}/pr-${pr}`;
+            const marker  = '<!-- woodworking-preview-bot -->';
+
+            const projects = JSON.parse(fs.readFileSync('_deploy/projects.json', 'utf8'));
+
+            const rows = projects
+              .map(p => `| **${p.title}** | [${base}/${p.slug}/](${base}/${p.slug}/) |`)
+              .join('\n');
+
             const body = [
               marker,
               '## Woodworking Previews',
               '',
-              `| | |`,
-              `|---|---|`,
-              `| **URL** | [${url}](${url}) |`,
-              `| **Commit** | \`${sha}\` |`,
-              `| **Updated** | ${new Date().toUTCString()} |`,
+              `[View all projects](${base}/)`,
+              '',
+              '| Project | Preview |',
+              '|---------|---------|',
+              rows,
+              '',
+              `Commit: \`${sha}\` &nbsp;·&nbsp; Updated: ${new Date().toUTCString()}`,
             ].join('\n');
 
             const { data: comments } = await github.rest.issues.listComments({
