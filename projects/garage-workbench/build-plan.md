@@ -62,21 +62,25 @@ Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 
    a. Lay two legs on the floor parallel, 510 mm apart (inside-face to inside-face).
 
-   b. Clamp a short apron across the top between the legs, top faces flush, inside face flush with leg inside face. Check the assembly is square by measuring both diagonals — they should be equal.
+   b. Clamp a short apron across the top between the legs, top faces flush, inside face of apron flush with the inside face of each leg. Check square by measuring both diagonals.
 
-   c. Pre-drill a 6 mm pilot hole through the leg face into each end of the apron. Drive 2× M10×100 coach screws per end with a socket wrench. Apply PVA to the mating surfaces before driving the first screw.
+   c. Pre-drill a 6 mm pilot hole through the **wide (90 mm) front face of each leg** into the apron end. This direction — through 45 mm of leg then 55 mm into the apron — gives a solid M10 × 100 connection with good bite. Drive 2× M10 × 100 coach screws per end with a socket wrench. Apply PVA first.
 
-   d. Repeat for the short stretcher at the lower position. Measure from the floor mark (142 mm) to position it.
+   d. Repeat for the short stretcher at the lower position.
 
-   e. Stand the end frame up and check it sits flat. Build the second end frame identically.
+   e. Stand the end frame up. Build the second end frame identically.
 
-6. **Connect the end frames** — Stand both end frames upright 1620 mm apart (inside-face to inside-face). Temporarily clamp or prop them vertical.
+6. **Connect the end frames with long aprons and stretchers** — Stand both end frames upright 1620 mm apart (inside-face to inside-face) and prop them vertical.
 
-   a. Fit the two long aprons across the top front and back. Clamp in position, check the frame is square (measure diagonals across the top), then pre-drill and drive 2× coach screws through each leg into the apron end. Apply PVA first.
+   > **Why not coach screws here:** the long aprons connect to the 45 mm-wide *side* face of the leg — a screw would need to travel 90 mm through the leg before reaching the apron end, leaving only 10 mm of bite even with M10 × 100. That's inadequate, and perpendicular screws in the same 90 × 45 section would cross paths. Instead, fasten with toe-nailed construction screws from inside the frame — standard NZ framing practice, stronger than it sounds.
 
-   b. Fit the two long stretchers at the lower position and fasten the same way.
+   a. Fit the two long aprons front and back. Clamp them in position and check the frame is square (measure diagonals across the top opening).
 
-   c. Once all four long rails are in, the frame should be rigid. Recheck square and adjust if needed (a diagonal tap with a hammer usually corrects a few mm).
+   b. Working from **inside the frame**, drive 3× 75 mm construction screws through each apron end into the leg at a ~30° angle — one angled up, one angled down, one straight. Apply a dab of PVA to the joint face first.
+
+   c. Fit the long stretchers the same way.
+
+   d. Recheck square and adjust if needed (a diagonal tap with a hammer usually corrects a few mm).
 
 7. **Cut plywood** — From sheet 1, cut the top: 1800×600 mm. From sheet 2, cut the shelf: 1620×510 mm. A circular saw with a clamped straight-edge gives a clean straight cut; alternatively ask the timber yard to rip the sheets for you.
 
@@ -93,6 +97,7 @@ Sheet 1 → top (1800×600). Sheet 2 → shelf (1620×510) with offcut to spare.
 - **No facing / milling:** Rough-sawn framing timber needs nothing done to it. Just cut to length.
 - **Assembly order:** Build end frames on the floor first — it is far easier to keep joints square when the pieces are lying flat. Stand them up only when both frames are complete.
 - **Square check:** After every glue-and-screw step, measure both diagonals. Equal diagonals = square frame. A 2 mm difference is acceptable; correct anything over 4 mm by tapping a corner before the glue sets.
-- **Coach screw tips:** Always pre-drill to prevent splitting. Hold the screw vertical and snug it up with the socket wrench — do not over-tighten or you will crush the pine fibre. Tighten once more the next day after the PVA has cured.
+- **Two fastener types, two reasons:** Coach screws (M10 × 100) are used only where the screw path travels through 45 mm of leg and into an apron end — that gives 55 mm of bite, which is strong. The long aprons use toe-nailed construction screws instead because a coach screw through the full 90 mm leg width would have only 10 mm of bite and would also cross paths with the end-frame coach screws inside the same 90 × 45 section.
+- **Coach screw tips:** Always pre-drill a 6 mm pilot to prevent splitting. Snug up with a socket wrench — do not over-tighten or you will crush the pine fibre. Tighten once more the next day after the PVA has cured.
 - **Leg orientation:** The 90 mm face of each leg faces left-right (visible from the front), the 45 mm face goes front-to-back. This keeps the bench shallow and saves material while maintaining good load-bearing capacity.
 - **Future upgrades:** A face vice (Record #52 or similar) bolts to the left-end apron. The 90 mm apron face provides a good clamping surface. Peg-board or plywood tool storage can be screwed directly to the back apron.
