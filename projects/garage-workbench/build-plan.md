@@ -67,7 +67,7 @@ Sheet 1 → top (1800×555). Sheet 2 → shelf (1620×510) with offcut to spare.
 
    b. Clamp a short apron across the top between the legs, top faces flush, inside face of apron flush with the inside face of each leg. Check square by measuring both diagonals.
 
-   c. Toe-nail 3× 75 mm construction screws per joint from **inside the frame**: tilt the drill to ~30° and start each screw on the **inside face** of the apron, about 20–25 mm back from the joint end, angling into the leg face — one angled up, one angled down, one roughly straight. The screw travels through apron face grain and bites into leg face grain — no end grain involved. Apply PVA to the joint face first. A 3 mm pilot at the same angle prevents splitting.
+   c. Toe-nail 3× 75 mm construction screws per joint from **inside the frame**: tilt the drill to ~30° and start each screw on the **inside face** of the apron, about 20–25 mm back from the joint end, angling into the leg face — one angled up, one angled down, one roughly straight. The screw travels through apron face grain and bites into leg face grain — no end grain involved. A 3 mm pilot at the same angle prevents splitting.
 
    d. Repeat for the short stretcher at the lower position.
 
@@ -77,7 +77,7 @@ Sheet 1 → top (1800×555). Sheet 2 → shelf (1620×510) with offcut to spare.
 
    a. Fit the two long aprons front and back. Clamp them in position and check the frame is square (measure diagonals across the top opening).
 
-   b. Working from **inside the frame**, toe-nail 3× 75 mm construction screws per joint: tilt the drill to ~30°, start each screw on the **inside face** of the apron about 20–25 mm from the end, angling into the leg face — one angled up, one angled down, one straight. Apply a dab of PVA to the joint face first.
+   b. Working from **inside the frame**, toe-nail 3× 75 mm construction screws per joint: tilt the drill to ~30°, start each screw on the **inside face** of the apron about 20–25 mm from the end, angling into the leg face — one angled up, one angled down, one straight.
 
    c. Fit the long stretchers the same way.
 

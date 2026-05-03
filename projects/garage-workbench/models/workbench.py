@@ -252,7 +252,6 @@ _COMPUTED = [
     ("90×45 H3.2 rough-sawn framing pine — legs, aprons, stretchers", _framing_buy_m, "meters"),
     ("18mm F8 structural plywood 2400×1200 — top and shelf", 2, "sheets"),
     ("75mm construction screws (box 100) — all frame joints, top and shelf", 1, "box"),
-    ("PVA wood glue 1L", 1, "each"),
     ("6mm hardboard 1800×900mm sheet — pegboard", 1 if PEGBOARD else 0, "each"),
     ("30mm screws (box 50) — pegboard mounting", 1 if PEGBOARD else 0, "box"),
 ]
@@ -327,8 +326,7 @@ _steps.append(
     "   c. Toe-nail 3× 75 mm construction screws per joint from **inside the frame**: tilt the drill to ~30° and "
     "start each screw on the **inside face** of the apron, about 20–25 mm back from the joint end, angling into "
     "the leg face — one angled up, one angled down, one roughly straight. The screw travels through apron face "
-    "grain and bites into leg face grain — no end grain involved. Apply PVA to the joint face first. A 3 mm pilot "
-    "at the same angle prevents splitting.\n\n"
+    "grain and bites into leg face grain — no end grain involved. A 3 mm pilot at the same angle prevents splitting.\n\n"
     "   d. Repeat for the short stretcher at the lower position.\n\n"
     "   e. Stand the end frame up. Build the second end frame identically."
 )
@@ -339,7 +337,7 @@ _steps.append(
     "(measure diagonals across the top opening).\n\n"
     "   b. Working from **inside the frame**, toe-nail 3× 75 mm construction screws per joint: tilt the drill "
     "to ~30°, start each screw on the **inside face** of the apron about 20–25 mm from the end, angling into "
-    "the leg face — one angled up, one angled down, one straight. Apply a dab of PVA to the joint face first.\n\n"
+    "the leg face — one angled up, one angled down, one straight.\n\n"
     "   c. Fit the long stretchers the same way.\n\n"
     "   d. Recheck square and adjust if needed (a diagonal tap with a hammer usually corrects a few mm)."
 )
