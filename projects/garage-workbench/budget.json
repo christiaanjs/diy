@@ -34,6 +34,22 @@
       "unit_price": 12.0,
       "subtotal": 12.0,
       "added": "2026-05-01"
+    },
+    {
+      "name": "6mm hardboard 1800×900mm sheet — pegboard",
+      "qty": 1.0,
+      "unit": "each",
+      "unit_price": 0.0,
+      "subtotal": 0.0,
+      "added": "2026-05-01"
+    },
+    {
+      "name": "30mm screws (box 50) — pegboard mounting",
+      "qty": 1.0,
+      "unit": "box",
+      "unit_price": 0.0,
+      "subtotal": 0.0,
+      "added": "2026-05-01"
     }
   ]
 }

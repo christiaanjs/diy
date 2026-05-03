@@ -216,5 +216,215 @@ print(f"Top surface    : {TOP_LAYERS} × {TOP_T} mm = {TOP_LAYERS * TOP_T} mm th
 print(f"Apron span     : {APR_LONG_LEN} mm (long)  ×  {APR_SHORT_LEN} mm (short)")
 print(f"Pegboard       : {'%d W × %d H × %d T mm' % (BENCH_W, PB_H, PB_T) if PEGBOARD else 'omitted'}")
 
+# ── Budget & build-plan sync ──────────────────────────────────────────────────
+
+import math as _math
+import json as _json
+from pathlib import Path as _Path
+
+_framing_exact_m = (
+    4 * LEG_H
+    + 2 * APR_LONG_LEN + 2 * APR_SHORT_LEN   # aprons
+    + 2 * APR_LONG_LEN + 2 * APR_SHORT_LEN   # stretchers (same spans)
+) / 1000
+_framing_buy_m = int(round(_framing_exact_m)) + 1
+
+_COMPUTED = [
+    ("90×45 H3.2 rough-sawn framing pine — legs, aprons, stretchers", _framing_buy_m, "meters"),
+    ("18mm F8 structural plywood 2400×1200 — top and shelf", 2, "sheets"),
+    ("75mm construction screws (box 100) — all frame joints, top and shelf", 1, "box"),
+    ("PVA wood glue 1L", 1, "each"),
+    ("6mm hardboard 1800×900mm sheet — pegboard", 1 if PEGBOARD else 0, "each"),
+    ("30mm screws (box 50) — pegboard mounting", 1 if PEGBOARD else 0, "box"),
+]
+
+_budget_path = _Path(__file__).parent.parent / "budget.json"
+if _budget_path.exists():
+    _budget = _json.loads(_budget_path.read_text())
+    _by_name = {item["name"]: item for item in _budget["items"]}
+    _new_items = []
+    for _name, _qty, _unit in _COMPUTED:
+        _existing = _by_name.get(_name, {})
+        _unit_price = _existing.get("unit_price", 0.0)
+        _new_items.append({
+            "name": _name,
+            "qty": float(_qty),
+            "unit": _unit,
+            "unit_price": _unit_price,
+            "subtotal": round(_unit_price * _qty, 2),
+            "added": _existing.get("added", "2026-05-01"),
+        })
+    _budget["items"] = _new_items
+    _budget_path.write_text(_json.dumps(_budget, indent=2, ensure_ascii=False) + "\n")
+    _total = sum(i["subtotal"] for i in _new_items)
+    print(f"Budget synced  : {len(_new_items)} items  total ${_total:.2f}")
+
+_STR_BOT_Z = int(SHELF_Z - SHELF_T - STR_H)
+
+_steps = []
+_steps.append(
+    "**Buy rough-sawn framing timber** — Purchase 90×45 H3.2 rough-sawn framing pine from the framing rack "
+    "(not the dressed joinery section). This is standard house-framing stock — cheaper, widely available, and "
+    "perfectly adequate for a workbench. Wear gloves when handling green treated timber. Sight down each length "
+    "and reject anything badly bowed or twisted; a slight crown is fine. Actual cross-sections run ±2–3 mm from "
+    "nominal — this makes no difference for toe-nailed butt-joint construction."
+)
+_steps.append(
+    f"**Cut legs to length** — Cross-cut 4 legs at {LEG_H} mm using a handsaw. Mark a square line around all "
+    "four faces with a combination square before cutting. Bundle the 4 legs and check they are the same length."
+)
+_steps.append(
+    f"**Cut aprons and stretchers** — Cross-cut the remaining 90×45 to:\n"
+    f"   - 2× {APR_LONG_LEN} mm (long aprons)\n"
+    f"   - 2× {APR_SHORT_LEN} mm (short aprons)\n"
+    f"   - 2× {APR_LONG_LEN} mm (long stretchers)\n"
+    f"   - 2× {APR_SHORT_LEN} mm (short stretchers)\n\n"
+    "   Label each piece immediately — aprons and stretchers are the same length per pair but live at different heights."
+)
+_steps.append(
+    f"**Mark the leg joint positions** — On each leg, mark two lines with a square:\n"
+    f"   - Apron shoulder: {APR_H} mm down from the top (the apron top face is flush with the leg top).\n"
+    f"   - Stretcher shoulder: {_STR_BOT_Z} mm up from the bottom "
+    f"(stretcher bottom face = {_STR_BOT_Z} mm; top face = {SHELF_Z - SHELF_T} mm; shelf top = {SHELF_Z} mm)."
+)
+_steps.append(
+    f"**Build the end frames** — For each of the two end frames (left and right):\n\n"
+    f"   a. Lay two legs on the floor parallel, {APR_SHORT_LEN} mm apart (inside-face to inside-face).\n\n"
+    "   b. Clamp a short apron across the top between the legs, top faces flush, inside face of apron flush with "
+    "the inside face of each leg. Check square by measuring both diagonals.\n\n"
+    "   c. Toe-nail 3× 75 mm construction screws per joint from **inside the frame**: tilt the drill to ~30° and "
+    "start each screw on the **inside face** of the apron, about 20–25 mm back from the joint end, angling into "
+    "the leg face — one angled up, one angled down, one roughly straight. The screw travels through apron face "
+    "grain and bites into leg face grain — no end grain involved. Apply PVA to the joint face first. A 3 mm pilot "
+    "at the same angle prevents splitting.\n\n"
+    "   d. Repeat for the short stretcher at the lower position.\n\n"
+    "   e. Stand the end frame up. Build the second end frame identically."
+)
+_steps.append(
+    f"**Connect the end frames with long aprons and stretchers** — Stand both end frames upright "
+    f"{APR_LONG_LEN} mm apart (inside-face to inside-face) and prop them vertical.\n\n"
+    "   a. Fit the two long aprons front and back. Clamp them in position and check the frame is square "
+    "(measure diagonals across the top opening).\n\n"
+    "   b. Working from **inside the frame**, toe-nail 3× 75 mm construction screws per joint: tilt the drill "
+    "to ~30°, start each screw on the **inside face** of the apron about 20–25 mm from the end, angling into "
+    "the leg face — one angled up, one angled down, one straight. Apply a dab of PVA to the joint face first.\n\n"
+    "   c. Fit the long stretchers the same way.\n\n"
+    "   d. Recheck square and adjust if needed (a diagonal tap with a hammer usually corrects a few mm)."
+)
+_pb_panel_cut = (
+    f" From the hardboard sheet, cut the pegboard panel: {BENCH_W}×{PB_H} mm."
+    if PEGBOARD else ""
+)
+_steps.append(
+    f"**Cut sheet materials** — From sheet 1, cut the top: {BENCH_W}×{BENCH_D} mm. "
+    f"From sheet 2, cut the shelf: {SHELF_W}×{SHELF_D} mm.{_pb_panel_cut} "
+    "A circular saw with a clamped straight-edge gives a clean straight cut; alternatively ask the timber yard "
+    "to rip the sheets for you."
+)
+_steps.append(
+    "**Attach the top** — Place the plywood top on the frame, centred side-to-side. Drive 75 mm construction "
+    "screws at an angle through the top edge of each apron up into the underside of the plywood — 3 screws per "
+    "long apron and 2 per short apron. No countersink needed; the screw head pulls into pine."
+)
+_steps.append(
+    "**Fit the shelf** — Drop the shelf panel onto the stretchers. Drive 2× 75 mm screws per stretcher through "
+    "the shelf into the stretcher top face to hold it captive."
+)
+if PEGBOARD:
+    _steps.append(
+        f"**Mount the pegboard** — Stand the {BENCH_W}×{PB_H} mm hardboard panel against the back face of the "
+        f"bench, flush with the outer back faces of the legs and back apron. Pre-drill 3 mm pilot holes through "
+        f"the {PB_T} mm hardboard: 2 into each back leg (at ⅓ and ⅔ of the panel height) and 2 into the back "
+        "apron near the quarter-points. Drive 30 mm screws to pull the panel tight. The panel sits directly "
+        "above the work surface with no gap at the top edge."
+    )
+_steps.append(
+    "**Finish** — The H3.2 treated pine needs no additional finish for a garage environment. Round any sharp "
+    "corners with a few passes of 80-grit sandpaper. The plywood top can be left bare and will harden with use, "
+    "or apply 2 coats of boiled linseed oil for moisture resistance."
+)
+
+_pb_cut_row = (
+    f"| Pegboard | 1 | {BENCH_W} | {PB_H} | {PB_T} | 6 mm hardboard | Mount on back face |\n"
+    if PEGBOARD else ""
+)
+_pb_ply_note = (
+    f"\n**Pegboard:** 1 sheet of 1800×900×6 mm hardboard, cut to {BENCH_W}×{PB_H} mm."
+    if PEGBOARD else ""
+)
+_pb_notes_item = (
+    f"- **Pegboard mounting:** The hardboard panel is secured with 30 mm screws through its face into the back "
+    "legs and back apron — 2 into each back leg and 2 into the back apron is sufficient for a tool board.\n"
+    if PEGBOARD else
+    "- **Pegboard:** The model supports an optional pegboard — set `PEGBOARD = True` to include it in the build.\n"
+)
+_pb_future = (
+    ""
+    if PEGBOARD else
+    " Peg-board or plywood tool storage can be screwed directly to the back apron."
+)
+
+_steps_text = "\n\n".join(f"{i + 1}. {s}" for i, s in enumerate(_steps))
+
+_plan_text = f"""# Garage Workbench — Build Plan
+
+## Tools required
+
+### Power tools
+- Drill/driver (pilot holes and driving construction screws)
+- Circular saw or jigsaw (cutting plywood sheet to size) — optional; a panel saw at the timber yard can do this
+
+### Hand tools
+- Handsaw (cross-cutting 90×45 framing to length — no table saw needed)
+- Tape measure, combination square, pencil
+- Clamps — 4× F-clamps or G-clamps (600 mm jaw sufficient)
+- Hammer (for tapping joints square)
+
+### Jigs & accessories
+- Straight-edge or clamping guide for circular saw (plywood cuts)
+- 3 mm HSS drill bit (optional pilot holes for toe-nailed screws — prevents splitting near ends)
+
+---
+
+## Cut list
+
+| Part | Qty | L (mm) | W (mm) | T (mm) | Material | Notes |
+|------|-----|--------|--------|--------|----------|-------|
+| Leg | 4 | {LEG_H} | 90 | 45 | 90×45 H3.2 pine | 90 mm face runs left-right |
+| Long apron | 2 | {APR_LONG_LEN} | 90 | 45 | 90×45 pine | Front and back, top |
+| Short apron | 2 | {APR_SHORT_LEN} | 90 | 45 | 90×45 pine | Left and right ends, top |
+| Long stretcher | 2 | {APR_LONG_LEN} | 90 | 45 | 90×45 pine | Front and back, lower |
+| Short stretcher | 2 | {APR_SHORT_LEN} | 90 | 45 | 90×45 pine | Left and right ends, lower |
+| Top | 1 | {BENCH_W} | {BENCH_D} | {TOP_T} | 18 mm F8 ply | Work surface |
+| Lower shelf | 1 | {SHELF_W} | {SHELF_D} | {SHELF_T} | 18 mm F8 ply | Inset between legs |
+{_pb_cut_row}
+**Framing total:** {_framing_exact_m:.1f} m of 90×45 mm — buy {_framing_buy_m} m to allow for end cuts.
+Suggested lengths: 3× 4.8 m + 1× 3.0 m, or whatever combination covers {_framing_buy_m} m with minimal waste.
+
+**Plywood:** 2 sheets of 2400×1200×{TOP_T} mm F8 structural ply.
+Sheet 1 → top ({BENCH_W}×{BENCH_D}). Sheet 2 → shelf ({SHELF_W}×{SHELF_D}) with offcut to spare.{_pb_ply_note}
+
+---
+
+## Build steps
+
+{_steps_text}
+
+---
+
+## Notes
+
+- **No facing / milling:** Rough-sawn framing timber needs nothing done to it. Just cut to length.
+- **Assembly order:** Build end frames on the floor first — it is far easier to keep joints square when the pieces are lying flat. Stand them up only when both frames are complete.
+- **Square check:** After every glue-and-screw step, measure both diagonals. Equal diagonals = square frame. A 2 mm difference is acceptable; correct anything over 4 mm by tapping a corner before the glue sets.
+- **Toe-nailing technique:** Start each screw about 20–25 mm back from the joint face on the inside face of the apron or stretcher. Tilt the drill to approximately 30°. A 3 mm pilot hole at the same angle prevents splitting near the ends. Three screws per joint — one angled up, one angled down, one roughly straight — gives good pull-out resistance with no screws entering end grain and no crossing paths inside any timber section.
+- **Leg orientation:** The 90 mm face of each leg faces left-right (visible from the front), the 45 mm face goes front-to-back. This keeps the bench shallow and saves material while maintaining good load-bearing capacity.
+{_pb_notes_item}- **Future upgrades:** A face vice (Record #52 or similar) bolts to the left-end apron. The 90 mm apron face provides a good clamping surface.{_pb_future}
+"""
+
+_plan_path = _Path(__file__).parent.parent / "build-plan.md"
+_plan_path.write_text(_plan_text)
+print(f"Build plan updated: {_plan_path.name}")
+
 # ── Export ────────────────────────────────────────────────────────────────────
 show_object = asm
