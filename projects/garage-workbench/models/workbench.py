@@ -7,11 +7,14 @@ rack at any Mitre 10 / Bunnings; no dressing or facing required.
 Dimensions are nominal — actual cross-section varies ±2–3 mm per piece.
 
 Structure:
-  Top        : single 18 mm structural plywood sheet (1800 × 600)
-  Legs       : 90 × 45 mm pine, 4 off — same section as everything else
+  Top        : single 18 mm structural plywood sheet (shortened when PEGBOARD)
+  Legs       : 90 × 45 mm pine — front pair at bench height, back pair
+               extended above the work surface when PEGBOARD is on
   Aprons     : 90 × 45 mm pine — long front/back + short end aprons
   Lower shelf: 18 mm structural plywood, inset between legs
   Stretchers : 90 × 45 mm pine — long + end pairs supporting shelf
+  Pegboard   : optional — 6 mm hardboard in a perimeter frame formed by
+               the extended back legs + back top rail
 
 Joinery: 75 mm construction screws toe-nailed from inside + PVA throughout — face grain to
          face grain at every joint, no end grain, no crossing screw paths, no jigs needed.
@@ -66,13 +69,6 @@ LEG_CX_R = BENCH_W - LEG_W / 2
 LEG_CY_F = LEG_D / 2
 LEG_CY_B = BENCH_D - LEG_D / 2
 
-LEG_POSITIONS = [
-    (LEG_CX_L, LEG_CY_F, "FL"),
-    (LEG_CX_R, LEG_CY_F, "FR"),
-    (LEG_CX_L, LEG_CY_B, "BL"),
-    (LEG_CX_R, LEG_CY_B, "BR"),
-]
-
 # Long apron clear span between leg inside faces
 APR_LONG_LEN = BENCH_W - LEG_W * 2   # net clear, but we run it leg-face to leg-face
 APR_LONG_CX  = BENCH_W / 2
@@ -97,6 +93,10 @@ STR_FRONT_CY = APR_FRONT_CY        # same front/back Y as aprons
 STR_BACK_CY  = APR_BACK_CY
 STR_Z        = SHELF_Z - SHELF_T - STR_H / 2   # shelf sits on top of stretchers
 
+# When PEGBOARD: back legs extend above the work surface; top is shortened to clear them.
+LEG_H_B = (BENCH_H + PB_H) if PEGBOARD else LEG_H
+TOP_D   = BENCH_D - LEG_D if PEGBOARD else BENCH_D
+
 # ── Colours ───────────────────────────────────────────────────────────────────
 C_LEG   = cq.Color(0.66, 0.48, 0.30)   # pine — same as all framing
 C_FRAME = cq.Color(0.66, 0.48, 0.30)   # pine framing (aprons / stretchers)
@@ -106,12 +106,20 @@ C_PEG   = cq.Color(0.45, 0.32, 0.20)   # hardboard pegboard
 asm = cq.Assembly()
 
 # ── Legs ──────────────────────────────────────────────────────────────────────
-leg = cq.Workplane("XY").box(LEG_W, LEG_D, LEG_H)
-for cx, cy, name in LEG_POSITIONS:
+front_leg = cq.Workplane("XY").box(LEG_W, LEG_D, LEG_H)
+back_leg  = cq.Workplane("XY").box(LEG_W, LEG_D, LEG_H_B)
+for cx, cy, name in [(LEG_CX_L, LEG_CY_F, "FL"), (LEG_CX_R, LEG_CY_F, "FR")]:
     asm.add(
-        leg,
+        front_leg,
         name=f"leg_{name}",
         loc=cq.Location(cq.Vector(cx, cy, LEG_H / 2)),
+        color=C_LEG,
+    )
+for cx, cy, name in [(LEG_CX_L, LEG_CY_B, "BL"), (LEG_CX_R, LEG_CY_B, "BR")]:
+    asm.add(
+        back_leg,
+        name=f"leg_{name}",
+        loc=cq.Location(cq.Vector(cx, cy, LEG_H_B / 2)),
         color=C_LEG,
     )
 
@@ -145,14 +153,15 @@ asm.add(
     color=C_FRAME,
 )
 
-# ── Work surface — two layers of 18 mm plywood ───────────────────────────────
-top_layer = cq.Workplane("XY").box(BENCH_W, BENCH_D, TOP_T)
+# ── Work surface ──────────────────────────────────────────────────────────────
+# TOP_D is shortened to clear the back legs when PEGBOARD is on.
+top_layer = cq.Workplane("XY").box(BENCH_W, TOP_D, TOP_T)
 for i in range(TOP_LAYERS):
     z = LEG_H + TOP_T * i + TOP_T / 2
     asm.add(
         top_layer,
         name=f"top_layer_{i}",
-        loc=cq.Location(cq.Vector(BENCH_W / 2, BENCH_D / 2, z)),
+        loc=cq.Location(cq.Vector(BENCH_W / 2, TOP_D / 2, z)),
         color=C_PLY,
     )
 
@@ -196,6 +205,15 @@ asm.add(
 
 # ── Pegboard (optional) ───────────────────────────────────────────────────────
 if PEGBOARD:
+    # Back top rail — spans between the extended back legs at the top of the panel,
+    # completing the perimeter frame the hardboard panel screws into.
+    pb_top_rail = cq.Workplane("XY").box(APR_LONG_LEN, APR_T, APR_H)
+    asm.add(
+        pb_top_rail,
+        name="pb_top_rail",
+        loc=cq.Location(cq.Vector(APR_LONG_CX, APR_BACK_CY, BENCH_H + PB_H - APR_H / 2)),
+        color=C_FRAME,
+    )
     pb = cq.Workplane("XY").box(BENCH_W, PB_T, PB_H)
     asm.add(
         pb,
@@ -210,9 +228,9 @@ if PEGBOARD:
 
 # ── Summary ───────────────────────────────────────────────────────────────────
 print(f"Overall        : {BENCH_W} W × {BENCH_D} D × {BENCH_H} H mm")
-print(f"Leg height     : {LEG_H} mm")
+print(f"Leg height     : front {LEG_H} mm / back {LEG_H_B} mm")
 print(f"Shelf at       : {SHELF_Z} mm (top face)")
-print(f"Top surface    : {TOP_LAYERS} × {TOP_T} mm = {TOP_LAYERS * TOP_T} mm thick")
+print(f"Top surface    : {BENCH_W}×{TOP_D}×{TOP_T} mm  ({TOP_LAYERS} layer)")
 print(f"Apron span     : {APR_LONG_LEN} mm (long)  ×  {APR_SHORT_LEN} mm (short)")
 print(f"Pegboard       : {'%d W × %d H × %d T mm' % (BENCH_W, PB_H, PB_T) if PEGBOARD else 'omitted'}")
 
@@ -223,9 +241,10 @@ import json as _json
 from pathlib import Path as _Path
 
 _framing_exact_m = (
-    4 * LEG_H
+    2 * LEG_H + 2 * LEG_H_B                   # front + back legs (may differ)
     + 2 * APR_LONG_LEN + 2 * APR_SHORT_LEN   # aprons
     + 2 * APR_LONG_LEN + 2 * APR_SHORT_LEN   # stretchers (same spans)
+    + (APR_LONG_LEN if PEGBOARD else 0)        # back top rail
 ) / 1000
 _framing_buy_m = int(round(_framing_exact_m)) + 1
 
@@ -269,16 +288,28 @@ _steps.append(
     "and reject anything badly bowed or twisted; a slight crown is fine. Actual cross-sections run ±2–3 mm from "
     "nominal — this makes no difference for toe-nailed butt-joint construction."
 )
-_steps.append(
-    f"**Cut legs to length** — Cross-cut 4 legs at {LEG_H} mm using a handsaw. Mark a square line around all "
-    "four faces with a combination square before cutting. Bundle the 4 legs and check they are the same length."
+if PEGBOARD:
+    _steps.append(
+        f"**Cut legs to length** — Cross-cut 2 front legs at {LEG_H} mm and 2 back legs at {LEG_H_B} mm using a "
+        "handsaw. Mark a square line around all four faces before each cut. Keep front and back legs in separate "
+        "bundles — they look similar until you measure them."
+    )
+else:
+    _steps.append(
+        f"**Cut legs to length** — Cross-cut 4 legs at {LEG_H} mm using a handsaw. Mark a square line around all "
+        "four faces with a combination square before cutting. Bundle the 4 legs and check they are the same length."
+    )
+_pb_rail_cut = (
+    f"   - 1× {APR_LONG_LEN} mm (back top rail — pegboard frame top)\n"
+    if PEGBOARD else ""
 )
 _steps.append(
     f"**Cut aprons and stretchers** — Cross-cut the remaining 90×45 to:\n"
     f"   - 2× {APR_LONG_LEN} mm (long aprons)\n"
     f"   - 2× {APR_SHORT_LEN} mm (short aprons)\n"
     f"   - 2× {APR_LONG_LEN} mm (long stretchers)\n"
-    f"   - 2× {APR_SHORT_LEN} mm (short stretchers)\n\n"
+    f"   - 2× {APR_SHORT_LEN} mm (short stretchers)\n"
+    f"{_pb_rail_cut}\n"
     "   Label each piece immediately — aprons and stretchers are the same length per pair but live at different heights."
 )
 _steps.append(
@@ -286,10 +317,11 @@ _steps.append(
     f"   - Apron shoulder: {APR_H} mm down from the top (the apron top face is flush with the leg top).\n"
     f"   - Stretcher shoulder: {_STR_BOT_Z} mm up from the bottom "
     f"(stretcher bottom face = {_STR_BOT_Z} mm; top face = {SHELF_Z - SHELF_T} mm; shelf top = {SHELF_Z} mm)."
+    + ("\n   Mark all 4 legs at these positions — both joints are the same height on front and back legs." if PEGBOARD else "")
 )
 _steps.append(
     f"**Build the end frames** — For each of the two end frames (left and right):\n\n"
-    f"   a. Lay two legs on the floor parallel, {APR_SHORT_LEN} mm apart (inside-face to inside-face).\n\n"
+    f"   a. Lay one front leg and one back leg on the floor parallel, {APR_SHORT_LEN} mm apart (inside-face to inside-face).\n\n"
     "   b. Clamp a short apron across the top between the legs, top faces flush, inside face of apron flush with "
     "the inside face of each leg. Check square by measuring both diagonals.\n\n"
     "   c. Toe-nail 3× 75 mm construction screws per joint from **inside the frame**: tilt the drill to ~30° and "
@@ -311,32 +343,50 @@ _steps.append(
     "   c. Fit the long stretchers the same way.\n\n"
     "   d. Recheck square and adjust if needed (a diagonal tap with a hammer usually corrects a few mm)."
 )
+if PEGBOARD:
+    _steps.append(
+        f"**Fit the back top rail** — Toe-nail the {APR_LONG_LEN} mm back top rail between the tops of the two "
+        "extended back legs, flush with their top faces and with the inside back face of the legs — this mirrors "
+        "the front apron and completes the pegboard perimeter frame. 3× 75 mm screws per joint from inside."
+    )
+_top_cut_note = (
+    f"{BENCH_W}×{TOP_D} mm (shortened to clear the extended back legs)"
+    if PEGBOARD else f"{BENCH_W}×{TOP_D} mm"
+)
 _pb_panel_cut = (
     f" From the hardboard sheet, cut the pegboard panel: {BENCH_W}×{PB_H} mm."
     if PEGBOARD else ""
 )
 _steps.append(
-    f"**Cut sheet materials** — From sheet 1, cut the top: {BENCH_W}×{BENCH_D} mm. "
+    f"**Cut sheet materials** — From sheet 1, cut the top: {_top_cut_note}. "
     f"From sheet 2, cut the shelf: {SHELF_W}×{SHELF_D} mm.{_pb_panel_cut} "
     "A circular saw with a clamped straight-edge gives a clean straight cut; alternatively ask the timber yard "
     "to rip the sheets for you."
 )
-_steps.append(
-    "**Attach the top** — Place the plywood top on the frame, centred side-to-side. Drive 75 mm construction "
-    "screws at an angle through the top edge of each apron up into the underside of the plywood — 3 screws per "
-    "long apron and 2 per short apron. No countersink needed; the screw head pulls into pine."
-)
+if PEGBOARD:
+    _steps.append(
+        f"**Attach the top** — Place the {BENCH_W}×{TOP_D} mm plywood top on the frame flush with the front "
+        "and side faces, butting its back edge against the front faces of the extended back legs. Drive 75 mm "
+        "construction screws at an angle through the top edge of each apron up into the underside of the plywood "
+        "— 3 screws per long apron and 2 per short apron."
+    )
+else:
+    _steps.append(
+        "**Attach the top** — Place the plywood top on the frame, centred side-to-side. Drive 75 mm construction "
+        "screws at an angle through the top edge of each apron up into the underside of the plywood — 3 screws per "
+        "long apron and 2 per short apron. No countersink needed; the screw head pulls into pine."
+    )
 _steps.append(
     "**Fit the shelf** — Drop the shelf panel onto the stretchers. Drive 2× 75 mm screws per stretcher through "
     "the shelf into the stretcher top face to hold it captive."
 )
 if PEGBOARD:
     _steps.append(
-        f"**Mount the pegboard** — Stand the {BENCH_W}×{PB_H} mm hardboard panel against the back face of the "
-        f"bench, flush with the outer back faces of the legs and back apron. Pre-drill 3 mm pilot holes through "
-        f"the {PB_T} mm hardboard: 2 into each back leg (at ⅓ and ⅔ of the panel height) and 2 into the back "
-        "apron near the quarter-points. Drive 30 mm screws to pull the panel tight. The panel sits directly "
-        "above the work surface with no gap at the top edge."
+        f"**Mount the pegboard** — Stand the {BENCH_W}×{PB_H} mm hardboard panel in the frame: bottom edge "
+        f"resting on the work surface, top edge against the back top rail, side edges against the back legs. "
+        f"Pre-drill 3 mm pilot holes through the {PB_T} mm hardboard into each back leg (at ⅓ and ⅔ of the "
+        "panel height) and into the back top rail near the quarter-points. Drive 30 mm screws to pull the panel "
+        "tight into the frame."
     )
 _steps.append(
     "**Finish** — The H3.2 treated pine needs no additional finish for a garage environment. Round any sharp "
@@ -344,8 +394,15 @@ _steps.append(
     "or apply 2 coats of boiled linseed oil for moisture resistance."
 )
 
-_pb_cut_row = (
-    f"| Pegboard | 1 | {BENCH_W} | {PB_H} | {PB_T} | 6 mm hardboard | Mount on back face |\n"
+_leg_cut_rows = (
+    f"| Front leg | 2 | {LEG_H} | 90 | 45 | 90×45 H3.2 pine | 90 mm face runs left-right |\n"
+    f"| Back leg | 2 | {LEG_H_B} | 90 | 45 | 90×45 H3.2 pine | Extended — pegboard frame uprights |"
+    if PEGBOARD else
+    f"| Leg | 4 | {LEG_H} | 90 | 45 | 90×45 H3.2 pine | 90 mm face runs left-right |"
+)
+_pb_frame_rows = (
+    f"\n| Back top rail | 1 | {APR_LONG_LEN} | 90 | 45 | 90×45 pine | Pegboard frame top |\n"
+    f"| Pegboard | 1 | {BENCH_W} | {PB_H} | {PB_T} | 6 mm hardboard | Mount on back face |"
     if PEGBOARD else ""
 )
 _pb_ply_note = (
@@ -353,8 +410,8 @@ _pb_ply_note = (
     if PEGBOARD else ""
 )
 _pb_notes_item = (
-    f"- **Pegboard mounting:** The hardboard panel is secured with 30 mm screws through its face into the back "
-    "legs and back apron — 2 into each back leg and 2 into the back apron is sufficient for a tool board.\n"
+    "- **Pegboard frame:** The two extended back legs and back top rail form a rigid perimeter. "
+    "The hardboard panel screws into all four sides — no bowing under tool loads.\n"
     if PEGBOARD else
     "- **Pegboard:** The model supports an optional pegboard — set `PEGBOARD = True` to include it in the build.\n"
 )
@@ -390,19 +447,18 @@ _plan_text = f"""# Garage Workbench — Build Plan
 
 | Part | Qty | L (mm) | W (mm) | T (mm) | Material | Notes |
 |------|-----|--------|--------|--------|----------|-------|
-| Leg | 4 | {LEG_H} | 90 | 45 | 90×45 H3.2 pine | 90 mm face runs left-right |
+{_leg_cut_rows}
 | Long apron | 2 | {APR_LONG_LEN} | 90 | 45 | 90×45 pine | Front and back, top |
 | Short apron | 2 | {APR_SHORT_LEN} | 90 | 45 | 90×45 pine | Left and right ends, top |
 | Long stretcher | 2 | {APR_LONG_LEN} | 90 | 45 | 90×45 pine | Front and back, lower |
 | Short stretcher | 2 | {APR_SHORT_LEN} | 90 | 45 | 90×45 pine | Left and right ends, lower |
-| Top | 1 | {BENCH_W} | {BENCH_D} | {TOP_T} | 18 mm F8 ply | Work surface |
-| Lower shelf | 1 | {SHELF_W} | {SHELF_D} | {SHELF_T} | 18 mm F8 ply | Inset between legs |
-{_pb_cut_row}
+| Top | 1 | {BENCH_W} | {TOP_D} | {TOP_T} | 18 mm F8 ply | Work surface |
+| Lower shelf | 1 | {SHELF_W} | {SHELF_D} | {SHELF_T} | 18 mm F8 ply | Inset between legs |{_pb_frame_rows}
+
 **Framing total:** {_framing_exact_m:.1f} m of 90×45 mm — buy {_framing_buy_m} m to allow for end cuts.
-Suggested lengths: 3× 4.8 m + 1× 3.0 m, or whatever combination covers {_framing_buy_m} m with minimal waste.
 
 **Plywood:** 2 sheets of 2400×1200×{TOP_T} mm F8 structural ply.
-Sheet 1 → top ({BENCH_W}×{BENCH_D}). Sheet 2 → shelf ({SHELF_W}×{SHELF_D}) with offcut to spare.{_pb_ply_note}
+Sheet 1 → top ({BENCH_W}×{TOP_D}). Sheet 2 → shelf ({SHELF_W}×{SHELF_D}) with offcut to spare.{_pb_ply_note}
 
 ---
 
