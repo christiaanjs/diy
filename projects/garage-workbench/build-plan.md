@@ -83,7 +83,7 @@ Sheet 1 → top (1800×555). Sheet 2 → shelf (1620×510) with offcut to spare.
 
    d. Recheck square and adjust if needed (a diagonal tap with a hammer usually corrects a few mm).
 
-7. **Fit the back top rail** — Toe-nail the 1620 mm back top rail between the tops of the two extended back legs, flush with their top faces and with the front face of the legs — facing the workspace. This completes the pegboard perimeter frame. 3× 75 mm screws per joint from behind.
+7. **Fit the back top rail** — Toe-nail the 1620 mm back top rail between the tops of the two extended back legs, flush with their top faces and with the back inside face of the legs — its front face sits flush against the back of the pegboard panel. 3× 75 mm screws per joint from inside.
 
 8. **Cut sheet materials** — From sheet 1, cut the top: 1800×555 mm (shortened to clear the extended back legs). From sheet 2, cut the shelf: 1620×510 mm. From the hardboard sheet, cut the pegboard panel: 1800×600 mm. A circular saw with a clamped straight-edge gives a clean straight cut; alternatively ask the timber yard to rip the sheets for you.
 

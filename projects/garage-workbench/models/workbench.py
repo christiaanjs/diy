@@ -211,7 +211,7 @@ if PEGBOARD:
     asm.add(
         pb_top_rail,
         name="pb_top_rail",
-        loc=cq.Location(cq.Vector(APR_LONG_CX, BENCH_D - LEG_D - APR_T / 2, BENCH_H + PB_H - APR_H / 2)),
+        loc=cq.Location(cq.Vector(APR_LONG_CX, APR_BACK_CY, BENCH_H + PB_H - APR_H / 2)),
         color=C_FRAME,
     )
     pb = cq.Workplane("XY").box(BENCH_W, PB_T, PB_H)
@@ -346,8 +346,8 @@ _steps.append(
 if PEGBOARD:
     _steps.append(
         f"**Fit the back top rail** — Toe-nail the {APR_LONG_LEN} mm back top rail between the tops of the two "
-        "extended back legs, flush with their top faces and with the front face of the legs — facing the "
-        "workspace. This completes the pegboard perimeter frame. 3× 75 mm screws per joint from behind."
+        "extended back legs, flush with their top faces and with the back inside face of the legs — its front "
+        "face sits flush against the back of the pegboard panel. 3× 75 mm screws per joint from inside."
     )
 _top_cut_note = (
     f"{BENCH_W}×{TOP_D} mm (shortened to clear the extended back legs)"
