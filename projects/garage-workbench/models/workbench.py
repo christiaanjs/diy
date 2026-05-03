@@ -211,7 +211,7 @@ if PEGBOARD:
     asm.add(
         pb_top_rail,
         name="pb_top_rail",
-        loc=cq.Location(cq.Vector(APR_LONG_CX, APR_BACK_CY, BENCH_H + PB_H - APR_H / 2)),
+        loc=cq.Location(cq.Vector(APR_LONG_CX, BENCH_D - LEG_D - APR_T / 2, BENCH_H + PB_H - APR_H / 2)),
         color=C_FRAME,
     )
     pb = cq.Workplane("XY").box(BENCH_W, PB_T, PB_H)
@@ -220,8 +220,8 @@ if PEGBOARD:
         name="pegboard",
         loc=cq.Location(cq.Vector(
             BENCH_W / 2,
-            BENCH_D + PB_T / 2,   # flush against the back face of the bench
-            BENCH_H + PB_H / 2,   # sits directly above the work surface
+            BENCH_D - LEG_D - PB_T / 2,   # flush against the front face of the back legs
+            BENCH_H + PB_H / 2,            # sits directly above the work surface
         )),
         color=C_PEG,
     )
@@ -346,8 +346,8 @@ _steps.append(
 if PEGBOARD:
     _steps.append(
         f"**Fit the back top rail** — Toe-nail the {APR_LONG_LEN} mm back top rail between the tops of the two "
-        "extended back legs, flush with their top faces and with the inside back face of the legs — this mirrors "
-        "the front apron and completes the pegboard perimeter frame. 3× 75 mm screws per joint from inside."
+        "extended back legs, flush with their top faces and with the front face of the legs — facing the "
+        "workspace. This completes the pegboard perimeter frame. 3× 75 mm screws per joint from behind."
     )
 _top_cut_note = (
     f"{BENCH_W}×{TOP_D} mm (shortened to clear the extended back legs)"
@@ -382,11 +382,11 @@ _steps.append(
 )
 if PEGBOARD:
     _steps.append(
-        f"**Mount the pegboard** — Stand the {BENCH_W}×{PB_H} mm hardboard panel in the frame: bottom edge "
-        f"resting on the work surface, top edge against the back top rail, side edges against the back legs. "
-        f"Pre-drill 3 mm pilot holes through the {PB_T} mm hardboard into each back leg (at ⅓ and ⅔ of the "
-        "panel height) and into the back top rail near the quarter-points. Drive 30 mm screws to pull the panel "
-        "tight into the frame."
+        f"**Mount the pegboard** — Slide the {BENCH_W}×{PB_H} mm hardboard panel into the frame against the "
+        f"front faces of the back legs, facing the workspace: bottom edge resting on the work surface, top edge "
+        f"against the back top rail, side edges flush with the outer faces of the back legs. Pre-drill 3 mm "
+        f"pilot holes through the {PB_T} mm hardboard into each back leg (at ⅓ and ⅔ of the panel height) and "
+        "into the back top rail near the quarter-points. Drive 30 mm screws from the front face."
     )
 _steps.append(
     "**Finish** — The H3.2 treated pine needs no additional finish for a garage environment. Round any sharp "
