@@ -31,6 +31,11 @@ BENCH_W  = 1800   # total width  (X)
 BENCH_D  = 600    # total depth  (Y)
 BENCH_H  = 900    # finished height from floor to top surface (Z)
 
+# Pegboard — set False to omit entirely
+PEGBOARD = True
+PB_T     = 6     # panel thickness (6 mm hardboard)
+PB_H     = 600   # panel height above work surface
+
 # Top
 TOP_T    = 18     # plywood thickness
 TOP_LAYERS = 1    # single sheet — adequate over a well-spaced frame
@@ -96,6 +101,7 @@ STR_Z        = SHELF_Z - SHELF_T - STR_H / 2   # shelf sits on top of stretchers
 C_LEG   = cq.Color(0.66, 0.48, 0.30)   # pine — same as all framing
 C_FRAME = cq.Color(0.66, 0.48, 0.30)   # pine framing (aprons / stretchers)
 C_PLY   = cq.Color(0.82, 0.72, 0.50)   # plywood top and shelf
+C_PEG   = cq.Color(0.45, 0.32, 0.20)   # hardboard pegboard
 
 asm = cq.Assembly()
 
@@ -188,12 +194,27 @@ asm.add(
     color=C_PLY,
 )
 
+# ── Pegboard (optional) ───────────────────────────────────────────────────────
+if PEGBOARD:
+    pb = cq.Workplane("XY").box(BENCH_W, PB_T, PB_H)
+    asm.add(
+        pb,
+        name="pegboard",
+        loc=cq.Location(cq.Vector(
+            BENCH_W / 2,
+            BENCH_D + PB_T / 2,   # flush against the back face of the bench
+            BENCH_H + PB_H / 2,   # sits directly above the work surface
+        )),
+        color=C_PEG,
+    )
+
 # ── Summary ───────────────────────────────────────────────────────────────────
 print(f"Overall        : {BENCH_W} W × {BENCH_D} D × {BENCH_H} H mm")
 print(f"Leg height     : {LEG_H} mm")
 print(f"Shelf at       : {SHELF_Z} mm (top face)")
 print(f"Top surface    : {TOP_LAYERS} × {TOP_T} mm = {TOP_LAYERS * TOP_T} mm thick")
 print(f"Apron span     : {APR_LONG_LEN} mm (long)  ×  {APR_SHORT_LEN} mm (short)")
+print(f"Pegboard       : {'%d W × %d H × %d T mm' % (BENCH_W, PB_H, PB_T) if PEGBOARD else 'omitted'}")
 
 # ── Export ────────────────────────────────────────────────────────────────────
 show_object = asm
