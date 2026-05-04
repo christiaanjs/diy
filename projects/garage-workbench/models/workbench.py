@@ -195,7 +195,17 @@ asm.add(
 )
 
 # ── Lower shelf ───────────────────────────────────────────────────────────────
-shelf = cq.Workplane("XY").box(SHELF_W, SHELF_D, SHELF_T)
+shelf = cq.Workplane("XY").box(BENCH_W, BENCH_D, SHELF_T)
+for _sx, _sy in [(-1, -1), (1, -1), (-1, 1), (1, 1)]:
+    shelf = shelf.cut(
+        cq.Workplane("XY")
+        .box(LEG_W, LEG_D, SHELF_T)
+        .translate(cq.Vector(
+            _sx * (BENCH_W / 2 - LEG_W / 2),
+            _sy * (BENCH_D / 2 - LEG_D / 2),
+            0,
+        ))
+    )
 asm.add(
     shelf,
     name="shelf",
@@ -357,9 +367,20 @@ _pb_panel_cut = (
 )
 _steps.append(
     f"**Cut sheet materials** — From sheet 1, cut the top: {_top_cut_note}. "
-    f"From sheet 2, cut the shelf: {SHELF_W}×{SHELF_D} mm.{_pb_panel_cut} "
+    f"From sheet 2, cut the shelf blank: {BENCH_W}×{BENCH_D} mm — one rip cut only, "
+    f"since the sheet is already {BENCH_D} mm wide.{_pb_panel_cut} "
     "A circular saw with a clamped straight-edge gives a clean straight cut; alternatively ask the timber yard "
     "to rip the sheets for you."
+)
+_steps.append(
+    f"**Cut corner notches in the shelf** — At each of the four corners of the shelf blank, mark a "
+    f"{LEG_W}×{LEG_D} mm notch: {LEG_W} mm along the long edge and {LEG_D} mm in from the short edge. "
+    "Use a combination square and pencil to mark both lines, then score along each line with a utility knife "
+    f"to prevent tear-out. Make the short cross-cut first — saw {LEG_D} mm in from the corner edge with a "
+    "handsaw, keeping the blade on the waste side of the line. Then make the rip-cut along the long edge "
+    f"({LEG_W} mm from the end), again with a handsaw. The waste piece drops free. Pare the internal corner "
+    "square with a chisel if needed. All four notches are identical — use the first as a template to mark "
+    "the remaining three."
 )
 if PEGBOARD:
     _steps.append(
@@ -375,8 +396,9 @@ else:
         "long apron and 2 per short apron. No countersink needed; the screw head pulls into pine."
     )
 _steps.append(
-    "**Fit the shelf** — Drop the shelf panel onto the stretchers. Drive 2× 75 mm screws per stretcher through "
-    "the shelf into the stretcher top face to hold it captive."
+    "**Fit the shelf** — Drop the notched shelf into place — the corner cutouts locate around the legs and "
+    "the shelf bears on all four stretchers. Drive 2× 75 mm screws per stretcher (8 total) down through the "
+    "shelf into each stretcher top face to hold it captive."
 )
 if PEGBOARD:
     _steps.append(
@@ -451,12 +473,12 @@ _plan_text = f"""# Garage Workbench — Build Plan
 | Long stretcher | 2 | {APR_LONG_LEN} | 90 | 45 | 90×45 pine | Front and back, lower |
 | Short stretcher | 2 | {APR_SHORT_LEN} | 90 | 45 | 90×45 pine | Left and right ends, lower |
 | Top | 1 | {BENCH_W} | {TOP_D} | {TOP_T} | 18 mm F8 ply | Work surface |
-| Lower shelf | 1 | {SHELF_W} | {SHELF_D} | {SHELF_T} | 18 mm F8 ply | Inset between legs |{_pb_frame_rows}
+| Lower shelf | 1 | {BENCH_W} | {BENCH_D} | {SHELF_T} | 18 mm F8 ply | 4× {LEG_W}×{LEG_D} mm corner notches |{_pb_frame_rows}
 
 **Framing total:** {_framing_exact_m:.1f} m of 90×45 mm — buy {_framing_buy_m} m to allow for end cuts.
 
 **Plywood:** 2 sheets of 2400×1200×{TOP_T} mm F8 structural ply.
-Sheet 1 → top ({BENCH_W}×{TOP_D}). Sheet 2 → shelf ({SHELF_W}×{SHELF_D}) with offcut to spare.{_pb_ply_note}
+Sheet 1 → top ({BENCH_W}×{TOP_D}). Sheet 2 → shelf blank ({BENCH_W}×{BENCH_D}), then cut 4 corner notches.{_pb_ply_note}
 
 ---
 

@@ -29,14 +29,14 @@
 | Long stretcher | 2 | 1620 | 90 | 45 | 90×45 pine | Front and back, lower |
 | Short stretcher | 2 | 510 | 90 | 45 | 90×45 pine | Left and right ends, lower |
 | Top | 1 | 1800 | 555 | 18 | 18 mm F8 ply | Work surface |
-| Lower shelf | 1 | 1620 | 510 | 18 | 18 mm F8 ply | Inset between legs |
+| Lower shelf | 1 | 1800 | 600 | 18 | 18 mm F8 ply | 4× 90×45 mm corner notches |
 | Back top rail | 1 | 1620 | 90 | 45 | 90×45 pine | Pegboard frame top |
 | Pegboard | 1 | 1800 | 600 | 6 | 6 mm hardboard | Mount on back face |
 
 **Framing total:** 14.9 m of 90×45 mm — buy 16 m to allow for end cuts.
 
 **Plywood:** 2 sheets of 2400×1200×18 mm F8 structural ply.
-Sheet 1 → top (1800×555). Sheet 2 → shelf (1620×510) with offcut to spare.
+Sheet 1 → top (1800×555). Sheet 2 → shelf blank (1800×600), then cut 4 corner notches.
 **Pegboard:** 1 sheet of 1800×900×6 mm hardboard, cut to 1800×600 mm.
 
 ---
@@ -85,15 +85,17 @@ Sheet 1 → top (1800×555). Sheet 2 → shelf (1620×510) with offcut to spare.
 
 7. **Fit the back top rail** — Toe-nail the 1620 mm back top rail between the tops of the two extended back legs, flush with their top faces and with the back inside face of the legs — its front face sits flush against the back of the pegboard panel. 3× 75 mm screws per joint from inside.
 
-8. **Cut sheet materials** — From sheet 1, cut the top: 1800×555 mm (shortened to clear the extended back legs). From sheet 2, cut the shelf: 1620×510 mm. From the hardboard sheet, cut the pegboard panel: 1800×600 mm. A circular saw with a clamped straight-edge gives a clean straight cut; alternatively ask the timber yard to rip the sheets for you.
+8. **Cut sheet materials** — From sheet 1, cut the top: 1800×555 mm (shortened to clear the extended back legs). From sheet 2, cut the shelf blank: 1800×600 mm — one rip cut only, since the sheet is already 600 mm wide. From the hardboard sheet, cut the pegboard panel: 1800×600 mm. A circular saw with a clamped straight-edge gives a clean straight cut; alternatively ask the timber yard to rip the sheets for you.
 
-9. **Attach the top** — Place the 1800×555 mm plywood top on the frame flush with the front and side faces, butting its back edge against the front faces of the extended back legs. Drive 75 mm construction screws at an angle through the top edge of each apron up into the underside of the plywood — 3 screws per long apron and 2 per short apron.
+9. **Cut corner notches in the shelf** — At each of the four corners of the shelf blank, mark a 90×45 mm notch: 90 mm along the long edge and 45 mm in from the short edge. Use a combination square and pencil to mark both lines, then score along each line with a utility knife to prevent tear-out. Make the short cross-cut first — saw 45 mm in from the corner edge with a handsaw, keeping the blade on the waste side of the line. Then make the rip-cut along the long edge (90 mm from the end), again with a handsaw. The waste piece drops free. Pare the internal corner square with a chisel if needed. All four notches are identical — use the first as a template to mark the remaining three.
 
-10. **Fit the shelf** — Drop the shelf panel onto the stretchers. Drive 2× 75 mm screws per stretcher through the shelf into the stretcher top face to hold it captive.
+10. **Attach the top** — Place the 1800×555 mm plywood top on the frame flush with the front and side faces, butting its back edge against the front faces of the extended back legs. Drive 75 mm construction screws at an angle through the top edge of each apron up into the underside of the plywood — 3 screws per long apron and 2 per short apron.
 
-11. **Mount the pegboard** — Slide the 1800×600 mm hardboard panel into the frame against the front faces of the back legs, facing the workspace: bottom edge resting on the work surface, top edge against the back top rail, side edges flush with the outer faces of the back legs. Pre-drill 3 mm pilot holes through the 6 mm hardboard into each back leg (at ⅓ and ⅔ of the panel height) and into the back top rail near the quarter-points. Drive 30 mm screws from the front face.
+11. **Fit the shelf** — Drop the notched shelf into place — the corner cutouts locate around the legs and the shelf bears on all four stretchers. Drive 2× 75 mm screws per stretcher (8 total) down through the shelf into each stretcher top face to hold it captive.
 
-12. **Finish** — The H3.2 treated pine needs no additional finish for a garage environment. Round any sharp corners with a few passes of 80-grit sandpaper. The plywood top can be left bare and will harden with use, or apply 2 coats of boiled linseed oil for moisture resistance.
+12. **Mount the pegboard** — Slide the 1800×600 mm hardboard panel into the frame against the front faces of the back legs, facing the workspace: bottom edge resting on the work surface, top edge against the back top rail, side edges flush with the outer faces of the back legs. Pre-drill 3 mm pilot holes through the 6 mm hardboard into each back leg (at ⅓ and ⅔ of the panel height) and into the back top rail near the quarter-points. Drive 30 mm screws from the front face.
+
+13. **Finish** — The H3.2 treated pine needs no additional finish for a garage environment. Round any sharp corners with a few passes of 80-grit sandpaper. The plywood top can be left bare and will harden with use, or apply 2 coats of boiled linseed oil for moisture resistance.
 
 ---
 
