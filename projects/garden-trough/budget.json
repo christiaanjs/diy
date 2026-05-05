@@ -1,0 +1,55 @@
+{
+  "project": "Garden Trough",
+  "slug": "garden-trough",
+  "created": "2026-05-05",
+  "items": [
+    {
+      "name": "Cedar DAR 90x19mm (side boards)",
+      "qty": 4.0,
+      "unit": "length",
+      "unit_price": 18.5,
+      "subtotal": 74.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar DAR 90x19mm (end boards)",
+      "qty": 2.0,
+      "unit": "length",
+      "unit_price": 12.0,
+      "subtotal": 24.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar DAR 90x19mm (base boards)",
+      "qty": 3.0,
+      "unit": "length",
+      "unit_price": 12.0,
+      "subtotal": 36.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Outdoor timber oil (250 mL)",
+      "qty": 1.0,
+      "unit": "tin",
+      "unit_price": 18.0,
+      "subtotal": 18.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Stainless screws 40mm (box)",
+      "qty": 1.0,
+      "unit": "box",
+      "unit_price": 8.5,
+      "subtotal": 8.5,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "PVA exterior glue (250 mL)",
+      "qty": 1.0,
+      "unit": "bottle",
+      "unit_price": 7.0,
+      "subtotal": 7.0,
+      "added": "2026-05-05"
+    }
+  ]
+}

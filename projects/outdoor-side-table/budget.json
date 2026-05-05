@@ -1,0 +1,71 @@
+{
+  "project": "Outdoor Side Table",
+  "slug": "outdoor-side-table",
+  "created": "2026-05-05",
+  "items": [
+    {
+      "name": "Cedar 50x50mm \u00d7 750mm (legs)",
+      "qty": 4.0,
+      "unit": "length",
+      "unit_price": 12.0,
+      "subtotal": 48.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar DAR 70x22mm \u00d7 700mm (aprons)",
+      "qty": 4.0,
+      "unit": "length",
+      "unit_price": 8.0,
+      "subtotal": 32.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar solid board 140x20mm \u00d7 600mm (top boards)",
+      "qty": 3.0,
+      "unit": "length",
+      "unit_price": 14.0,
+      "subtotal": 42.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar DAR 40x20mm \u00d7 400mm (breadboard ends)",
+      "qty": 2.0,
+      "unit": "length",
+      "unit_price": 6.0,
+      "subtotal": 12.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Pipe clamps \u00d7 2 (hire or buy)",
+      "qty": 2.0,
+      "unit": "piece",
+      "unit_price": 18.0,
+      "subtotal": 36.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Exterior PVA glue",
+      "qty": 1.0,
+      "unit": "bottle",
+      "unit_price": 7.0,
+      "subtotal": 7.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Pocket-hole screws + buttons (top fixing)",
+      "qty": 1.0,
+      "unit": "pack",
+      "unit_price": 9.0,
+      "subtotal": 9.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Outdoor timber oil 500mL",
+      "qty": 1.0,
+      "unit": "tin",
+      "unit_price": 28.0,
+      "subtotal": 28.0,
+      "added": "2026-05-05"
+    }
+  ]
+}

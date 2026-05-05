@@ -1,0 +1,47 @@
+{
+  "project": "Workshop Stool",
+  "slug": "workshop-stool",
+  "created": "2026-05-05",
+  "items": [
+    {
+      "name": "Pine glulam or hardwood blank 300x300x50mm (seat)",
+      "qty": 1.0,
+      "unit": "piece",
+      "unit_price": 22.0,
+      "subtotal": 22.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood dowel 35mm dia \u00d7 900mm (legs)",
+      "qty": 1.0,
+      "unit": "length",
+      "unit_price": 18.0,
+      "subtotal": 18.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood dowel 22mm dia \u00d7 300mm (tenon stock)",
+      "qty": 1.0,
+      "unit": "length",
+      "unit_price": 8.0,
+      "subtotal": 8.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Exterior PVA glue",
+      "qty": 1.0,
+      "unit": "bottle",
+      "unit_price": 7.0,
+      "subtotal": 7.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Sandpaper assorted",
+      "qty": 1.0,
+      "unit": "pack",
+      "unit_price": 6.0,
+      "subtotal": 6.0,
+      "added": "2026-05-05"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "project": "Outdoor Dining Set",
+  "slug": "outdoor-dining-set",
+  "created": "2026-05-05",
+  "items": [
+    {
+      "name": "Hardwood 90x90mm \u00d7 780mm (table legs)",
+      "qty": 4.0,
+      "unit": "length",
+      "unit_price": 38.0,
+      "subtotal": 152.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood 90x40mm \u00d7 1800mm (table long aprons)",
+      "qty": 2.0,
+      "unit": "length",
+      "unit_price": 32.0,
+      "subtotal": 64.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood 90x40mm \u00d7 900mm (table short aprons)",
+      "qty": 2.0,
+      "unit": "length",
+      "unit_price": 18.0,
+      "subtotal": 36.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood solid board 200x25mm \u00d7 1800mm (tabletop)",
+      "qty": 5.0,
+      "unit": "length",
+      "unit_price": 55.0,
+      "subtotal": 275.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood 50x50mm \u00d7 480mm (bench legs)",
+      "qty": 8.0,
+      "unit": "length",
+      "unit_price": 14.0,
+      "subtotal": 112.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood 90x40mm \u00d7 1600mm (bench long aprons)",
+      "qty": 4.0,
+      "unit": "length",
+      "unit_price": 28.0,
+      "subtotal": 112.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood 90x40mm \u00d7 350mm (bench short aprons)",
+      "qty": 4.0,
+      "unit": "length",
+      "unit_price": 10.0,
+      "subtotal": 40.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood solid board 140x40mm \u00d7 1600mm (bench seats)",
+      "qty": 6.0,
+      "unit": "length",
+      "unit_price": 42.0,
+      "subtotal": 252.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Breadboard end stock 50x25mm",
+      "qty": 6.0,
+      "unit": "length",
+      "unit_price": 8.0,
+      "subtotal": 48.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Exterior PVA glue 1L",
+      "qty": 2.0,
+      "unit": "bottle",
+      "unit_price": 14.0,
+      "subtotal": 28.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Wooden buttons / pocket screws (top fixing)",
+      "qty": 2.0,
+      "unit": "pack",
+      "unit_price": 9.0,
+      "subtotal": 18.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Stainless screws assorted",
+      "qty": 2.0,
+      "unit": "box",
+      "unit_price": 12.0,
+      "subtotal": 24.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Outdoor oil finish 1L",
+      "qty": 2.0,
+      "unit": "tin",
+      "unit_price": 42.0,
+      "subtotal": 84.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Pipe clamps \u00d7 4 (hire or buy)",
+      "qty": 4.0,
+      "unit": "piece",
+      "unit_price": 22.0,
+      "subtotal": 88.0,
+      "added": "2026-05-05"
+    }
+  ]
+}
