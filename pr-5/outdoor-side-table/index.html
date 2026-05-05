@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Outdoor Side Table — Woodworking</title>
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, sans-serif;
+  background: #111;
+  color: #ddd;
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+a { color: #c8a96e; text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1 { font-size: 1.6rem; margin-bottom: 0.25rem; color: #fff; }
+h2 { font-size: 1.3rem; color: #c8a96e; margin-bottom: 1rem; }
+.meta { font-size: 0.8rem; color: #666; margin-bottom: 2.5rem; }
+.back { font-size: 0.85rem; margin-bottom: 1.5rem; }
+
+/* ── Views grid ── */
+.views {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+figure {
+  background: #1e1e1e;
+  border: 1px solid #2e2e2e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+figcaption {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #252525;
+}
+figure img { width: 100%; height: auto; display: block; background: #fff; }
+
+/* ── Section headings ── */
+.section-heading {
+  font-size: 1.1rem;
+  color: #c8a96e;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* ── Budget table ── */
+.budget {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-bottom: 3rem;
+}
+.budget th {
+  text-align: left;
+  color: #999;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid #2e2e2e;
+}
+.budget td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+.budget tr:last-child td { border-bottom: none; }
+.budget .num { text-align: right; font-variant-numeric: tabular-nums; }
+.budget tfoot td {
+  font-weight: 700;
+  color: #eee;
+  border-top: 1px solid #3a3a3a;
+  padding-top: 0.55rem;
+}
+
+/* ── Build plan (rendered Markdown) ── */
+.build-plan { margin-bottom: 3rem; }
+.build-plan h1,
+.build-plan h2,
+.build-plan h3 {
+  color: #c8a96e;
+  margin: 1.5rem 0 0.6rem;
+}
+.build-plan h1 { font-size: 1.1rem; }
+.build-plan h2 { font-size: 1rem; }
+.build-plan h3 { font-size: 0.95rem; color: #b09050; }
+.build-plan p  { line-height: 1.65; margin-bottom: 0.75rem; }
+.build-plan ul,
+.build-plan ol { margin: 0.5rem 0 0.75rem 1.4rem; line-height: 1.6; }
+.build-plan li { margin-bottom: 0.2rem; }
+.build-plan hr {
+  border: none;
+  border-top: 1px solid #2a2a2a;
+  margin: 1.5rem 0;
+}
+.build-plan strong { color: #eee; }
+.build-plan code {
+  background: #1e1e1e;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.87em;
+  font-family: monospace;
+}
+.build-plan table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 0.75rem 0 1.25rem;
+}
+.build-plan th {
+  text-align: left;
+  color: #999;
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #2e2e2e;
+}
+.build-plan td {
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+</style>
+</head>
+<body>
+  <p class="back"><a href="../">← All Projects</a></p>
+  <h2>Outdoor Side Table</h2>
+  <p class="meta">Generated 2026-05-05 07:54 UTC</p>
+  <div class="views">
+    <figure>
+      <figcaption>Isometric</figcaption>
+      <img src="preview.png" alt="Isometric">
+    </figure>
+    <figure>
+      <figcaption>Front</figcaption>
+      <img src="preview-front.png" alt="Front">
+    </figure>
+    <figure>
+      <figcaption>Back</figcaption>
+      <img src="preview-back.png" alt="Back">
+    </figure>
+    <figure>
+      <figcaption>Side (right)</figcaption>
+      <img src="preview-side.png" alt="Side (right)">
+    </figure>
+    <figure>
+      <figcaption>Left</figcaption>
+      <img src="preview-left.png" alt="Left">
+    </figure>
+    <figure>
+      <figcaption>Top</figcaption>
+      <img src="preview-top.png" alt="Top">
+    </figure>
+  </div>
+<h3 class="section-heading">Budget</h3>
+<table class="budget">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th class="num">Qty</th>
+      <th>Unit</th>
+      <th class="num">Unit price</th>
+      <th class="num">Subtotal</th>
+    </tr>
+  </thead>
+  <tbody><tr><td>Cedar 50x50mm × 750mm (legs)</td><td class='num'>4</td><td>length</td><td class='num'>$12.00</td><td class='num'>$48.00</td></tr><tr><td>Cedar DAR 70x22mm × 700mm (aprons)</td><td class='num'>4</td><td>length</td><td class='num'>$8.00</td><td class='num'>$32.00</td></tr><tr><td>Cedar solid board 140x20mm × 600mm (top boards)</td><td class='num'>3</td><td>length</td><td class='num'>$14.00</td><td class='num'>$42.00</td></tr><tr><td>Cedar DAR 40x20mm × 400mm (breadboard ends)</td><td class='num'>2</td><td>length</td><td class='num'>$6.00</td><td class='num'>$12.00</td></tr><tr><td>Pipe clamps × 2 (hire or buy)</td><td class='num'>2</td><td>piece</td><td class='num'>$18.00</td><td class='num'>$36.00</td></tr><tr><td>Exterior PVA glue</td><td class='num'>1</td><td>bottle</td><td class='num'>$7.00</td><td class='num'>$7.00</td></tr><tr><td>Pocket-hole screws + buttons (top fixing)</td><td class='num'>1</td><td>pack</td><td class='num'>$9.00</td><td class='num'>$9.00</td></tr><tr><td>Outdoor timber oil 500mL</td><td class='num'>1</td><td>tin</td><td class='num'>$28.00</td><td class='num'>$28.00</td></tr></tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">Total</td>
+      <td class="num">$214.00</td>
+    </tr>
+  </tfoot>
+</table>
+<h3 class="section-heading">Build Plan</h3>
+<div class="build-plan"><h2>Tools required</h2>
+<h3>Power tools</h3>
+<ul>
+<li>Mitre saw or circular saw</li>
+<li>Drill/driver</li>
+<li>Random orbital sander</li>
+<li>Pocket-hole jig (Kreg or similar) — for top buttons</li>
+</ul>
+<h3>Hand tools</h3>
+<ul>
+<li>Tenon saw</li>
+<li>Mortise chisel 10 mm</li>
+<li>Mallet</li>
+<li>Hand plane No. 4 (edge-jointing top boards)</li>
+<li>Marking gauge</li>
+<li>Try square</li>
+<li>Clamps: 2 × pipe/bar clamps (top glue-up), 4 × F-clamps (frame)</li>
+<li>Shoulder plane (tenon fitting)</li>
+</ul>
+<h3>Jigs &amp; accessories</h3>
+<ul>
+<li>Cauls (2 × straight sticks) for top glue-up — prevents bowing under clamp pressure</li>
+<li>Shooting board (optional, for squaring board ends)</li>
+</ul>
+<hr />
+<h2>Cut list</h2>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Qty</th>
+<th>L (mm)</th>
+<th>W (mm)</th>
+<th>T (mm)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leg</td>
+<td>4</td>
+<td>680</td>
+<td>50</td>
+<td>50</td>
+<td>LEG_H = TABLE_H − TOP_T</td>
+</tr>
+<tr>
+<td>Long apron</td>
+<td>2</td>
+<td>600</td>
+<td>70</td>
+<td>22</td>
+<td>Full outer width; tenons on ends</td>
+</tr>
+<tr>
+<td>Short apron</td>
+<td>2</td>
+<td>400</td>
+<td>70</td>
+<td>22</td>
+<td>Full outer depth; tenons on ends</td>
+</tr>
+<tr>
+<td>Top board</td>
+<td>3</td>
+<td>520</td>
+<td>140</td>
+<td>20</td>
+<td>Edge-joined to ~400 mm wide</td>
+</tr>
+<tr>
+<td>Breadboard end</td>
+<td>2</td>
+<td>400</td>
+<td>40</td>
+<td>20</td>
+<td>Cross-grain, slotted screws</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Build steps</h2>
+<ol>
+<li>
+<p><strong>Prepare top boards.</strong> Flatten one face and joint one edge on each of the three top boards. Aim for square, gap-free mating edges — hold two boards together and look for light through the joint. A well-set hand plane removes high spots; aim for 0 gap over the 520 mm length.</p>
+</li>
+<li>
+<p><strong>Glue up top panel.</strong> Apply PVA to all mating edges. Clamp with two pipe clamps perpendicular to the boards (one each side of centre), cauls on top and bottom to prevent bowing. Tighten clamps evenly. Let cure overnight.</p>
+</li>
+<li>
+<p><strong>Flatten and trim panel.</strong> Once cured, scrape or plane off squeeze-out. Flatten the face with a hand plane or belt sander. Trim panel to final 520 × 360 mm (length between breadboard ends, width after joining).</p>
+</li>
+<li>
+<p><strong>Fit breadboard ends.</strong> The centre 50 mm of each breadboard is glued and screwed; the outer 75 mm each side is only screwed through a slot (5 mm slot in the breadboard, screws not glued). Drill centre pilot hole. Rout or chop a 5 mm × 20 mm slot at each outer fixing. Glue and screw centre only; drive screws into slots without glue.</p>
+</li>
+<li>
+<p><strong>Mark and cut leg mortises.</strong> On the inner face of each leg, mark two mortises (one per apron face): 10 mm wide × 40 mm tall, centred at mid-apron height, set back 5 mm from leg end. Chop to 12 mm depth with mortise chisel.</p>
+</li>
+<li>
+<p><strong>Cut apron tenons.</strong> Mark tenon shoulders at distance = leg width (50 mm) from each end. Tenon is 10 mm thick × 40 mm tall, centred on the 70 mm apron height. Saw cheeks and shoulders; pare to fit. Tenons should be snug but push fully home with hand pressure.</p>
+</li>
+<li>
+<p><strong>Dry-fit frame.</strong> Assemble all four legs and four aprons without glue. Check all shoulders pull up tight. Measure diagonals — equal diagonals = square.</p>
+</li>
+<li>
+<p><strong>Glue up frame.</strong> Glue apron tenons into two opposite legs first (one end frame). Clamp and check square. After 2 h, glue in remaining two aprons and clamp across the full frame. Let cure overnight.</p>
+</li>
+<li>
+<p><strong>Fix top to frame.</strong> Rout or chop a 5 mm groove on the inside top face of each apron. Cut wooden buttons from scrap: ~30 mm long, 5 mm step that hooks into the apron groove. Screw buttons upward into the top underside — they can slide in the groove as the top moves seasonally.</p>
+</li>
+<li>
+<p><strong>Sand and finish.</strong> Sand frame to 120 grit, top to 180 grit. Apply two coats outdoor timber oil; allow to cure between coats.</p>
+</li>
+</ol>
+<hr />
+<h2>Notes</h2>
+<ul>
+<li>The edge-joint quality determines the top's appearance; spend extra time on edge preparation — a slightly hollow edge is better than a crowned one (clamps will close a hollow, not a crown).</li>
+<li>Breadboard grain runs perpendicular to top panel grain — this is correct and intentional.</li>
+<li>Seasonal movement in a 360 mm-wide cedar panel is approximately 2–3 mm across the width; the slotted breadboard fixings accommodate this.</li>
+<li>The wooden button technique for top fixing is the same method used on the dining table.</li>
+</ul></div>
+</body>
+</html>

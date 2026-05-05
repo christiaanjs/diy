@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Garden Trough — Woodworking</title>
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, sans-serif;
+  background: #111;
+  color: #ddd;
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+a { color: #c8a96e; text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1 { font-size: 1.6rem; margin-bottom: 0.25rem; color: #fff; }
+h2 { font-size: 1.3rem; color: #c8a96e; margin-bottom: 1rem; }
+.meta { font-size: 0.8rem; color: #666; margin-bottom: 2.5rem; }
+.back { font-size: 0.85rem; margin-bottom: 1.5rem; }
+
+/* ── Views grid ── */
+.views {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+figure {
+  background: #1e1e1e;
+  border: 1px solid #2e2e2e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+figcaption {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #252525;
+}
+figure img { width: 100%; height: auto; display: block; background: #fff; }
+
+/* ── Section headings ── */
+.section-heading {
+  font-size: 1.1rem;
+  color: #c8a96e;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* ── Budget table ── */
+.budget {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-bottom: 3rem;
+}
+.budget th {
+  text-align: left;
+  color: #999;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid #2e2e2e;
+}
+.budget td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+.budget tr:last-child td { border-bottom: none; }
+.budget .num { text-align: right; font-variant-numeric: tabular-nums; }
+.budget tfoot td {
+  font-weight: 700;
+  color: #eee;
+  border-top: 1px solid #3a3a3a;
+  padding-top: 0.55rem;
+}
+
+/* ── Build plan (rendered Markdown) ── */
+.build-plan { margin-bottom: 3rem; }
+.build-plan h1,
+.build-plan h2,
+.build-plan h3 {
+  color: #c8a96e;
+  margin: 1.5rem 0 0.6rem;
+}
+.build-plan h1 { font-size: 1.1rem; }
+.build-plan h2 { font-size: 1rem; }
+.build-plan h3 { font-size: 0.95rem; color: #b09050; }
+.build-plan p  { line-height: 1.65; margin-bottom: 0.75rem; }
+.build-plan ul,
+.build-plan ol { margin: 0.5rem 0 0.75rem 1.4rem; line-height: 1.6; }
+.build-plan li { margin-bottom: 0.2rem; }
+.build-plan hr {
+  border: none;
+  border-top: 1px solid #2a2a2a;
+  margin: 1.5rem 0;
+}
+.build-plan strong { color: #eee; }
+.build-plan code {
+  background: #1e1e1e;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.87em;
+  font-family: monospace;
+}
+.build-plan table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 0.75rem 0 1.25rem;
+}
+.build-plan th {
+  text-align: left;
+  color: #999;
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #2e2e2e;
+}
+.build-plan td {
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+</style>
+</head>
+<body>
+  <p class="back"><a href="../">← All Projects</a></p>
+  <h2>Garden Trough</h2>
+  <p class="meta">Generated 2026-05-05 07:54 UTC</p>
+  <div class="views">
+    <figure>
+      <figcaption>Isometric</figcaption>
+      <img src="preview.png" alt="Isometric">
+    </figure>
+    <figure>
+      <figcaption>Front</figcaption>
+      <img src="preview-front.png" alt="Front">
+    </figure>
+    <figure>
+      <figcaption>Back</figcaption>
+      <img src="preview-back.png" alt="Back">
+    </figure>
+    <figure>
+      <figcaption>Side (right)</figcaption>
+      <img src="preview-side.png" alt="Side (right)">
+    </figure>
+    <figure>
+      <figcaption>Left</figcaption>
+      <img src="preview-left.png" alt="Left">
+    </figure>
+    <figure>
+      <figcaption>Top</figcaption>
+      <img src="preview-top.png" alt="Top">
+    </figure>
+  </div>
+<h3 class="section-heading">Budget</h3>
+<table class="budget">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th class="num">Qty</th>
+      <th>Unit</th>
+      <th class="num">Unit price</th>
+      <th class="num">Subtotal</th>
+    </tr>
+  </thead>
+  <tbody><tr><td>Cedar DAR 90x19mm (side boards)</td><td class='num'>4</td><td>length</td><td class='num'>$18.50</td><td class='num'>$74.00</td></tr><tr><td>Cedar DAR 90x19mm (end boards)</td><td class='num'>2</td><td>length</td><td class='num'>$12.00</td><td class='num'>$24.00</td></tr><tr><td>Cedar DAR 90x19mm (base boards)</td><td class='num'>3</td><td>length</td><td class='num'>$12.00</td><td class='num'>$36.00</td></tr><tr><td>Outdoor timber oil (250 mL)</td><td class='num'>1</td><td>tin</td><td class='num'>$18.00</td><td class='num'>$18.00</td></tr><tr><td>Stainless screws 40mm (box)</td><td class='num'>1</td><td>box</td><td class='num'>$8.50</td><td class='num'>$8.50</td></tr><tr><td>PVA exterior glue (250 mL)</td><td class='num'>1</td><td>bottle</td><td class='num'>$7.00</td><td class='num'>$7.00</td></tr></tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">Total</td>
+      <td class="num">$167.50</td>
+    </tr>
+  </tfoot>
+</table>
+<h3 class="section-heading">Build Plan</h3>
+<div class="build-plan"><h2>Tools required</h2>
+<h3>Power tools</h3>
+<ul>
+<li>Circular saw or mitre saw (crosscuts)</li>
+<li>Drill/driver</li>
+</ul>
+<h3>Hand tools</h3>
+<ul>
+<li>Tenon saw (dado shoulder cuts if not routing)</li>
+<li>Chisel 19 mm (dado waste removal)</li>
+<li>Mallet</li>
+<li>Router plane or shoulder plane (dado floor cleanup — optional but useful)</li>
+<li>Marking gauge</li>
+<li>Try square</li>
+<li>Clamps × 4 minimum</li>
+<li>Drill bit 20 mm (spade or forstner, drainage holes)</li>
+</ul>
+<h3>Jigs &amp; accessories</h3>
+<ul>
+<li>Straight-edge or fence for circular saw</li>
+<li>Shooting board (optional, for end-grain cleanup)</li>
+</ul>
+<hr />
+<h2>Cut list</h2>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Qty</th>
+<th>L (mm)</th>
+<th>W (mm)</th>
+<th>T (mm)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Side wall</td>
+<td>2</td>
+<td>800</td>
+<td>300</td>
+<td>19</td>
+<td>Long faces, dado on inside</td>
+</tr>
+<tr>
+<td>End wall</td>
+<td>2</td>
+<td>262</td>
+<td>300</td>
+<td>19</td>
+<td>Sits between side walls</td>
+</tr>
+<tr>
+<td>Base panel</td>
+<td>1</td>
+<td>762</td>
+<td>262</td>
+<td>19</td>
+<td>Drops into dado</td>
+</tr>
+</tbody>
+</table>
+<p><em>Side wall inner length 762 = 800 − 2 × 19. Base panel sized to slide into dado with ~1 mm clearance.</em></p>
+<hr />
+<h2>Build steps</h2>
+<ol>
+<li>
+<p><strong>Mill / cut to size</strong> — Cross-cut all boards to length. Rip side walls to 300 mm height if starting from wider stock.</p>
+</li>
+<li>
+<p><strong>Mark dado on side walls</strong> — On the inside face of each side wall, mark two lines 30 mm and 49 mm (30 + 19) up from the bottom edge. These are the top and bottom shoulders of the 19 mm-wide, 6 mm-deep dado groove.</p>
+</li>
+<li>
+<p><strong>Cut dado shoulders</strong> — With a tenon saw guided by a square, saw down 6 mm on each shoulder line. Keep the saw vertical; the saw kerfs define the width exactly.</p>
+</li>
+<li>
+<p><strong>Waste out the dado</strong> — Chisel between the two kerfs in stages: score across the grain first, then pare the waste from each end toward the middle. Flatten the floor with a router plane or sharp chisel registered flat. Test-fit the base panel — it should slide in snugly with light hand pressure.</p>
+</li>
+<li>
+<p><strong>Mark and cut corner rabbets on end walls</strong> — On each end of both end walls, mark a rabbet 19 mm wide × 10 mm deep (half thickness). Cut shoulder with tenon saw, remove waste with chisel. The end walls will nest behind the side walls at each corner.</p>
+</li>
+<li>
+<p><strong>Drill drainage holes</strong> — Drill 8 × 20 mm holes in the base panel before assembly (4 columns × 2 rows, evenly spaced). Chamfer the top rim of each hole to prevent splitting.</p>
+</li>
+<li>
+<p><strong>Dry fit</strong> — Assemble without glue. Check that base drops fully into both dados with the end walls in place. Adjust with a shoulder plane or chisel if tight.</p>
+</li>
+<li>
+<p><strong>Glue and screw</strong> — Apply exterior PVA to all mating faces. Clamp end walls to side walls; drive 2 × 40 mm stainless screws through each rabbet corner. Set base into dados (glue optional — loose allows for movement and easier disassembly).</p>
+</li>
+<li>
+<p><strong>Clean up</strong> — Flush any protruding edges with a block plane. Remove squeeze-out with a damp cloth before it sets.</p>
+</li>
+<li>
+<p><strong>Finishing</strong> — Sand to 120 grit. Seal all end grain generously with timber oil before the first outdoor exposure. Apply oil to all faces; allow to soak in and wipe excess after 20 min.</p>
+</li>
+</ol>
+<hr />
+<h2>Notes</h2>
+<ul>
+<li>Assembly order: glue both side walls to one end wall, drop in base, then fit the second end wall last.</li>
+<li>Cedar is light and aromatic but soft — support it well when chiselling to avoid denting.</li>
+<li>The dado keeps the base off the ground; combined with the drainage holes, this prevents rot pockets.</li>
+<li>Grain on base boards should run along the 762 mm length to minimise cross-grain movement against the dado.</li>
+</ul></div>
+</body>
+</html>

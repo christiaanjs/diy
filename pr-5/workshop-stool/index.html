@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workshop Stool — Woodworking</title>
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, sans-serif;
+  background: #111;
+  color: #ddd;
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+a { color: #c8a96e; text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1 { font-size: 1.6rem; margin-bottom: 0.25rem; color: #fff; }
+h2 { font-size: 1.3rem; color: #c8a96e; margin-bottom: 1rem; }
+.meta { font-size: 0.8rem; color: #666; margin-bottom: 2.5rem; }
+.back { font-size: 0.85rem; margin-bottom: 1.5rem; }
+
+/* ── Views grid ── */
+.views {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+figure {
+  background: #1e1e1e;
+  border: 1px solid #2e2e2e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+figcaption {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #252525;
+}
+figure img { width: 100%; height: auto; display: block; background: #fff; }
+
+/* ── Section headings ── */
+.section-heading {
+  font-size: 1.1rem;
+  color: #c8a96e;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* ── Budget table ── */
+.budget {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-bottom: 3rem;
+}
+.budget th {
+  text-align: left;
+  color: #999;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid #2e2e2e;
+}
+.budget td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+.budget tr:last-child td { border-bottom: none; }
+.budget .num { text-align: right; font-variant-numeric: tabular-nums; }
+.budget tfoot td {
+  font-weight: 700;
+  color: #eee;
+  border-top: 1px solid #3a3a3a;
+  padding-top: 0.55rem;
+}
+
+/* ── Build plan (rendered Markdown) ── */
+.build-plan { margin-bottom: 3rem; }
+.build-plan h1,
+.build-plan h2,
+.build-plan h3 {
+  color: #c8a96e;
+  margin: 1.5rem 0 0.6rem;
+}
+.build-plan h1 { font-size: 1.1rem; }
+.build-plan h2 { font-size: 1rem; }
+.build-plan h3 { font-size: 0.95rem; color: #b09050; }
+.build-plan p  { line-height: 1.65; margin-bottom: 0.75rem; }
+.build-plan ul,
+.build-plan ol { margin: 0.5rem 0 0.75rem 1.4rem; line-height: 1.6; }
+.build-plan li { margin-bottom: 0.2rem; }
+.build-plan hr {
+  border: none;
+  border-top: 1px solid #2a2a2a;
+  margin: 1.5rem 0;
+}
+.build-plan strong { color: #eee; }
+.build-plan code {
+  background: #1e1e1e;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.87em;
+  font-family: monospace;
+}
+.build-plan table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 0.75rem 0 1.25rem;
+}
+.build-plan th {
+  text-align: left;
+  color: #999;
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #2e2e2e;
+}
+.build-plan td {
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+</style>
+</head>
+<body>
+  <p class="back"><a href="../">← All Projects</a></p>
+  <h2>Workshop Stool</h2>
+  <p class="meta">Generated 2026-05-05 07:54 UTC</p>
+  <div class="views">
+    <figure>
+      <figcaption>Isometric</figcaption>
+      <img src="preview.png" alt="Isometric">
+    </figure>
+    <figure>
+      <figcaption>Front</figcaption>
+      <img src="preview-front.png" alt="Front">
+    </figure>
+    <figure>
+      <figcaption>Back</figcaption>
+      <img src="preview-back.png" alt="Back">
+    </figure>
+    <figure>
+      <figcaption>Side (right)</figcaption>
+      <img src="preview-side.png" alt="Side (right)">
+    </figure>
+    <figure>
+      <figcaption>Left</figcaption>
+      <img src="preview-left.png" alt="Left">
+    </figure>
+    <figure>
+      <figcaption>Top</figcaption>
+      <img src="preview-top.png" alt="Top">
+    </figure>
+  </div>
+<h3 class="section-heading">Budget</h3>
+<table class="budget">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th class="num">Qty</th>
+      <th>Unit</th>
+      <th class="num">Unit price</th>
+      <th class="num">Subtotal</th>
+    </tr>
+  </thead>
+  <tbody><tr><td>Pine glulam or hardwood blank 300x300x50mm (seat)</td><td class='num'>1</td><td>piece</td><td class='num'>$22.00</td><td class='num'>$22.00</td></tr><tr><td>Hardwood dowel 35mm dia × 900mm (legs)</td><td class='num'>1</td><td>length</td><td class='num'>$18.00</td><td class='num'>$18.00</td></tr><tr><td>Hardwood dowel 22mm dia × 300mm (tenon stock)</td><td class='num'>1</td><td>length</td><td class='num'>$8.00</td><td class='num'>$8.00</td></tr><tr><td>Exterior PVA glue</td><td class='num'>1</td><td>bottle</td><td class='num'>$7.00</td><td class='num'>$7.00</td></tr><tr><td>Sandpaper assorted</td><td class='num'>1</td><td>pack</td><td class='num'>$6.00</td><td class='num'>$6.00</td></tr></tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">Total</td>
+      <td class="num">$61.00</td>
+    </tr>
+  </tfoot>
+</table>
+<h3 class="section-heading">Build Plan</h3>
+<div class="build-plan"><h2>Tools required</h2>
+<h3>Power tools</h3>
+<ul>
+<li>Drill press (strongly preferred for consistent mortise angles) or handheld drill</li>
+<li>Bandsaw or jigsaw (cutting seat disc)</li>
+<li>Disc or belt sander (shaping seat edge and leg tapers — optional)</li>
+</ul>
+<h3>Hand tools</h3>
+<ul>
+<li>Brace and bit or auger bit 22 mm (mortise boring)</li>
+<li>Chisel 22 mm (cleaning mortise walls)</li>
+<li>Tenon saw (cutting leg lengths)</li>
+<li>Spokeshave or drawknife (optional leg taper)</li>
+<li>Marking gauge</li>
+<li>Bevel gauge (setting splay angle)</li>
+<li>Sliding bevel or purpose-made boring guide (for angled drilling)</li>
+<li>Clamps × 3</li>
+<li>Mallet</li>
+</ul>
+<h3>Jigs &amp; accessories</h3>
+<ul>
+<li>Boring guide block: a square block with a 22 mm hole drilled at 10° — used to guide the drill at consistent splay</li>
+<li>Card scraper or sandpaper 80/120/180 grit</li>
+</ul>
+<hr />
+<h2>Cut list</h2>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Qty</th>
+<th>Dimension</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seat</td>
+<td>1</td>
+<td>280 mm dia × 40 mm T</td>
+<td>Cut from glulam blank or solid slab</td>
+</tr>
+<tr>
+<td>Leg</td>
+<td>3</td>
+<td>35 mm dia × ~470 mm</td>
+<td>Slight extra length; trim to fit</td>
+</tr>
+<tr>
+<td>Tenon</td>
+<td>3</td>
+<td>22 mm dia × 32 mm</td>
+<td>Turned or cut from dowel stock</td>
+</tr>
+</tbody>
+</table>
+<p><em>Leg actual length depends on splay — cut long, dry-fit, trim feet to level.</em></p>
+<hr />
+<h2>Build steps</h2>
+<ol>
+<li>
+<p><strong>Cut seat disc</strong> — Mark centre and a 280 mm circle on the blank. Cut out with bandsaw or jigsaw. Smooth edge to the line with a spokeshave or sanding disc.</p>
+</li>
+<li>
+<p><strong>Mark mortise positions</strong> — From the underside, mark centre. Scribe a circle at 55% of seat radius (≈ 77 mm from centre). Mark three points at 120° intervals (use a protractor or divide with a compass). These are the mortise centres.</p>
+</li>
+<li>
+<p><strong>Bore mortises</strong> — Set bevel gauge to 10°. Using the boring guide block (or drill press tilted 10°), bore each mortise 32 mm deep with a 23 mm spade or auger bit (23 mm gives 1 mm clearance on the 22 mm tenon). Bore toward the outside of the seat so legs splay outward. Clean walls with a chisel.</p>
+</li>
+<li>
+<p><strong>Make tenons</strong> — If using bought 22 mm dowel, cut three 32 mm lengths. If cutting from square stock, round with a shoulder plane or spoke shave to 22 mm diameter over 32 mm length. Test-fit each into its mortise — should push in by hand with light resistance.</p>
+</li>
+<li>
+<p><strong>Cut legs to rough length</strong> — Cut three legs at ~470 mm (10 mm over finished height) to allow final trimming. Mark top and bottom ends.</p>
+</li>
+<li>
+<p><strong>Glue tenons into legs</strong> — Spread exterior PVA on tenon shank and inside mortise. Drive home with a mallet. Wipe squeeze-out immediately.</p>
+</li>
+<li>
+<p><strong>Check splay and level</strong> — Stand the stool on a flat surface. All three feet should contact simultaneously. If one rocks, mark the high foot and trim 1–2 mm at a time until level.</p>
+</li>
+<li>
+<p><strong>Final trim</strong> — With stool upright, scribe around each foot parallel to the floor (use a small block as a height gauge). Saw feet to the scribed line so they sit flat when splayed.</p>
+</li>
+<li>
+<p><strong>Sand and finish</strong> — Sand seat face through 80 → 120 → 180 grit. Break all arrises. Apply oil or wax for a shop stool, or leave bare.</p>
+</li>
+</ol>
+<hr />
+<h2>Notes</h2>
+<ul>
+<li>Three legs are inherently stable — no adjustment needed for uneven floors.</li>
+<li>If a mortise blows out (too close to the edge), fill with a dowel plug and re-bore slightly inward.</li>
+<li>Draw-boring option: after dry-fitting, remove leg, drill a 6 mm hole through the seat directly over the mortise, then re-insert tenon and mark through the seat hole onto the tenon. Remove and drill a 6 mm hole in the tenon ~1 mm closer to the shoulder. Re-assemble and drive a tapered hardwood peg — the offset draws the joint tight mechanically, no clamps needed.</li>
+</ul></div>
+</body>
+</html>
