@@ -5,10 +5,10 @@
   "items": [
     {
       "name": "90×45 H3.2 rough-sawn framing pine — legs, aprons, stretchers",
-      "qty": 13.0,
+      "qty": 16.0,
       "unit": "meters",
       "unit_price": 3.2,
-      "subtotal": 41.6,
+      "subtotal": 51.2,
       "added": "2026-05-01"
     },
     {
@@ -28,11 +28,19 @@
       "added": "2026-05-01"
     },
     {
-      "name": "PVA wood glue 1L",
+      "name": "6mm hardboard 1800×900mm sheet — pegboard",
       "qty": 1.0,
       "unit": "each",
-      "unit_price": 12.0,
-      "subtotal": 12.0,
+      "unit_price": 0.0,
+      "subtotal": 0.0,
+      "added": "2026-05-01"
+    },
+    {
+      "name": "30mm screws (box 50) — pegboard mounting",
+      "qty": 1.0,
+      "unit": "box",
+      "unit_price": 0.0,
+      "subtotal": 0.0,
       "added": "2026-05-01"
     }
   ]
