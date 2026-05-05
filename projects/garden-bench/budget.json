@@ -1,0 +1,79 @@
+{
+  "project": "Garden Bench",
+  "slug": "garden-bench",
+  "created": "2026-05-05",
+  "items": [
+    {
+      "name": "Cedar 70x70mm \u00d7 2400mm (legs/posts)",
+      "qty": 4.0,
+      "unit": "length",
+      "unit_price": 28.0,
+      "subtotal": 112.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar DAR 70x35mm \u00d7 1200mm (seat rails)",
+      "qty": 2.0,
+      "unit": "length",
+      "unit_price": 14.0,
+      "subtotal": 28.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar DAR 70x35mm \u00d7 1200mm (back top rail)",
+      "qty": 1.0,
+      "unit": "length",
+      "unit_price": 14.0,
+      "subtotal": 14.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar DAR 70x28mm \u00d7 1200mm (seat slats)",
+      "qty": 4.0,
+      "unit": "length",
+      "unit_price": 10.0,
+      "subtotal": 40.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Cedar DAR 70x28mm \u00d7 1200mm (back slats)",
+      "qty": 2.0,
+      "unit": "length",
+      "unit_price": 10.0,
+      "subtotal": 20.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Hardwood wedges (pack)",
+      "qty": 1.0,
+      "unit": "pack",
+      "unit_price": 6.0,
+      "subtotal": 6.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Exterior PVA glue",
+      "qty": 1.0,
+      "unit": "bottle",
+      "unit_price": 7.0,
+      "subtotal": 7.0,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Stainless screws 50mm (box)",
+      "qty": 1.0,
+      "unit": "box",
+      "unit_price": 9.5,
+      "subtotal": 9.5,
+      "added": "2026-05-05"
+    },
+    {
+      "name": "Outdoor timber oil 500mL",
+      "qty": 1.0,
+      "unit": "tin",
+      "unit_price": 28.0,
+      "subtotal": 28.0,
+      "added": "2026-05-05"
+    }
+  ]
+}
