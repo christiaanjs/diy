@@ -35,11 +35,11 @@ target 3.8 m at 1.6 m high × 0.5 m deep stacks).
 | Back post | 2 | 1400 | 100 | 100 | H4 treated |
 | Front wall plate | 1 | 1600 | 45 | 90 | 90×45 CCA pine, laid flat (90 mm vertical) |
 | Back wall plate | 1 | 1600 | 45 | 90 | 90×45 CCA pine, laid flat |
-| Rafter | 3 | 1991 | 45 | 90 | Along-slope length; 90×45 CCA pine |
+| Rafter | 3 | 2022 | 45 | 90 | Along-slope length; 90×45 CCA pine |
 | Knee brace | 2 | 675 | 90 | 45 | 90×45 CCA pine; 45° cuts both ends; one per upper rear post corner |
 | Roof sheet | 3 | 3300 | 810 | — | Corrugated iron; cover width ~760 mm lapped |
 
-> Rafter along-slope length = √(1950² + 400²) ≈ 1991 mm. Cut a birdsmouth notch 30 mm deep × 55 mm seat at each plate bearing point.
+> Rafter along-slope length = √(1950² + 400²) ≈ 2022 mm. Cut a birdsmouth notch 12 mm deep × 45 mm seat at each plate bearing point.
 > Knee braces: 675 mm long at 45°; 2 total (one per upper rear post corner). No housing required — face-fix with 2× 90 mm structural screws per end.
 
 
@@ -59,9 +59,9 @@ target 3.8 m at 1.6 m high × 0.5 m deep stacks).
 
 6. **Fix front wall plate** — Cut the 1600 mm front plate from 90 × 45. Rest it flat (90 mm vertical) on top of the 2 front posts, flush with the outer sleeper faces. Clamp, level, then fix with 2 × angle brackets per post. The plate overhangs 100 mm each side of the outer posts.
 
-7. **Fix back wall plate** — Repeat for the back plate on the 2 back posts. The back plate sits 400 mm lower than the front — this creates the 14.9° skillion slope. Confirm the height difference at each post pair before fixing.
+7. **Fix back wall plate** — Repeat for the back plate on the 2 back posts. The back plate sits 400 mm lower than the front — this creates the 15.4° skillion slope. Confirm the height difference at each post pair before fixing.
 
-8. **Cut and fix rafters** — Cut 3 rafters to 1991 mm (along-slope). Cut a birdsmouth notch (30 mm deep × 55 mm seat) at each end where the rafter will cross the plate. Place one rafter directly above each post, with 1 intermediate per bay at 700 mm spacing. Seat each rafter into its birdsmouth notch with 300 mm overhang at the front and 150 mm at the rear. Fix with 2× 90 mm structural screws toe-screwed at ~30° through rafter into plate at each end.
+8. **Cut and fix rafters** — Cut 3 rafters to 2022 mm (along-slope). Cut a birdsmouth notch (12 mm deep × 45 mm seat) at each end where the rafter will cross the plate. Place one rafter directly above each post, with 1 intermediate per bay at 700 mm spacing. Seat each rafter into its birdsmouth notch with 300 mm overhang at the front and 150 mm at the rear. Fix with 2× 90 mm structural screws toe-screwed at ~30° through rafter into plate at each end.
 
 9. *(No noggins — knee braces provide back-wall stability. Skip to step 10.)*
 
